@@ -1,0 +1,295 @@
+import 'package:audio_service/audio_service.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:musify/services/providers/audio_player.dart';
+import 'package:musify/services/providers/song_stream.dart';
+import 'package:musify/utils/colors.dart';
+import 'package:musify/utils/duration_label.dart';
+import 'package:musify/utils/screen_size.dart';
+import 'package:musify/utils/spacers.dart';
+import 'package:musify/utils/text.dart';
+import 'package:musify/widgets/buttons/favourite_button.dart';
+import 'package:musify/widgets/snack_bars.dart';
+import 'package:my_progress_bar/progress_bar.dart';
+
+class SongPlayer extends ConsumerWidget {
+  const SongPlayer({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final songStream = ref.watch(songStreamProvider);
+    final audioProvider = ref.watch(audioPlayerProvider);
+    double coverImageSize = ScreenSize.width / 1.2;
+
+    List<Map<String, dynamic>> loopModes = [
+      {'label': 'Off', 'loopMode': LoopMode.off},
+      {'label': 'Loop this song', 'loopMode': LoopMode.one},
+      {'label': 'Loop all songs', 'loopMode': LoopMode.all},
+    ];
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: AppColors.primaryBackground,
+        body: songStream.when(
+          data: (data) {
+            MediaItem mediaItem = data.mediaItem!;
+            final isPlaying = data.playbackState.playing;
+            final currentPosition = data.currentPosition;
+            final bufferedPosition = data.bufferedPosition;
+            bool isSuffled = data.shuffleStream;
+            final loopStream = data.loopStream;
+            return Column(
+              children: [
+                // AppBar
+                Container(
+                  color: AppColors.cardBackground,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: Icon(Icons.arrow_back, color: AppColors.white),
+                        ),
+                        Expanded(
+                          child: doubleText(
+                            text1: mediaItem.title,
+                            style1: TextStyle(
+                              color: AppColors.primaryPink,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            text2: mediaItem.artist!,
+                            style2: TextStyle(
+                              color: AppColors.textMedium,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const Spacer(),
+                Center(
+                  child: CachedNetworkImage(
+                    imageUrl: mediaItem.artUri.toString(),
+                    placeholder: (context, url) => Container(
+                      width: coverImageSize,
+                      height: coverImageSize,
+                      decoration: BoxDecoration(
+                        color: AppColors.musicTrackBackground,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    imageBuilder: (context, imageProvider) => Container(
+                      width: coverImageSize,
+                      height: coverImageSize,
+                      decoration: BoxDecoration(
+                        color: AppColors.musicTrackBackground,
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const Spacer(),
+                //
+                // Player controls
+
+                // Favourite button
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    FavouriteButton(
+                      songId: mediaItem.extras!['songId'],
+                      size: 40,
+                    ),
+                    w20,
+                  ],
+                ),
+                h20,
+                // Duration labels
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Row(
+                    children: [
+                      whiteTextMicro(durationLabel(currentPosition)),
+                      const Spacer(),
+                      whiteTextMicro(
+                        durationLabel(mediaItem.duration!.inSeconds),
+                      ),
+                    ],
+                  ),
+                ),
+                // Progress bar
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: HorizontalProgressBar(
+                    trackHeight: 7,
+                    thumbDiameter: 16,
+                    currentPosition: currentPosition,
+                    thumbColor: AppColors.buttonPink,
+                    bufferedPosition: bufferedPosition,
+                    bufferedColor: AppColors.bufferColor,
+                    maxValue: mediaItem.duration!.inSeconds.toDouble(),
+                    progressColor: AppColors.primaryPink.withValues(alpha: 0.7),
+                    onChanged: (value) {
+                      audioProvider.seek(Duration(seconds: value.toInt()));
+                    },
+                  ),
+                ),
+                h10,
+                Padding(
+                  padding: EdgeInsetsGeometry.symmetric(horizontal: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () async {
+                          showAppSnackbar(
+                            context: context,
+                            message:
+                                'Shuffle mode turned ${isSuffled ? 'off' : 'on'}...',
+                          );
+                          await audioProvider.changeShuffleMode(!isSuffled);
+                        },
+                        icon: Icon(
+                          Icons.shuffle_sharp,
+                          size: 25,
+                          color: isSuffled
+                              ? AppColors.white
+                              : AppColors.bufferColor,
+                        ),
+                      ),
+                      const Spacer(),
+                      IconButton(
+                        onPressed: () {
+                          audioProvider.skipToPrevious();
+                        },
+                        icon: Icon(
+                          Icons.skip_previous_rounded,
+                          size: 35,
+                          color: AppColors.white,
+                        ),
+                      ),
+                      w20,
+                      GestureDetector(
+                        onTap: () {
+                          if (isPlaying) {
+                            audioProvider.pause();
+                          } else {
+                            audioProvider.play();
+                          }
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.buttonPink,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Icon(
+                              isPlaying
+                                  ? Icons.pause
+                                  : Icons.play_arrow_rounded,
+                              size: 45,
+                              color: AppColors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      w20,
+                      IconButton(
+                        onPressed: () {
+                          audioProvider.skipToNext();
+                        },
+                        icon: Icon(
+                          Icons.skip_next_rounded,
+                          size: 35,
+                          color: AppColors.white,
+                        ),
+                      ),
+                      const Spacer(),
+
+                      GestureDetector(
+                        onTapDown: (details) {
+                          final pos = details.globalPosition;
+                          showMenu(
+                            color: AppColors.cardBackground,
+                            position: RelativeRect.fromLTRB(
+                              pos.dx - 10,
+                              pos.dy - 10,
+                              0,
+                              0,
+                            ),
+                            context: context,
+                            items: loopModes
+                                .map(
+                                  (loop) => PopupMenuItem(
+                                    onTap: () {
+                                      audioProvider.loopSongs(loop['loopMode']);
+                                    },
+                                    child: loopStream == loop['loopMode']
+                                        ? primaryTextNormal(loop['label'])
+                                        : whiteTextSmall(loop['label']),
+                                  ),
+                                )
+                                .toList(),
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: SizedBox(
+                            width: 25,
+                            height: 55,
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  top: 15,
+                                  child: Icon(
+                                    Icons.loop,
+                                    size: 25,
+                                    color: loopStream == LoopMode.off
+                                        ? AppColors.bufferColor
+                                        : AppColors.white,
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: whiteTextMicro(
+                                    loopStream == LoopMode.one
+                                        ? '1'
+                                        : loopStream == LoopMode.all
+                                        ? 'all'
+                                        : '',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Spacer(),
+              ],
+            );
+          },
+          error: (error, stackTrace) =>
+              Center(child: errorText('Error Occured')),
+          loading: () =>
+              Center(child: CircularProgressIndicator(color: AppColors.white)),
+        ),
+      ),
+    );
+  }
+}

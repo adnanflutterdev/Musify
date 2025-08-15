@@ -1,0 +1,47 @@
+name: musify
+description: "A Music player application"
+publish_to: 'none' 
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^3.15.1
+  firebase_auth: ^5.6.2
+  cloud_firestore: ^5.6.11
+  image_picker: ^1.1.2
+  flutter_riverpod: ^2.6.1
+  firebase_storage: ^12.4.9
+  just_audio: ^0.10.4
+  audio_service: ^0.18.18
+  my_progress_bar: ^2.1.0
+  audio_session: ^0.2.2
+  rxdart: ^0.28.0
+  cached_network_image: ^3.4.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+
+
+flutter:
+  uses-material-design: true
+
+
+  assets:
+    - assets/images/
+
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+
