@@ -12,7 +12,7 @@ A flutter app for playing and listening songs.
 * Flutter (Dart)
 * Firebase Auth & Firestore
 * audio_service / just_audio for background playback
-* Riverpod (if you used it)
+* flutter_riverpod
 
 ## Ui screenshots
 <img src='https://github.com/adnanflutterdev/Musify/blob/main/ui_snapshots/musify_1.jpg?raw=true' height='400'></img>
