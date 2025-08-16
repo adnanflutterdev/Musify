@@ -1,16 +1,40 @@
-# musify
+# Musify
+A flutter app for playing and listening songs.
 
-A new Flutter project.
+## Features
+* 🔑 Secure Authentication – Firebase authentication with login/signup.
+* 🎵 Music Playback – Play, pause, skip songs, with background support.
+* 📱 Notification Controls – Control playback directly from the notification bar.
+* ❤️ Favorites – Save and manage favorite songs.
+* 🔍 Smart Search – Search songs by name.
 
-## Getting Started
+## Technologies used
+* Flutter (Dart)
+* Firebase Auth & Firestore
+* audio_service / just_audio for background playback
+* Riverpod (if you used it)
 
-This project is a starting point for a Flutter application.
+## Ui screenshots
+<img src='https://github.com/adnanflutterdev/Musify/blob/main/ui_snapshots/musify_1.jpg?raw=true' height='400'></img>
+<img src='https://github.com/adnanflutterdev/Musify/blob/main/ui_snapshots/musify_2.jpg?raw=true' height='400'></img>
+<img src='https://github.com/adnanflutterdev/Musify/blob/main/ui_snapshots/musify_3.jpg?raw=true' height='400'></img><br>
+<img src='https://github.com/adnanflutterdev/Musify/blob/main/ui_snapshots/musify_4.jpg?raw=true' height='400'></img>
+<img src='https://github.com/adnanflutterdev/Musify/blob/main/ui_snapshots/musify_5.jpg?raw=true' height='400'></img>
+<img src='https://github.com/adnanflutterdev/Musify/blob/main/ui_snapshots/musify_6.jpg?raw=true' height='400'></img>
 
-A few resources to get you started if this is your first Flutter project:
+## Demo video
+Working demostration:
+👉 [demo](https://www.linkedin.com/posts/mohammad-adnan-346b82287_musify-app-working-video-activity-7361993879463563264-uNWx?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXDS2YBHux9oHHyDv4zhdlUorX52S9vpHg)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 📱Download the APK
+You can try **Musify**:
+👉 [Download Musify APK](https://drive.google.com/file/d/1FjrfglKmJ9affCTh9PHUeokYq-M3Er1c/view?usp=drive_link)  
+> Install it on your Android device and start listening 🎶  
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Future work
+* Forget password
+* Viewing User data and editing user data
+* Playlists creation option
+* Add playlists to favorites
+* Edit history and playlist 
+* Suggestion chat.
