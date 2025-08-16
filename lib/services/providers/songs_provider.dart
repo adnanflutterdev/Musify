@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/services/modals/song.dart';
-import 'package:musify/services/providers/user_data.dart';
+import 'package:musify/services/providers/user_data_provider.dart';
 
 final songsProvider = StreamProvider<List<Song>>((ref) {
   return FirebaseFirestore.instance

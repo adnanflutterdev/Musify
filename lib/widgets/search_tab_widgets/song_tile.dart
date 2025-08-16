@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/functions/play_song.dart';
 import 'package:musify/screens/song_details_screen.dart';
 import 'package:musify/services/modals/song.dart';
-import 'package:musify/services/providers/audio_player.dart';
+import 'package:musify/services/providers/audio_player_provider.dart';
 import 'package:musify/utils/colors.dart';
 import 'package:musify/utils/duration_label.dart';
 import 'package:musify/utils/images.dart';

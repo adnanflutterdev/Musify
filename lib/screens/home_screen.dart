@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/functions/auth_functions.dart';
 import 'package:musify/services/providers/song_search_provider.dart';
-import 'package:musify/services/providers/tabs.dart';
+import 'package:musify/services/providers/tabs_provider.dart';
 import 'package:musify/utils/colors.dart';
 import 'package:musify/utils/images.dart';
 import 'package:musify/utils/screen_size.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:musify/functions/auth_functions.dart';
-import 'package:musify/services/providers/auth.dart';
+import 'package:musify/services/providers/auth_provider.dart';
 import 'package:musify/utils/colors.dart';
 import 'package:musify/utils/images.dart';
 import 'package:musify/utils/screen_size.dart';
