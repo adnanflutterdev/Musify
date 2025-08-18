@@ -73,7 +73,7 @@ class PlayButton extends ConsumerWidget {
           child:
               song != null &&
                       (mediaItem == null || mediaItem.id != song!.url) ||
-                  songs != null && songs!.length > 2
+                  songs != null
               ? Container(
                   width: size ?? 30,
                   height: size ?? 30,

@@ -32,14 +32,10 @@ class SongTrack extends ConsumerWidget {
                           color: AppColors.surfaceMuted,
                           width: 0.7,
                         ),
-                        // bottom: BorderSide(
-                        //   color: AppColors.surfaceMuted,
-                        //   width: 0.7,
-                        // ),
                       ),
                     ),
                     child: ListTile(
-                      minTileHeight: 40,
+                      minTileHeight: 45,
                       minVerticalPadding: 3,
                       horizontalTitleGap: 10,
                       onTap: () => Navigator.push(
@@ -50,7 +46,7 @@ class SongTrack extends ConsumerWidget {
                       leading: CachedNetworkImage(
                         imageUrl: mediaItem.artUri.toString(),
                         placeholder: (context, url) => CircleAvatar(
-                          radius: 20,
+                          radius: 22,
                           backgroundColor: AppColors.surface,
                         ),
                         imageBuilder: (context, imageProvider) => CircleAvatar(

@@ -67,7 +67,7 @@ class SongDetailsScreen extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -110,31 +110,35 @@ class SongDetailsScreen extends StatelessWidget {
                       // Song Details here
                       songDetailsHeading('Details:'),
                       h10,
-                      Wrap(
-                        children: List.generate(songDetails.length, (index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 10.0),
-                            child: SizedBox(
-                              width: ScreenSize.width / 2.2,
-                              child: doubleText(
-                                text1: songDetails[index].first,
-                                style1: TextStyle(
-                                  color: AppColors.onSurfaceMedium,
-                                  fontSize: 16,
-                                ),
-                                text2: songDetails[index].last != ''
-                                    ? songDetails[index].last[0].toUpperCase() +
-                                          songDetails[index].last.substring(1)
-                                    : '_______',
-                                style2: TextStyle(
-                                  color: AppColors.surfaceWhite,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 5.0, bottom: 5.0),
+                        child: Wrap(
+                          children: List.generate(songDetails.length, (index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 10.0),
+                              child: SizedBox(
+                                width: ScreenSize.width / 2.2,
+                                child: doubleText(
+                                  text1: songDetails[index].first,
+                                  style1: TextStyle(
+                                    color: AppColors.onSurfaceMedium,
+                                    fontSize: 16,
+                                  ),
+                                  text2: songDetails[index].last != ''
+                                      ? songDetails[index].last[0]
+                                                .toUpperCase() +
+                                            songDetails[index].last.substring(1)
+                                      : '_______',
+                                  style2: TextStyle(
+                                    color: AppColors.surfaceWhite,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        }),
+                            );
+                          }),
+                        ),
                       ),
                       songDetailsHeading('Language(s):'),
                       Row(
