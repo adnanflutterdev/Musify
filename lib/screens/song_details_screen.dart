@@ -8,6 +8,7 @@ import 'package:musify/utils/spacers.dart';
 import 'package:musify/utils/text.dart';
 import 'package:musify/widgets/buttons/favourite_button.dart';
 import 'package:musify/widgets/buttons/play_button.dart';
+import 'package:musify/widgets/custom_app_bar.dart';
 import 'package:musify/widgets/song_track.dart';
 import 'package:musify/widgets/tag.dart';
 
@@ -31,46 +32,20 @@ class SongDetailsScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            Container(
-              decoration: BoxDecoration(
-                color: AppColors.surfaceDark,
-                border: Border(
-                  bottom: BorderSide(color: AppColors.surfaceMuted, width: 0.7),
+            CustomAppBar(title: doubleText(
+                text1: song.songName,
+                style1: TextStyle(
+                  color: AppColors.primary,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
-              ),
-
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: AppColors.surfaceWhite,
-                      ),
-                    ),
-                    Expanded(
-                      child: doubleText(
-                        text1: song.songName,
-                        style1: TextStyle(
-                          color: AppColors.primary,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        text2: song.artistName,
-                        style2: TextStyle(
-                          color: AppColors.onSurfaceMedium,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
+                text2: song.artistName,
+                style2: TextStyle(
+                  color: AppColors.onSurfaceMedium,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
                 ),
-              ),
-            ),
+              ),),
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(

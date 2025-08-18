@@ -11,6 +11,7 @@ import 'package:musify/utils/screen_size.dart';
 import 'package:musify/utils/spacers.dart';
 import 'package:musify/utils/text.dart';
 import 'package:musify/widgets/buttons/favourite_button.dart';
+import 'package:musify/widgets/custom_app_bar.dart';
 import 'package:musify/widgets/snack_bars.dart';
 import 'package:my_progress_bar/progress_bar.dart';
 
@@ -44,30 +45,7 @@ class SongPlayer extends ConsumerWidget {
             return Column(
               children: [
                 // AppBar
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.surfaceDark,
-                    border: Border(
-                      bottom: BorderSide(
-                        color: AppColors.surfaceMuted,
-                        width: 0.7,
-                      ),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        IconButton(
-                          onPressed: () => Navigator.pop(context),
-                          icon: Icon(
-                            Icons.arrow_back,
-                            color: AppColors.surfaceWhite,
-                          ),
-                        ),
-                        Expanded(
-                          child: doubleText(
+                CustomAppBar(title: doubleText(
                             text1: mediaItem.title,
                             style1: TextStyle(
                               color: AppColors.primary,
@@ -80,12 +58,7 @@ class SongPlayer extends ConsumerWidget {
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                          ),),
                 const Spacer(),
                 Center(
                   child: CachedNetworkImage(
