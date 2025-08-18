@@ -16,20 +16,20 @@ void showAppSnackbar({
             showCloseIcon: true,
             behavior: SnackBarBehavior.floating,
 
-            backgroundColor: AppColors.normalBackground,
+            backgroundColor: AppColors.neutral,
             content: normalText(message),
           )
         : snackBarType == SnackBarType.success
         ? SnackBar(
             showCloseIcon: true,
             behavior: SnackBarBehavior.floating,
-            backgroundColor: AppColors.successBackground,
+            backgroundColor: AppColors.success,
             content: successText(message),
           )
         : SnackBar(
             showCloseIcon: true,
             behavior: SnackBarBehavior.floating,
-            backgroundColor: AppColors.errorBackground,
+            backgroundColor: AppColors.error,
             content: errorText(message),
           ),
   );

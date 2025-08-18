@@ -27,11 +27,11 @@ class SongDetailsScreen extends StatelessWidget {
     ];
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppColors.primaryBackground,
+        backgroundColor: AppColors.surface,
         body: Column(
           children: [
             Container(
-              color: AppColors.cardBackground,
+              color: AppColors.surfaceVariant,
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5.0),
                 child: Row(
@@ -39,19 +39,22 @@ class SongDetailsScreen extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: Icon(Icons.arrow_back, color: AppColors.white),
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: AppColors.surfaceWhite,
+                      ),
                     ),
                     Expanded(
                       child: doubleText(
                         text1: song.songName,
                         style1: TextStyle(
-                          color: AppColors.primaryPink,
+                          color: AppColors.primary,
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                         text2: song.artistName,
                         style2: TextStyle(
-                          color: AppColors.textMedium,
+                          color: AppColors.onSurfaceMedium,
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                         ),
@@ -76,7 +79,7 @@ class SongDetailsScreen extends StatelessWidget {
                             width: coverImageSize,
                             height: coverImageSize,
                             decoration: BoxDecoration(
-                              color: AppColors.musicTrackBackground,
+                              color: AppColors.surfaceVariant,
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
@@ -84,7 +87,7 @@ class SongDetailsScreen extends StatelessWidget {
                             width: coverImageSize,
                             height: coverImageSize,
                             decoration: BoxDecoration(
-                              color: AppColors.musicTrackBackground,
+                              color: AppColors.surfaceVariant,
                               borderRadius: BorderRadius.circular(20),
                               image: DecorationImage(
                                 image: imageProvider,
@@ -100,7 +103,7 @@ class SongDetailsScreen extends StatelessWidget {
                         children: [
                           FavouriteButton(songId: song.id, size: 40),
                           w10,
-                          PlayButton(songs: [song], size: 40),
+                          PlayButton(song: song, size: 40),
                           w20,
                         ],
                       ),
@@ -116,7 +119,7 @@ class SongDetailsScreen extends StatelessWidget {
                               child: doubleText(
                                 text1: songDetails[index].first,
                                 style1: TextStyle(
-                                  color: AppColors.textMedium,
+                                  color: AppColors.onSurfaceMedium,
                                   fontSize: 16,
                                 ),
                                 text2: songDetails[index].last != ''
@@ -124,7 +127,7 @@ class SongDetailsScreen extends StatelessWidget {
                                           songDetails[index].last.substring(1)
                                     : '_______',
                                 style2: TextStyle(
-                                  color: AppColors.white,
+                                  color: AppColors.surfaceWhite,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                 ),

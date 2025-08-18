@@ -11,7 +11,7 @@ class SearchTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryBackground,
+      backgroundColor: AppColors.surface,
       body: Column(
         children: [
           Consumer(
@@ -26,13 +26,13 @@ class SearchTab extends StatelessWidget {
                 ),
                 child: TextField(
                   keyboardType: TextInputType.text,
-                  cursorColor: AppColors.white,
-                  style: TextStyle(color: AppColors.white),
+                  cursorColor: AppColors.surfaceWhite,
+                  style: TextStyle(color: AppColors.surfaceWhite),
                   decoration: InputDecoration(
                     filled: true,
                     hintText: 'Search song',
-                    fillColor: AppColors.inputBackground,
-                    hintStyle: TextStyle(color: AppColors.textDark),
+                    fillColor: AppColors.surfaceLight,
+                    hintStyle: TextStyle(color: AppColors.onSurfaceLow),
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: 10,
                       vertical: 3,
@@ -40,12 +40,12 @@ class SearchTab extends StatelessWidget {
 
                     // Enabled Border
                     enabledBorder: outlinedBorder(
-                      color: AppColors.white,
+                      color: AppColors.surfaceWhite,
                       width: 0.5,
                     ),
                     // Focused Border
                     focusedBorder: outlinedBorder(
-                      color: AppColors.buttonPink,
+                      color: AppColors.primaryVariant,
                       width: 2.0,
                     ),
                   ),

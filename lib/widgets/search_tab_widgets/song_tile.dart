@@ -5,6 +5,7 @@ import 'package:musify/functions/play_song.dart';
 import 'package:musify/screens/song_details_screen.dart';
 import 'package:musify/services/modals/song.dart';
 import 'package:musify/services/providers/audio_player_provider.dart';
+import 'package:musify/services/providers/song_selection_provider.dart';
 import 'package:musify/utils/colors.dart';
 import 'package:musify/utils/duration_label.dart';
 import 'package:musify/utils/images.dart';
@@ -18,16 +19,41 @@ class SongTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final audioProvider = ref.watch(audioPlayerProvider);
+    bool isSongSelectionOn = ref.watch(turnOnOffSongSelectionProvider);
+    final songSelectionNotifier = ref.watch(
+      turnOnOffSongSelectionProvider.notifier,
+    );
+    final selectedSong = ref.watch(songSelectionProvider);
+    final selectedSongNotifier = ref.watch(songSelectionProvider.notifier);
+
+    bool isSongSelected = selectedSong.songsOrder.contains(song.id);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: Container(
-        color: isSameSong ? AppColors.primaryPink : Colors.transparent,
+        color: isSongSelected
+            ? AppColors.surfaceMuted
+            : isSameSong
+            ? AppColors.primary
+            : Colors.transparent,
         child: ListTile(
-          onTap: () {
-            isSameSong
-                ? null
-                : playSong(song: song, audioProvider: audioProvider);
-          },
+          onLongPress: isSongSelectionOn
+              ? () {
+                  selectedSongNotifier.toggleSongSelection(song);
+                }
+              : () {
+                  songSelectionNotifier.start();
+                  selectedSongNotifier.toggleSongSelection(song);
+                },
+          onTap: isSongSelectionOn
+              ? () {
+                  selectedSongNotifier.toggleSongSelection(song);
+                }
+              : () {
+                  isSameSong
+                      ? null
+                      : playSong(song: song, audioProvider: audioProvider);
+                },
           contentPadding: EdgeInsets.symmetric(horizontal: 5),
           minTileHeight: 45,
           horizontalTitleGap: 8,

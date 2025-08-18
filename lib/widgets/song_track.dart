@@ -24,79 +24,76 @@ class SongTrack extends ConsumerWidget {
 
             return mediaItem == null
                 ? Container()
-                : Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.musicTrackBackground,
-                        border: BoxBorder.all(
-                          color: AppColors.primaryPink.withValues(alpha: 0.7),
-                          width: 1.5,
+                : Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.surfaceDark,
+                      border: Border(
+                        top: BorderSide(
+                          color: AppColors.surfaceMuted,
+                          width: 0.7,
                         ),
-                        borderRadius: BorderRadius.circular(15.0),
+                        // bottom: BorderSide(
+                        //   color: AppColors.surfaceMuted,
+                        //   width: 0.7,
+                        // ),
                       ),
-                      child: ListTile(
-                        minTileHeight: 40,
-                        minVerticalPadding: 3,
-                        horizontalTitleGap: 10,
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SongPlayer()),
+                    ),
+                    child: ListTile(
+                      minTileHeight: 40,
+                      minVerticalPadding: 3,
+                      horizontalTitleGap: 10,
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SongPlayer()),
+                      ),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
+                      leading: CachedNetworkImage(
+                        imageUrl: mediaItem.artUri.toString(),
+                        placeholder: (context, url) => CircleAvatar(
+                          radius: 20,
+                          backgroundColor: AppColors.surface,
                         ),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
-                        leading: CachedNetworkImage(
-                          imageUrl: mediaItem.artUri.toString(),
-                          placeholder: (context, url) => CircleAvatar(
-                            radius: 20,
-                            backgroundColor: AppColors.primaryBackground,
-                          ),
-                          imageBuilder: (context, imageProvider) =>
-                              CircleAvatar(
-                                radius: 20,
-                                backgroundImage: imageProvider,
-                              ),
+                        imageBuilder: (context, imageProvider) => CircleAvatar(
+                          radius: 20,
+                          backgroundImage: imageProvider,
                         ),
-                        title: Padding(
-                          padding: const EdgeInsets.only(left: 5.0),
-                          child: tileTitle(mediaItem.title),
-                        ),
-                        subtitle: HorizontalProgressBar(
-                          maxValue: mediaItem.duration!.inSeconds.toDouble(),
-                          currentPosition: currentPosition,
-                          progressColor: AppColors.primaryPink.withValues(
-                            alpha: 0.7,
-                          ),
-                          bufferedColor: AppColors.bufferColor,
-                          bufferedPosition: bufferedPosition,
-                          thumbColor: AppColors.buttonPink,
-                          trackHeight: 4,
-                          thumbDiameter: 12,
-                          onChanged: (value) {
-                            audioProvider.seek(
-                              Duration(seconds: value.toInt()),
-                            );
-                          },
-                        ),
+                      ),
+                      title: Padding(
+                        padding: const EdgeInsets.only(left: 5.0),
+                        child: tileTitle(mediaItem.title),
+                      ),
+                      subtitle: HorizontalProgressBar(
+                        maxValue: mediaItem.duration!.inSeconds.toDouble(),
+                        currentPosition: currentPosition,
+                        progressColor: AppColors.primary.withValues(alpha: 0.7),
+                        bufferedColor: AppColors.surfaceMuted,
+                        bufferedPosition: bufferedPosition,
+                        thumbColor: AppColors.primaryVariant,
+                        trackHeight: 4,
+                        thumbDiameter: 12,
+                        onChanged: (value) {
+                          audioProvider.seek(Duration(seconds: value.toInt()));
+                        },
+                      ),
 
-                        trailing: GestureDetector(
-                          onTap: () {
-                            if (isPlaying) {
-                              audioProvider.pause();
-                            } else {
-                              audioProvider.play();
-                            }
-                          },
-                          child: Container(
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppColors.buttonPink,
-                            ),
-                            child: Icon(
-                              isPlaying ? Icons.pause : Icons.play_arrow,
-                              color: AppColors.white,
-                            ),
+                      trailing: GestureDetector(
+                        onTap: () {
+                          if (isPlaying) {
+                            audioProvider.pause();
+                          } else {
+                            audioProvider.play();
+                          }
+                        },
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.primaryVariant,
+                          ),
+                          child: Icon(
+                            isPlaying ? Icons.pause : Icons.play_arrow,
+                            color: AppColors.surfaceWhite,
                           ),
                         ),
                       ),

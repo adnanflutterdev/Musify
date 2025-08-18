@@ -9,6 +9,7 @@ import 'package:musify/utils/text.dart';
 import 'package:musify/widgets/buttons/favourite_button.dart';
 import 'package:musify/widgets/buttons/play_button.dart';
 import 'package:musify/widgets/search_tab_widgets/song_tile.dart';
+import 'package:musify/widgets/song_selection_bar.dart';
 import 'package:musify/widgets/song_track.dart';
 
 class PlaylistScreen extends StatelessWidget {
@@ -32,7 +33,7 @@ class PlaylistScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.primaryBackground,
+      backgroundColor: AppColors.surface,
       body: SafeArea(
         child: Column(
           children: [
@@ -43,7 +44,7 @@ class PlaylistScreen extends StatelessWidget {
                   SliverAppBar(
                     pinned: true,
                     expandedHeight: 220,
-                    backgroundColor: AppColors.cardBackground,
+                    backgroundColor: AppColors.surfaceVariant,
                     automaticallyImplyLeading: false,
 
                     flexibleSpace: LayoutBuilder(
@@ -61,7 +62,7 @@ class PlaylistScreen extends StatelessWidget {
                               onPressed: () => Navigator.pop(context),
                               icon: Icon(
                                 Icons.arrow_back,
-                                color: AppColors.white,
+                                color: AppColors.surfaceWhite,
                               ),
                             ),
                             const Spacer(),
@@ -150,6 +151,7 @@ class PlaylistScreen extends StatelessWidget {
                 ],
               ),
             ),
+            SongSelectionBar(),
             SongTrack(),
           ],
         ),

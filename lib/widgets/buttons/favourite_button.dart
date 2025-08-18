@@ -55,12 +55,14 @@ class FavouriteButton extends ConsumerWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: isFavourite
-              ? AppColors.musicTrackBackground
-              : AppColors.inputBackground,
+              ? AppColors.surfaceVariant
+              : AppColors.surfaceLight,
         ),
         child: Icon(
           isFavourite ? Icons.favorite_rounded : Icons.favorite_outline_sharp,
-          color: isFavourite ? AppColors.buttonPink : AppColors.white,
+          color: isFavourite
+              ? AppColors.primaryVariant
+              : AppColors.surfaceWhite,
           size: size == null ? 18 : (size! - 15),
         ),
       ),

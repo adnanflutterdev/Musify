@@ -13,7 +13,7 @@ Text musifyText() {
   return Text(
     'Musify',
     style: TextStyle(
-      color: AppColors.primaryPink,
+      color: AppColors.primary,
       fontSize: 20,
       fontWeight: FontWeight.bold,
     ),
@@ -24,7 +24,7 @@ Text appBarText(String text) {
   return Text(
     text,
     style: TextStyle(
-      color: AppColors.textLight,
+      color: AppColors.onSurfaceHigh,
       fontSize: 22,
       fontWeight: FontWeight.bold,
     ),
@@ -34,7 +34,7 @@ Text appBarText(String text) {
 Text whiteTextMicro(String text) {
   return Text(
     text,
-    style: TextStyle(fontSize: 12,color: AppColors.textLight),
+    style: TextStyle(fontSize: 12, color: AppColors.onSurfaceHigh),
     overflow: TextOverflow.ellipsis,
   );
 }
@@ -42,7 +42,7 @@ Text whiteTextMicro(String text) {
 Text whiteTextSmall(String text) {
   return Text(
     text,
-    style: TextStyle(color: AppColors.textLight),
+    style: TextStyle(color: AppColors.onSurfaceHigh),
     overflow: TextOverflow.ellipsis,
   );
 }
@@ -52,7 +52,7 @@ Text tileTitle(String text) {
     text,
     style: TextStyle(
       fontSize: 16,
-      color: AppColors.textLight,
+      color: AppColors.onSurfaceHigh,
       fontWeight: FontWeight.w600,
     ),
   );
@@ -61,14 +61,17 @@ Text tileTitle(String text) {
 Text tileSubTitle(String text) {
   return Text(
     text,
-    style: TextStyle(color: AppColors.textMedium, fontWeight: FontWeight.w500),
+    style: TextStyle(
+      color: AppColors.onSurfaceMedium,
+      fontWeight: FontWeight.w500,
+    ),
   );
 }
 
 Text tileTrailing(String text) {
   return Text(
     text,
-    style: TextStyle(fontSize: 12, color: AppColors.textMedium),
+    style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMedium),
   );
 }
 
@@ -78,13 +81,13 @@ Text whiteTextMedium(String text) {
     style: TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.w500,
-      color: AppColors.textLight,
+      color: AppColors.onSurfaceHigh,
     ),
   );
 }
 
 Text darkText(String text) {
-  return Text(text, style: TextStyle(color: AppColors.textDark));
+  return Text(text, style: TextStyle(color: AppColors.onSurfaceLow));
 }
 
 Text songDetailsHeading(String text) {
@@ -93,13 +96,13 @@ Text songDetailsHeading(String text) {
     style: TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.w600,
-      color: AppColors.textDark,
+      color: AppColors.onSurfaceLow,
     ),
   );
 }
 
 Text primaryTextNormal(String text) {
-  return Text(text, style: TextStyle(color: AppColors.primaryPink));
+  return Text(text, style: TextStyle(color: AppColors.primary));
 }
 
 Text buttonText(String text) {
@@ -108,19 +111,21 @@ Text buttonText(String text) {
     style: TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.bold,
-      color: AppColors.white,
+      color: AppColors.surfaceWhite,
     ),
   );
 }
 
 Text errorText(String text) {
-  return Text(text, style: TextStyle(color: AppColors.errorText));
+  return Text(text, style: TextStyle(color: AppColors.onError));
 }
+
 Text successText(String text) {
-  return Text(text, style: TextStyle(color: AppColors.successText));
+  return Text(text, style: TextStyle(color: AppColors.onSuccess));
 }
+
 Text normalText(String text) {
-  return Text(text, style: TextStyle(color: AppColors.normalText));
+  return Text(text, style: TextStyle(color: AppColors.onNeutral));
 }
 
 Column doubleText({

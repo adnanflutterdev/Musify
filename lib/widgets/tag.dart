@@ -7,7 +7,7 @@ Widget tag(String text) {
     padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 3.0),
     child: Container(
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: AppColors.surfaceVariant,
         borderRadius: BorderRadius.circular(18),
       ),
 

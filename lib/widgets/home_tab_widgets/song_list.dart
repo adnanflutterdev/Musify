@@ -43,7 +43,7 @@ class SongList extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(
-              color: AppColors.musicTrackBackground,
+              color: AppColors.surfaceVariant,
               borderRadius: BorderRadius.circular(15.0),
             ),
             child: SizedBox(
@@ -70,7 +70,7 @@ class SongList extends StatelessWidget {
                           width: 80,
                           decoration: BoxDecoration(
                             shape: BoxShape.rectangle,
-                            color: AppColors.inputBackground,
+                            color: AppColors.surfaceLight,
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),

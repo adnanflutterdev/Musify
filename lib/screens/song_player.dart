@@ -30,7 +30,7 @@ class SongPlayer extends ConsumerWidget {
     ];
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppColors.primaryBackground,
+        backgroundColor: AppColors.surface,
         body: songStream.when(
           data: (data) {
             MediaItem mediaItem = data.mediaItem!;
@@ -43,7 +43,7 @@ class SongPlayer extends ConsumerWidget {
               children: [
                 // AppBar
                 Container(
-                  color: AppColors.cardBackground,
+                  color: AppColors.surfaceVariant,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5.0),
                     child: Row(
@@ -51,19 +51,22 @@ class SongPlayer extends ConsumerWidget {
                       children: [
                         IconButton(
                           onPressed: () => Navigator.pop(context),
-                          icon: Icon(Icons.arrow_back, color: AppColors.white),
+                          icon: Icon(
+                            Icons.arrow_back,
+                            color: AppColors.surfaceWhite,
+                          ),
                         ),
                         Expanded(
                           child: doubleText(
                             text1: mediaItem.title,
                             style1: TextStyle(
-                              color: AppColors.primaryPink,
+                              color: AppColors.primary,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                             text2: mediaItem.artist!,
                             style2: TextStyle(
-                              color: AppColors.textMedium,
+                              color: AppColors.onSurfaceMedium,
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                             ),
@@ -81,7 +84,7 @@ class SongPlayer extends ConsumerWidget {
                       width: coverImageSize,
                       height: coverImageSize,
                       decoration: BoxDecoration(
-                        color: AppColors.musicTrackBackground,
+                        color: AppColors.surfaceDark,
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -89,7 +92,7 @@ class SongPlayer extends ConsumerWidget {
                       width: coverImageSize,
                       height: coverImageSize,
                       decoration: BoxDecoration(
-                        color: AppColors.musicTrackBackground,
+                        color: AppColors.surfaceDark,
                         borderRadius: BorderRadius.circular(10),
                         image: DecorationImage(
                           image: imageProvider,
@@ -135,11 +138,11 @@ class SongPlayer extends ConsumerWidget {
                     trackHeight: 7,
                     thumbDiameter: 16,
                     currentPosition: currentPosition,
-                    thumbColor: AppColors.buttonPink,
+                    thumbColor: AppColors.primaryVariant,
                     bufferedPosition: bufferedPosition,
-                    bufferedColor: AppColors.bufferColor,
+                    bufferedColor: AppColors.surfaceMuted,
                     maxValue: mediaItem.duration!.inSeconds.toDouble(),
-                    progressColor: AppColors.primaryPink.withValues(alpha: 0.7),
+                    progressColor: AppColors.primary.withValues(alpha: 0.7),
                     onChanged: (value) {
                       audioProvider.seek(Duration(seconds: value.toInt()));
                     },
@@ -164,8 +167,8 @@ class SongPlayer extends ConsumerWidget {
                           Icons.shuffle_sharp,
                           size: 25,
                           color: isSuffled
-                              ? AppColors.white
-                              : AppColors.bufferColor,
+                              ? AppColors.surfaceWhite
+                              : AppColors.surfaceMuted,
                         ),
                       ),
                       const Spacer(),
@@ -176,7 +179,7 @@ class SongPlayer extends ConsumerWidget {
                         icon: Icon(
                           Icons.skip_previous_rounded,
                           size: 35,
-                          color: AppColors.white,
+                          color: AppColors.surfaceWhite,
                         ),
                       ),
                       w20,
@@ -191,7 +194,7 @@ class SongPlayer extends ConsumerWidget {
                         child: Container(
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: AppColors.buttonPink,
+                            color: AppColors.primaryVariant,
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
@@ -200,7 +203,7 @@ class SongPlayer extends ConsumerWidget {
                                   ? Icons.pause
                                   : Icons.play_arrow_rounded,
                               size: 45,
-                              color: AppColors.white,
+                              color: AppColors.surfaceWhite,
                             ),
                           ),
                         ),
@@ -213,7 +216,7 @@ class SongPlayer extends ConsumerWidget {
                         icon: Icon(
                           Icons.skip_next_rounded,
                           size: 35,
-                          color: AppColors.white,
+                          color: AppColors.surfaceWhite,
                         ),
                       ),
                       const Spacer(),
@@ -222,7 +225,7 @@ class SongPlayer extends ConsumerWidget {
                         onTapDown: (details) {
                           final pos = details.globalPosition;
                           showMenu(
-                            color: AppColors.cardBackground,
+                            color: AppColors.surfaceVariant,
                             position: RelativeRect.fromLTRB(
                               pos.dx - 10,
                               pos.dy - 10,
@@ -257,8 +260,8 @@ class SongPlayer extends ConsumerWidget {
                                     Icons.loop,
                                     size: 25,
                                     color: loopStream == LoopMode.off
-                                        ? AppColors.bufferColor
-                                        : AppColors.white,
+                                        ? AppColors.surfaceMuted
+                                        : AppColors.surfaceWhite,
                                   ),
                                 ),
                                 Positioned(
@@ -286,8 +289,9 @@ class SongPlayer extends ConsumerWidget {
           },
           error: (error, stackTrace) =>
               Center(child: errorText('Error Occured')),
-          loading: () =>
-              Center(child: CircularProgressIndicator(color: AppColors.white)),
+          loading: () => Center(
+            child: CircularProgressIndicator(color: AppColors.surfaceWhite),
+          ),
         ),
       ),
     );

@@ -45,14 +45,14 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
     final stateNotifier = ref.watch(authProvider.notifier);
 
     return Scaffold(
-      backgroundColor: AppColors.primaryBackground,
+      backgroundColor: AppColors.surface,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             child: Container(
               width: ScreenSize.width - 40,
               decoration: BoxDecoration(
-                color: AppColors.cardBackground,
+                color: AppColors.surfaceVariant,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
@@ -90,7 +90,7 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                                     return Container(
                                       width: double.infinity,
                                       height: 60,
-                                      color: AppColors.primaryBackground,
+                                      color: AppColors.surface,
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -110,7 +110,7 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                                             },
                                             icon: Icon(
                                               Icons.camera_alt,
-                                              color: AppColors.white,
+                                              color: AppColors.surfaceWhite,
                                               size: 30,
                                             ),
                                           ),
@@ -131,7 +131,7 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                                             },
                                             icon: Icon(
                                               Icons.image,
-                                              color: AppColors.white,
+                                              color: AppColors.surfaceWhite,
                                               size: 30,
                                             ),
                                           ),
@@ -146,13 +146,13 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                                 height: 80,
                                 clipBehavior: Clip.hardEdge,
                                 decoration: BoxDecoration(
-                                  color: AppColors.inputBackground,
+                                  color: AppColors.surfaceLight,
                                   shape: BoxShape.circle,
                                 ),
                                 child: state.image == null
                                     ? Icon(
                                         Icons.camera_alt,
-                                        color: AppColors.white,
+                                        color: AppColors.surfaceWhite,
                                       )
                                     : Image.file(
                                         File(state.image!.path),
@@ -173,36 +173,38 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                             TextFormField(
                               controller: _name,
                               keyboardType: TextInputType.name,
-                              cursorColor: AppColors.white,
-                              style: TextStyle(color: AppColors.white),
+                              cursorColor: AppColors.surfaceWhite,
+                              style: TextStyle(color: AppColors.surfaceWhite),
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: AppColors.inputBackground,
+                                fillColor: AppColors.surfaceLight,
                                 hintText: 'Your name',
 
-                                hintStyle: TextStyle(color: AppColors.textDark),
+                                hintStyle: TextStyle(
+                                  color: AppColors.onSurfaceLow,
+                                ),
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 10,
                                   vertical: 3,
                                 ),
                                 // Enabled Border
                                 enabledBorder: outlinedBorder(
-                                  color: AppColors.white,
+                                  color: AppColors.surfaceWhite,
                                   width: 0.5,
                                 ),
                                 // Focused Border
                                 focusedBorder: outlinedBorder(
-                                  color: AppColors.primaryPink,
+                                  color: AppColors.primary,
                                   width: 2.0,
                                 ),
                                 // Error Border
                                 errorBorder: outlinedBorder(
-                                  color: AppColors.errorBackground,
+                                  color: AppColors.error,
                                   width: 0.5,
                                 ),
                                 // Focused Error Border
                                 focusedErrorBorder: outlinedBorder(
-                                  color: AppColors.primaryPink,
+                                  color: AppColors.primary,
                                   width: 2.0,
                                 ),
                               ),
@@ -228,10 +230,10 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                                       width: ScreenSize.width / 3,
                                       height: 40,
                                       decoration: BoxDecoration(
-                                        color: AppColors.inputBackground,
+                                        color: AppColors.surfaceLight,
                                         borderRadius: BorderRadius.circular(10),
                                         border: Border.all(
-                                          color: AppColors.white,
+                                          color: AppColors.surfaceWhite,
                                         ),
                                       ),
                                       child: Row(
@@ -246,7 +248,7 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                                             child: whiteTextSmall(state.gender),
                                           ),
                                           PopupMenuButton(
-                                            iconColor: AppColors.white,
+                                            iconColor: AppColors.surfaceWhite,
                                             icon: Icon(Icons.arrow_drop_down),
                                             menuPadding: EdgeInsets.all(0),
                                             padding: EdgeInsetsGeometry.all(0),
@@ -294,10 +296,10 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                                       width: ScreenSize.width / 2.2,
                                       height: 40,
                                       decoration: BoxDecoration(
-                                        color: AppColors.inputBackground,
+                                        color: AppColors.surfaceLight,
                                         borderRadius: BorderRadius.circular(10),
                                         border: Border.all(
-                                          color: AppColors.white,
+                                          color: AppColors.surfaceWhite,
                                         ),
                                       ),
                                       child: Row(
@@ -327,7 +329,7 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                                             },
                                             icon: Icon(
                                               Icons.calendar_month,
-                                              color: AppColors.white,
+                                              color: AppColors.surfaceWhite,
                                             ),
                                           ),
                                         ],
@@ -343,35 +345,37 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                           TextFormField(
                             controller: _email,
                             keyboardType: TextInputType.emailAddress,
-                            cursorColor: AppColors.white,
-                            style: TextStyle(color: AppColors.white),
+                            cursorColor: AppColors.surfaceWhite,
+                            style: TextStyle(color: AppColors.surfaceWhite),
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: AppColors.inputBackground,
+                              fillColor: AppColors.surfaceLight,
                               hintText: 'your@example.com',
-                              hintStyle: TextStyle(color: AppColors.textDark),
+                              hintStyle: TextStyle(
+                                color: AppColors.onSurfaceLow,
+                              ),
                               contentPadding: EdgeInsets.symmetric(
                                 horizontal: 10,
                                 vertical: 3,
                               ),
                               // Enabled Border
                               enabledBorder: outlinedBorder(
-                                color: AppColors.white,
+                                color: AppColors.surfaceWhite,
                                 width: 0.5,
                               ),
                               // Focused Border
                               focusedBorder: outlinedBorder(
-                                color: AppColors.primaryPink,
+                                color: AppColors.primary,
                                 width: 2.0,
                               ),
                               // Error Border
                               errorBorder: outlinedBorder(
-                                color: AppColors.errorBackground,
+                                color: AppColors.error,
                                 width: 0.5,
                               ),
                               // Focused Error Border
                               focusedErrorBorder: outlinedBorder(
-                                color: AppColors.primaryPink,
+                                color: AppColors.primary,
                                 width: 2.0,
                               ),
                             ),
@@ -395,15 +399,17 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                           TextFormField(
                             controller: _pass,
                             keyboardType: TextInputType.visiblePassword,
-                            cursorColor: AppColors.white,
-                            style: TextStyle(color: AppColors.white),
+                            cursorColor: AppColors.surfaceWhite,
+                            style: TextStyle(color: AppColors.surfaceWhite),
                             obscureText: state.isObscure,
                             obscuringCharacter: '*',
                             decoration: InputDecoration(
                               filled: true,
                               hintText: '******',
-                              fillColor: AppColors.inputBackground,
-                              hintStyle: TextStyle(color: AppColors.textDark),
+                              fillColor: AppColors.surfaceLight,
+                              hintStyle: TextStyle(
+                                color: AppColors.onSurfaceLow,
+                              ),
                               suffixIcon: IconButton(
                                 onPressed: () {
                                   stateNotifier.updateIsObscure(
@@ -414,7 +420,7 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                                   state.isObscure
                                       ? Icons.visibility
                                       : Icons.visibility_off,
-                                  color: AppColors.primaryPink,
+                                  color: AppColors.primary,
                                 ),
                               ),
                               contentPadding: EdgeInsets.symmetric(
@@ -423,22 +429,22 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                               ),
                               // Enabled Border
                               enabledBorder: outlinedBorder(
-                                color: AppColors.white,
+                                color: AppColors.surfaceWhite,
                                 width: 0.5,
                               ),
                               // Focused Border
                               focusedBorder: outlinedBorder(
-                                color: AppColors.primaryPink,
+                                color: AppColors.primary,
                                 width: 2.0,
                               ),
                               // Error Border
                               errorBorder: outlinedBorder(
-                                color: AppColors.errorBackground,
+                                color: AppColors.error,
                                 width: 0.5,
                               ),
                               // Focused Error Border
                               focusedErrorBorder: outlinedBorder(
-                                color: AppColors.primaryPink,
+                                color: AppColors.primary,
                                 width: 2.0,
                               ),
                             ),
@@ -481,7 +487,7 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                               height: 40,
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                color: AppColors.buttonPink,
+                                color: AppColors.primaryVariant,
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Center(
@@ -490,7 +496,7 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                                         width: 30,
                                         height: 30,
                                         child: CircularProgressIndicator(
-                                          color: AppColors.white,
+                                          color: AppColors.surfaceWhite,
                                         ),
                                       )
                                     : whiteTextSmall(

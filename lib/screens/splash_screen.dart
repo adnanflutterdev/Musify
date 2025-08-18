@@ -53,14 +53,14 @@ class _SplashScreenState extends State<SplashScreen>
     return AnnotatedRegion(
       value: SystemUiOverlayStyle(
         // For Android:
-        statusBarColor: AppColors.primaryBackground,
+        statusBarColor: AppColors.surfaceDark,
         statusBarIconBrightness: Brightness.light, // For Android (light icons)
         statusBarBrightness: Brightness.dark, // For iOS (light icons)
         // For iOS:
         systemStatusBarContrastEnforced: true, // Recommended for modern iOS
 
         systemNavigationBarColor:
-            AppColors.primaryBackground, // Navigation bar background color
+            AppColors.surfaceDark, // Navigation bar background color
         systemNavigationBarIconBrightness:
             Brightness.light, // Navigation bar icons
         systemNavigationBarDividerColor: Colors.transparent,
@@ -75,8 +75,8 @@ class _SplashScreenState extends State<SplashScreen>
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  AppColors.primaryBackground,
-                  AppColors.primaryBackground.withValues(alpha: 0.7),
+                  AppColors.surface,
+                  AppColors.surface.withValues(alpha: 0.7),
                 ],
               ),
             ),

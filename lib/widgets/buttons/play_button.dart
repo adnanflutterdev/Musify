@@ -7,9 +7,15 @@ import 'package:musify/services/providers/song_stream_provider.dart';
 import 'package:musify/utils/colors.dart';
 
 class PlayButton extends ConsumerWidget {
-  const PlayButton({super.key, required this.songs, this.size});
+  const PlayButton({super.key, this.size, this.callback, this.song, this.songs})
+    : assert(
+        (songs == null) != (song == null),
+        'You must provide exactly one song or list of songs',
+      );
   final double? size;
-  final List<Song> songs;
+  final Song? song;
+  final List<Song>? songs;
+  final VoidCallback? callback;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -17,26 +23,28 @@ class PlayButton extends ConsumerWidget {
     final audioProvider = ref.watch(audioPlayerProvider);
     return songStream.when(
       error: (error, stackTrace) => Text('Error'),
-      loading: () => CircularProgressIndicator(color: AppColors.white),
+      loading: () => CircularProgressIndicator(color: AppColors.surfaceWhite),
       data: (data) {
         final mediaItem = data.mediaItem;
         final isPlaying = data.playbackState.playing;
 
-        bool isDiffSong = mediaItem == null || mediaItem.id != songs[0].url;
-
         return GestureDetector(
           onTap: () {
-            if (songs.length == 1) {
+            if (callback != null) {
+              callback?.call();
+            }
+            if (song != null) {
+              bool isDiffSong = mediaItem == null || mediaItem.id != song!.url;
               if (isDiffSong) {
-                Song song = songs[0];
+                Song s = song!;
                 audioProvider.playSong(
                   MediaItem(
-                    id: song.url,
-                    title: song.songName,
-                    artUri: Uri.parse(song.coverImage),
-                    artist: song.artistName,
-                    duration: Duration(seconds: song.duration),
-                    extras: {'songId': song.id, 'listen': song.listen},
+                    id: s.url,
+                    title: s.songName,
+                    artUri: Uri.parse(s.coverImage),
+                    artist: s.artistName,
+                    duration: Duration(seconds: s.duration),
+                    extras: {'songId': s.id, 'listen': s.listen},
                   ),
                 );
               } else {
@@ -47,7 +55,7 @@ class PlayButton extends ConsumerWidget {
                 }
               }
             } else {
-              List<MediaItem> mediaItems = songs
+              List<MediaItem> mediaItems = songs!
                   .map(
                     (song) => MediaItem(
                       id: song.url,
@@ -62,17 +70,20 @@ class PlayButton extends ConsumerWidget {
               audioProvider.playPlaylist(mediaItems, 0);
             }
           },
-          child: isDiffSong || songs.length > 2
+          child:
+              song != null &&
+                      (mediaItem == null || mediaItem.id != song!.url) ||
+                  songs != null && songs!.length > 2
               ? Container(
                   width: size ?? 30,
                   height: size ?? 30,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: AppColors.buttonPink,
+                    color: AppColors.primaryVariant,
                   ),
                   child: Icon(
                     Icons.play_arrow,
-                    color: AppColors.white,
+                    color: AppColors.surfaceWhite,
                     size: size == null ? 23 : (size! - 7),
                   ),
                 )
