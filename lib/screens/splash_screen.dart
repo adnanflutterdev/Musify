@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:musify/screens/auth_screen.dart';
 import 'package:musify/utils/colors.dart';
 import 'package:musify/utils/images.dart';
@@ -50,53 +49,38 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion(
-      value: SystemUiOverlayStyle(
-        // For Android:
-        statusBarColor: AppColors.surfaceDark,
-        statusBarIconBrightness: Brightness.light, // For Android (light icons)
-        statusBarBrightness: Brightness.dark, // For iOS (light icons)
-        // For iOS:
-        systemStatusBarContrastEnforced: true, // Recommended for modern iOS
-
-        systemNavigationBarColor:
-            AppColors.surfaceDark, // Navigation bar background color
-        systemNavigationBarIconBrightness:
-            Brightness.light, // Navigation bar icons
-        systemNavigationBarDividerColor: Colors.transparent,
-      ),
-      child: Scaffold(
-        body: SafeArea(
-          child: Container(
-            width: ScreenSize.width,
-            height: ScreenSize.height,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  AppColors.surface,
-                  AppColors.surface.withValues(alpha: 0.7),
-                ],
-              ),
-            ),
-            child: Stack(
-              children: [
-                Center(
-                  child: ScaleTransition(
-                    scale: _animation,
-                    child: Image.asset(logo),
-                  ),
-                ),
-                Positioned(
-                  bottom: 10,
-                  child: SizedBox(
-                    width: ScreenSize.width,
-                    child: splashScreenText('Musify yourself...'),
-                  ),
-                ),
+    return Scaffold(
+      appBar: AppBar(backgroundColor: AppColors.surface, toolbarHeight: 1),
+      body: SafeArea(
+        child: Container(
+          width: ScreenSize.width,
+          height: ScreenSize.height,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                AppColors.surface,
+                AppColors.surface.withValues(alpha: 0.7),
               ],
             ),
+          ),
+          child: Stack(
+            children: [
+              Center(
+                child: ScaleTransition(
+                  scale: _animation,
+                  child: Image.asset(logo),
+                ),
+              ),
+              Positioned(
+                bottom: 10,
+                child: SizedBox(
+                  width: ScreenSize.width,
+                  child: splashScreenText('Musify yourself...'),
+                ),
+              ),
+            ],
           ),
         ),
       ),

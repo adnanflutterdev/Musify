@@ -44,3 +44,9 @@ final songSelectionProvider =
     StateNotifierProvider<SongSelectionNotifer, SongSelection>(
       (ref) => SongSelectionNotifer(),
     );
+
+final isSongSelectedProvider = Provider.family<bool, String>((ref, songId) {
+  final selectedSong = ref.watch(songSelectionProvider);
+  return selectedSong.songsOrder.contains(songId);
+});
+

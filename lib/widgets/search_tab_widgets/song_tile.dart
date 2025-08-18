@@ -23,10 +23,9 @@ class SongTile extends ConsumerWidget {
     final songSelectionNotifier = ref.watch(
       turnOnOffSongSelectionProvider.notifier,
     );
-    final selectedSong = ref.watch(songSelectionProvider);
     final selectedSongNotifier = ref.watch(songSelectionProvider.notifier);
 
-    bool isSongSelected = selectedSong.songsOrder.contains(song.id);
+    bool isSongSelected = ref.watch(isSongSelectedProvider(song.id));
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -55,7 +54,7 @@ class SongTile extends ConsumerWidget {
                       : playSong(song: song, audioProvider: audioProvider);
                 },
           contentPadding: EdgeInsets.symmetric(horizontal: 5),
-          minTileHeight: 45,
+          minTileHeight: 46,
           horizontalTitleGap: 8,
           leading: GestureDetector(
             onTap: () => Navigator.push(
@@ -67,15 +66,15 @@ class SongTile extends ConsumerWidget {
             child: CachedNetworkImage(
               imageUrl: song.coverImage,
               placeholder: (context, url) => CircleAvatar(
-                radius: 20,
+                radius: 23,
                 backgroundImage: AssetImage(coverImage),
               ),
               errorWidget: (context, url, error) => CircleAvatar(
-                radius: 20,
+                radius: 23,
                 backgroundImage: AssetImage(coverImage),
               ),
               imageBuilder: (context, imageProvider) =>
-                  CircleAvatar(radius: 20, backgroundImage: imageProvider),
+                  CircleAvatar(radius: 23, backgroundImage: imageProvider),
             ),
           ),
           title: tileTitle(song.songName),

@@ -25,13 +25,20 @@ class SongDetailsScreen extends StatelessWidget {
       {'Released: ', song.date},
       {'Listens:  ', song.listen.toString()},
     ];
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.surface,
-        body: Column(
+    return Scaffold(
+      backgroundColor: AppColors.surface,
+      appBar: AppBar(backgroundColor: AppColors.surfaceDark, toolbarHeight: 1),
+      body: SafeArea(
+        child: Column(
           children: [
             Container(
-              color: AppColors.surfaceVariant,
+              decoration: BoxDecoration(
+                color: AppColors.surfaceDark,
+                border: Border(
+                  bottom: BorderSide(color: AppColors.surfaceMuted, width: 0.7),
+                ),
+              ),
+
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5.0),
                 child: Row(
@@ -117,12 +124,11 @@ class SongDetailsScreen extends StatelessWidget {
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 10.0),
                               child: SizedBox(
-                                width: ScreenSize.width / 2.2,
+                                width: ScreenSize.width / 2.3,
                                 child: doubleText(
                                   text1: songDetails[index].first,
                                   style1: TextStyle(
                                     color: AppColors.onSurfaceMedium,
-                                    fontSize: 16,
                                   ),
                                   text2: songDetails[index].last != ''
                                       ? songDetails[index].last[0]
@@ -131,7 +137,6 @@ class SongDetailsScreen extends StatelessWidget {
                                       : '_______',
                                   style2: TextStyle(
                                     color: AppColors.surfaceWhite,
-                                    fontSize: 16,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -156,7 +161,7 @@ class SongDetailsScreen extends StatelessWidget {
                         ],
                       ),
                       h10,
-                      songDetailsHeading('Categories:'),
+                      songDetailsHeading('Genre(s):'),
                       Wrap(
                         children: song.songCategories
                             .toString()

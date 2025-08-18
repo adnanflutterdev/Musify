@@ -19,37 +19,42 @@ class SearchTab extends StatelessWidget {
               final searchedTextNotifier = ref.watch(
                 searchedTextProvider.notifier,
               );
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10.0,
-                  vertical: 5,
-                ),
-                child: TextField(
-                  keyboardType: TextInputType.text,
-                  cursorColor: AppColors.surfaceWhite,
-                  style: TextStyle(color: AppColors.surfaceWhite),
-                  decoration: InputDecoration(
-                    filled: true,
-                    hintText: 'Search song',
-                    fillColor: AppColors.surfaceLight,
-                    hintStyle: TextStyle(color: AppColors.onSurfaceLow),
-                    contentPadding: EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 3,
-                    ),
-
-                    // Enabled Border
-                    enabledBorder: outlinedBorder(
-                      color: AppColors.surfaceWhite,
-                      width: 0.5,
-                    ),
-                    // Focused Border
-                    focusedBorder: outlinedBorder(
-                      color: AppColors.primaryVariant,
-                      width: 2.0,
-                    ),
+              return Container(
+                color: AppColors.surfaceDark,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 5.0,
+                    vertical: 10,
                   ),
-                  onChanged: (value) => searchedTextNotifier.updateState(value),
+                  child: TextField(
+                    keyboardType: TextInputType.text,
+                    cursorColor: AppColors.surfaceWhite,
+                    onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                    style: TextStyle(color: AppColors.surfaceWhite),
+                    decoration: InputDecoration(
+                      filled: true,
+                      hintText: 'Songs, artists, genre, language and movie',
+                      fillColor: AppColors.surfaceVariant,
+                      hintStyle: TextStyle(color: AppColors.onSurfaceLow),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 3,
+                      ),
+
+                      // Enabled Border
+                      enabledBorder: outlinedBorder(
+                        color: AppColors.surfaceWhite,
+                        width: 0.5,
+                      ),
+                      // Focused Border
+                      focusedBorder: outlinedBorder(
+                        color: AppColors.primaryVariant,
+                        width: 1.0,
+                      ),
+                    ),
+                    onChanged: (value) =>
+                        searchedTextNotifier.updateState(value),
+                  ),
                 ),
               );
             },

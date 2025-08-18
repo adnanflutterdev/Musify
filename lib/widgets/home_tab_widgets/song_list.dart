@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:musify/screens/playlist_screen.dart';
+import 'package:musify/screens/featured_playlist_screen.dart';
 import 'package:musify/screens/song_details_screen.dart';
 import 'package:musify/services/modals/song.dart';
 import 'package:musify/utils/colors.dart';
@@ -33,7 +33,7 @@ class SongList extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          PlaylistScreen(title: title, songs: songs),
+                          FeaturedPlaylistScreen(title: title, songs: songs),
                     ),
                   ),
                   child: darkText('View all'),

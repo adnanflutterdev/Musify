@@ -6,19 +6,20 @@ import 'package:musify/services/providers/song_search_provider.dart';
 import 'package:musify/services/providers/tabs_provider.dart';
 import 'package:musify/utils/colors.dart';
 import 'package:musify/utils/images.dart';
+import 'package:musify/utils/spacers.dart';
 import 'package:musify/utils/tabs.dart';
 import 'package:musify/utils/text.dart';
 import 'package:musify/widgets/page_navigation_bar.dart';
 import 'package:musify/widgets/song_selection_bar.dart';
 import 'package:musify/widgets/song_track.dart';
 
-class HomeScreen extends ConsumerStatefulWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _HomeScreen();
+  State<StatefulWidget> createState() => _HomeScreen();
 }
 
-class _HomeScreen extends ConsumerState<HomeScreen> {
+class _HomeScreen extends State<HomeScreen> {
   late PageController _pageController;
   @override
   void initState() {
@@ -76,48 +77,79 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
           );
         }
       },
-      child: SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: GestureDetector(onTap: () {}, child: Image.asset(logo)),
-            ),
-            title: Row(
-              children: [
-                Image.asset(musifyTextLogo, height: 28),
-                const Spacer(),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    alertDialog(
-                      title: 'Logout',
-                      subTitle: 'Are you sure to want to logout',
-                      callBack: () => logout(context),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.surfaceLight,
-                  ),
-                  icon: Icon(
-                    Icons.logout_rounded,
-                    color: AppColors.surfaceWhite,
-                    size: 20,
-                  ),
-                  label: Text(
-                    'Logout',
-                    style: TextStyle(
-                      color: AppColors.surfaceWhite,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            backgroundColor: AppColors.surfaceDark,
-          ),
-          backgroundColor: AppColors.surface,
-          body: Column(
+      child: Scaffold(
+        backgroundColor: AppColors.surface,
+        appBar: AppBar(
+          backgroundColor: AppColors.surfaceDark,
+          toolbarHeight: 1,
+        ),
+        body: SafeArea(
+          child: Column(
             children: [
+              
+              Consumer(
+                builder: (context, ref, child) {
+                  int tabIndex = ref.watch(tabProvider);
+
+                  return tabIndex == 0
+                      ? Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.surfaceDark,
+                            border: Border(
+                              bottom: BorderSide(
+                                color: AppColors.surfaceMuted,
+                                width: 0.7,
+                              ),
+                            ),
+                          ),
+
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 8.0,
+                            ),
+                            child: Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: Image.asset(logo, height: 40),
+                                ),
+                                w10,
+                                Image.asset(musifyTextLogo, height: 28),
+                                const Spacer(),
+                                ElevatedButton.icon(
+                                  onPressed: () {
+                                    alertDialog(
+                                      title: 'Logout',
+                                      subTitle:
+                                          'Are you sure to want to logout',
+                                      callBack: () => logout(context),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColors.surfaceVariant,
+                                  ),
+                                  icon: Icon(
+                                    Icons.logout_rounded,
+                                    color: AppColors.onError,
+                                    size: 20,
+                                  ),
+                                  label: Text(
+                                    'Logout',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: AppColors.onError,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      : Container();
+                },
+              ),
               // Tabs
               Expanded(
                 child: Consumer(
@@ -141,6 +173,10 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
               SongSelectionBar(),
               SongTrack(),
               PageNavigationBar(pageController: _pageController),
+              //  Container(
+              //   height: MediaQuery.of(context).padding.bottom,
+              //   color: AppColors.surfaceDark,
+              // ),
             ],
           ),
         ),

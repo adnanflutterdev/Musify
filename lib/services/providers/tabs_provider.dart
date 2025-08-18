@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 List<Set> tabItems = [
   {Icons.home_outlined, 'Home'},
   {Icons.search, 'Search'},
-  {Icons.library_music_outlined, 'Library'},
   {Icons.queue_music_outlined, 'Playlists'},
+  {Icons.library_music_outlined, 'Library'},
 ];
 
 class TabsProviderNotifier extends StateNotifier<int> {

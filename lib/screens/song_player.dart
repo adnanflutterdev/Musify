@@ -28,10 +28,11 @@ class SongPlayer extends ConsumerWidget {
       {'label': 'Loop this song', 'loopMode': LoopMode.one},
       {'label': 'Loop all songs', 'loopMode': LoopMode.all},
     ];
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.surface,
-        body: songStream.when(
+    return Scaffold(
+      backgroundColor: AppColors.surface,
+      appBar: AppBar(backgroundColor: AppColors.surfaceDark, toolbarHeight: 1),
+      body: SafeArea(
+        child: songStream.when(
           data: (data) {
             MediaItem mediaItem = data.mediaItem!;
             final isPlaying = data.playbackState.playing;
@@ -39,11 +40,20 @@ class SongPlayer extends ConsumerWidget {
             final bufferedPosition = data.bufferedPosition;
             bool isSuffled = data.shuffleStream;
             final loopStream = data.loopStream;
+
             return Column(
               children: [
                 // AppBar
                 Container(
-                  color: AppColors.surfaceVariant,
+                  decoration: BoxDecoration(
+                    color: AppColors.surfaceDark,
+                    border: Border(
+                      bottom: BorderSide(
+                        color: AppColors.surfaceMuted,
+                        width: 0.7,
+                      ),
+                    ),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5.0),
                     child: Row(

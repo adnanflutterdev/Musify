@@ -46,6 +46,10 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
 
     return Scaffold(
       backgroundColor: AppColors.surface,
+      appBar: AppBar(
+          backgroundColor: AppColors.surface,
+          toolbarHeight: 1,
+        ),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(

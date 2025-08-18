@@ -12,8 +12,8 @@ import 'package:musify/widgets/search_tab_widgets/song_tile.dart';
 import 'package:musify/widgets/song_selection_bar.dart';
 import 'package:musify/widgets/song_track.dart';
 
-class PlaylistScreen extends StatelessWidget {
-  const PlaylistScreen({
+class FeaturedPlaylistScreen extends StatelessWidget {
+  const FeaturedPlaylistScreen({
     super.key,
     required this.title,
     required this.songs,
@@ -34,6 +34,7 @@ class PlaylistScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.surface,
+      appBar: AppBar(backgroundColor: AppColors.surfaceDark, toolbarHeight: 1),
       body: SafeArea(
         child: Column(
           children: [
@@ -44,19 +45,21 @@ class PlaylistScreen extends StatelessWidget {
                   SliverAppBar(
                     pinned: true,
                     expandedHeight: 220,
-                    backgroundColor: AppColors.surfaceVariant,
+                    backgroundColor: AppColors.surfaceDark,
                     automaticallyImplyLeading: false,
-
                     flexibleSpace: LayoutBuilder(
                       builder: (context, constraints) {
                         final maxHeight = constraints.maxHeight;
-                        double imageSize =
-                            ((maxHeight - kToolbarHeight) /
-                                (220 - kToolbarHeight)) *
-                            90;
-                        imageSize = imageSize.clamp(30, 90);
+                        int songLength = songs.length.clamp(0, 4);
+                        double imageSize = songLength < 3
+                            ? maxHeight / 1.75
+                            : (((maxHeight - kToolbarHeight) /
+                                          (220 - kToolbarHeight)) *
+                                      90)
+                                  .clamp(30, 90);
                         return Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             IconButton(
                               onPressed: () => Navigator.pop(context),
@@ -67,58 +70,38 @@ class PlaylistScreen extends StatelessWidget {
                             ),
                             const Spacer(),
                             Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 12,
-                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 12),
                               child: Center(
                                 child: imageSize == 30
                                     ? appBarText(title)
-                                    : Container(
-                                        width: imageSize * 2 + 16,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            10,
+                                    : SizedBox(
+                                        width: imageSize * 2 + 20,
+                                        child: Center(
+                                          child: Wrap(
+                                            crossAxisAlignment:
+                                                WrapCrossAlignment.center,
+                                            alignment: songLength > 2
+                                                ? WrapAlignment.start
+                                                : WrapAlignment.center,
+                                            children: List.generate(
+                                              songLength,
+                                              (index) {
+                                                return CachedNetworkImage(
+                                                  imageUrl:
+                                                      songs[index].coverImage,
+                                                  width: songLength == 1
+                                                      ? imageSize * 1.35
+                                                      : imageSize,
+                                                );
+                                              },
+                                            ),
                                           ),
-                                        ),
-                                        clipBehavior: Clip.hardEdge,
-                                        child: GridView.builder(
-                                          itemCount: songs.length > 4
-                                              ? 4
-                                              : songs.length,
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          gridDelegate:
-                                              SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 2,
-                                                crossAxisSpacing: 0,
-                                                mainAxisSpacing: 0,
-                                              ),
-                                          itemBuilder: (context, index) =>
-                                              CachedNetworkImage(
-                                                imageUrl:
-                                                    songs[index].coverImage,
-                                                imageBuilder:
-                                                    (
-                                                      context,
-                                                      imageProvider,
-                                                    ) => Container(
-                                                      width: imageSize,
-                                                      height: imageSize,
-                                                      decoration: BoxDecoration(
-                                                        image: DecorationImage(
-                                                          image: imageProvider,
-                                                          fit: BoxFit.fitWidth,
-                                                        ),
-                                                      ),
-                                                    ),
-                                              ),
                                         ),
                                       ),
                               ),
                             ),
                             const Spacer(),
-                            if (imageSize != 30)
+                            if (imageSize > 30)
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: actions(h10),

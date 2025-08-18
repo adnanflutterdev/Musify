@@ -10,7 +10,6 @@ import 'package:musify/services/audio/audio_player_handler.dart';
 
 late final AudioPlayerHandler audioHandler;
 void main() async {
-  ScreenSize();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
@@ -28,7 +27,7 @@ void main() async {
   runApp(const RestartWidget(child: Musify()));
 }
 
-// RestartWidget class for completely reseting all providers.
+// RestartWidget for completely reseting all providers.
 class RestartWidget extends StatefulWidget {
   final Widget child;
 
