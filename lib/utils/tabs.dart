@@ -4,4 +4,4 @@ import 'package:musify/tabs/library_tab.dart';
 import 'package:musify/tabs/playlist_tab.dart';
 import 'package:musify/tabs/search_tab.dart';
 
-List<Widget> tabs = [HomeTab(), SearchTab(), LibraryTab(), PlaylistTab()];
+List<Widget> tabs = [HomeTab(), SearchTab(), PlaylistTab(), LibraryTab()];
