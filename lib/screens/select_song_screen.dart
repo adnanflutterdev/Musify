@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:musify/services/providers/song_selection_provider.dart';
 import 'package:musify/tabs/search_tab.dart';
 import 'package:musify/utils/colors.dart';
-import 'package:musify/utils/spacers.dart';
 import 'package:musify/utils/text.dart';
-import 'package:musify/utils/text_field_borders.dart';
 import 'package:musify/widgets/custom_app_bar.dart';
 import 'package:musify/widgets/song_selection_bar.dart';
 
