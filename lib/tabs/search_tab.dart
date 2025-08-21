@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/services/providers/song_search_provider.dart';
+import 'package:musify/widgets/custom_text_form_field.dart';
 import 'package:musify/widgets/search_tab_widgets/searched_songs.dart';
 import 'package:musify/utils/colors.dart';
 import 'package:musify/utils/text_field_borders.dart';
@@ -10,58 +11,30 @@ class SearchTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.surface,
-      body: Column(
-        children: [
-          Consumer(
-            builder: (context, ref, child) {
-              final searchedTextNotifier = ref.watch(
-                searchedTextProvider.notifier,
-              );
-              return Container(
-                color: AppColors.surfaceDark,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 5.0,
-                    vertical: 10,
-                  ),
-                  child: TextField(
-                    keyboardType: TextInputType.text,
-                    cursorColor: AppColors.surfaceWhite,
-                    onTapOutside: (event) => FocusScope.of(context).unfocus(),
-                    style: TextStyle(color: AppColors.surfaceWhite),
-                    decoration: InputDecoration(
-                      filled: true,
-                      hintText: 'Songs, artists, genre, language and movie',
-                      fillColor: AppColors.surfaceVariant,
-                      hintStyle: TextStyle(color: AppColors.onSurfaceLow),
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 3,
-                      ),
-
-                      // Enabled Border
-                      enabledBorder: outlinedBorder(
-                        color: AppColors.surfaceWhite,
-                        width: 0.5,
-                      ),
-                      // Focused Border
-                      focusedBorder: outlinedBorder(
-                        color: AppColors.primaryVariant,
-                        width: 1.0,
-                      ),
-                    ),
-                    onChanged: (value) =>
-                        searchedTextNotifier.updateState(value),
-                  ),
+    return Column(
+      children: [
+        Consumer(
+          builder: (context, ref, child) {
+            final searchedTextNotifier = ref.watch(
+              searchedTextProvider.notifier,
+            );
+            return Container(
+              color: AppColors.surfaceDark,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 5.0,
+                  vertical: 10,
                 ),
-              );
-            },
-          ),
-          Expanded(child: SearchedSongs()),
-        ],
-      ),
+                child: CustomTextFormField(
+                  hintText: 'Songs, artists, genre, language and movie',
+                  onChanged: (value) => searchedTextNotifier.updateState(value),
+                ),
+              ),
+            );
+          },
+        ),
+        Expanded(child: SearchedSongs()),
+      ],
     );
   }
 }

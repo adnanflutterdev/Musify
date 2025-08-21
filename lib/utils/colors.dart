@@ -19,6 +19,7 @@ class AppColors {
   static const Color primaryVariant = Color(0xffEC4899);
 
   // Error and snack bar colors
+  static const Color textFieldOnError = Color.fromARGB(255, 255, 64, 64);
   static const Color error = Color(0xffB91C1C);
   static const Color onError = Color(0xffFEE2E2);
   static const Color success = Color.fromARGB(255, 41, 125, 72);

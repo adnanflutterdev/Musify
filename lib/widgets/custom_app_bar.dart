@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:musify/utils/colors.dart';
+import 'package:musify/utils/spacers.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({super.key, required this.title, this.hasLeading = false});
+  const CustomAppBar({
+    super.key,
+    required this.title,
+    this.hasLeading = true,
+    this.trailing,
+  });
   final bool hasLeading;
   final Widget title;
+  final Widget? trailing;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,14 +25,15 @@ class CustomAppBar extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if(hasLeading)
-            IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: Icon(Icons.arrow_back, color: AppColors.surfaceWhite),
-            ),
+            if (!hasLeading) w20,
+            if (hasLeading)
+              IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: Icon(Icons.arrow_back, color: AppColors.surfaceWhite),
+              ),
             Expanded(child: title),
+            if (trailing != null) trailing!,
           ],
         ),
       ),

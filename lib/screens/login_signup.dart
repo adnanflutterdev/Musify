@@ -9,7 +9,7 @@ import 'package:musify/utils/images.dart';
 import 'package:musify/utils/screen_size.dart';
 import 'package:musify/utils/spacers.dart';
 import 'package:musify/utils/text.dart';
-import 'package:musify/utils/text_field_borders.dart';
+import 'package:musify/widgets/custom_text_form_field.dart';
 
 class LoginSignup extends ConsumerStatefulWidget {
   const LoginSignup({super.key});
@@ -46,10 +46,7 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
 
     return Scaffold(
       backgroundColor: AppColors.surface,
-      appBar: AppBar(
-          backgroundColor: AppColors.surface,
-          toolbarHeight: 1,
-        ),
+      appBar: AppBar(backgroundColor: AppColors.surface, toolbarHeight: 1),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -174,44 +171,13 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                             whiteTextSmall('Enter Name'),
                           if (!state.isLoginScreen) h5,
                           if (!state.isLoginScreen)
-                            TextFormField(
-                              controller: _name,
+                            CustomTextFormField(
+                              hintText: 'Your name',
+                              contorller: _name,
                               keyboardType: TextInputType.name,
-                              cursorColor: AppColors.surfaceWhite,
-                              style: TextStyle(color: AppColors.surfaceWhite),
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: AppColors.surfaceLight,
-                                hintText: 'Your name',
-
-                                hintStyle: TextStyle(
-                                  color: AppColors.onSurfaceLow,
-                                ),
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 3,
-                                ),
-                                // Enabled Border
-                                enabledBorder: outlinedBorder(
-                                  color: AppColors.surfaceWhite,
-                                  width: 0.5,
-                                ),
-                                // Focused Border
-                                focusedBorder: outlinedBorder(
-                                  color: AppColors.primary,
-                                  width: 2.0,
-                                ),
-                                // Error Border
-                                errorBorder: outlinedBorder(
-                                  color: AppColors.error,
-                                  width: 0.5,
-                                ),
-                                // Focused Error Border
-                                focusedErrorBorder: outlinedBorder(
-                                  color: AppColors.primary,
-                                  width: 2.0,
-                                ),
-                              ),
+                              errorBorder: true,
+                              filledColor: AppColors.surfaceLight,
+                              focusedErorBorder: true,
                               validator: (value) {
                                 if (value == null || value.trim().isEmpty) {
                                   return 'name is required';
@@ -221,6 +187,7 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                                 return null;
                               },
                             ),
+
                           h20,
                           if (!state.isLoginScreen)
                             Row(
@@ -346,43 +313,13 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                           if (!state.isLoginScreen) h20,
                           whiteTextSmall('Enter Email'),
                           h5,
-                          TextFormField(
-                            controller: _email,
+                          CustomTextFormField(
+                            hintText: 'your@example.com',
+                            contorller: _email,
                             keyboardType: TextInputType.emailAddress,
-                            cursorColor: AppColors.surfaceWhite,
-                            style: TextStyle(color: AppColors.surfaceWhite),
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColors.surfaceLight,
-                              hintText: 'your@example.com',
-                              hintStyle: TextStyle(
-                                color: AppColors.onSurfaceLow,
-                              ),
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 3,
-                              ),
-                              // Enabled Border
-                              enabledBorder: outlinedBorder(
-                                color: AppColors.surfaceWhite,
-                                width: 0.5,
-                              ),
-                              // Focused Border
-                              focusedBorder: outlinedBorder(
-                                color: AppColors.primary,
-                                width: 2.0,
-                              ),
-                              // Error Border
-                              errorBorder: outlinedBorder(
-                                color: AppColors.error,
-                                width: 0.5,
-                              ),
-                              // Focused Error Border
-                              focusedErrorBorder: outlinedBorder(
-                                color: AppColors.primary,
-                                width: 2.0,
-                              ),
-                            ),
+                            errorBorder: true,
+                            filledColor: AppColors.surfaceLight,
+                            focusedErorBorder: true,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
                                 return 'Email is required';
@@ -400,56 +337,23 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                           h20,
                           whiteTextSmall('Enter Password'),
                           h5,
-                          TextFormField(
-                            controller: _pass,
+                          CustomTextFormField(
+                            hintText: '******',
+                            contorller: _pass,
+                            isObscure: state.isObscure,
+                            filledColor: AppColors.surfaceLight,
                             keyboardType: TextInputType.visiblePassword,
-                            cursorColor: AppColors.surfaceWhite,
-                            style: TextStyle(color: AppColors.surfaceWhite),
-                            obscureText: state.isObscure,
-                            obscuringCharacter: '*',
-                            decoration: InputDecoration(
-                              filled: true,
-                              hintText: '******',
-                              fillColor: AppColors.surfaceLight,
-                              hintStyle: TextStyle(
-                                color: AppColors.onSurfaceLow,
-                              ),
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  stateNotifier.updateIsObscure(
-                                    !state.isObscure,
-                                  );
-                                },
-                                icon: Icon(
-                                  state.isObscure
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: AppColors.primary,
-                                ),
-                              ),
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 3,
-                              ),
-                              // Enabled Border
-                              enabledBorder: outlinedBorder(
-                                color: AppColors.surfaceWhite,
-                                width: 0.5,
-                              ),
-                              // Focused Border
-                              focusedBorder: outlinedBorder(
+                            errorBorder: true,
+                            focusedErorBorder: true,
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                stateNotifier.updateIsObscure(!state.isObscure);
+                              },
+                              icon: Icon(
+                                state.isObscure
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
                                 color: AppColors.primary,
-                                width: 2.0,
-                              ),
-                              // Error Border
-                              errorBorder: outlinedBorder(
-                                color: AppColors.error,
-                                width: 0.5,
-                              ),
-                              // Focused Error Border
-                              focusedErrorBorder: outlinedBorder(
-                                color: AppColors.primary,
-                                width: 2.0,
                               ),
                             ),
                             validator: (value) {
@@ -463,6 +367,7 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                               }
                             },
                           ),
+
                           h20,
                           GestureDetector(
                             onTap: () async {
