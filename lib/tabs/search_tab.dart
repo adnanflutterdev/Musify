@@ -4,10 +4,10 @@ import 'package:musify/services/providers/song_search_provider.dart';
 import 'package:musify/widgets/custom_text_form_field.dart';
 import 'package:musify/widgets/search_tab_widgets/searched_songs.dart';
 import 'package:musify/utils/colors.dart';
-import 'package:musify/utils/text_field_borders.dart';
 
 class SearchTab extends StatelessWidget {
-  const SearchTab({super.key});
+  const SearchTab({super.key,});
+
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +18,7 @@ class SearchTab extends StatelessWidget {
             final searchedTextNotifier = ref.watch(
               searchedTextProvider.notifier,
             );
+           
             return Container(
               color: AppColors.surfaceDark,
               child: Padding(

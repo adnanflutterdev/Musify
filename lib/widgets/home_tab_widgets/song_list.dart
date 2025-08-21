@@ -48,53 +48,56 @@ class SongList extends StatelessWidget {
             ),
             child: SizedBox(
               height: 120,
-              child: ListView.builder(
-                itemCount: songs.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  Song song = songs[index];
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              SongDetailsScreen(song: songs[index]),
-                        ),
-                      ),
-                      child: CachedNetworkImage(
-                        imageUrl: song.coverImage,
-
-                        placeholder: (context, url) => Container(
-                          width: 80,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            color: AppColors.surfaceLight,
-                            borderRadius: BorderRadius.circular(10),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                child: ListView.builder(
+                  itemCount: songs.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    Song song = songs[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                SongDetailsScreen(song: songs[index]),
                           ),
                         ),
+                        child: CachedNetworkImage(
+                          imageUrl: song.coverImage,
 
-                        imageBuilder: (context, imageProvider) => Column(
-                          children: [
-                            Container(
-                              width: 80,
-                              height: 80,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(image: imageProvider),
-                                borderRadius: BorderRadius.circular(10),
+                          placeholder: (context, url) => Container(
+                            width: 80,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              color: AppColors.surfaceLight,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+
+                          imageBuilder: (context, imageProvider) => Column(
+                            children: [
+                              Container(
+                                width: 80,
+                                height: 80,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(image: imageProvider),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 80,
-                              child: whiteTextSmall(song.songName),
-                            ),
-                          ],
+                              SizedBox(
+                                width: 80,
+                                child: whiteTextSmall(song.songName),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
           ),

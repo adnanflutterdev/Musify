@@ -86,7 +86,6 @@ class _HomeScreen extends State<HomeScreen> {
         body: SafeArea(
           child: Column(
             children: [
-              
               Consumer(
                 builder: (context, ref, child) {
                   int tabIndex = ref.watch(tabProvider);
@@ -128,6 +127,11 @@ class _HomeScreen extends State<HomeScreen> {
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppColors.surfaceVariant,
+
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 3,
+                                    ),
                                   ),
                                   icon: Icon(
                                     Icons.logout_rounded,

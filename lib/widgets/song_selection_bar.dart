@@ -5,10 +5,12 @@ import 'package:musify/services/providers/song_selection_provider.dart';
 import 'package:musify/utils/colors.dart';
 import 'package:musify/utils/spacers.dart';
 import 'package:musify/utils/text.dart';
+import 'package:musify/widgets/buttons/custom_button.dart';
 import 'package:musify/widgets/buttons/play_button.dart';
 
 class SongSelectionBar extends StatelessWidget {
-  const SongSelectionBar({super.key});
+  const SongSelectionBar({super.key, this.forPlaylist = false});
+  final bool forPlaylist;
 
   @override
   Widget build(BuildContext context) {
@@ -22,38 +24,47 @@ class SongSelectionBar extends StatelessWidget {
         final selectedSongNotifier = ref.watch(songSelectionProvider.notifier);
         return isSongSelectionOn
             ? Container(
+                height: 50,
                 padding: EdgeInsets.symmetric(horizontal: 10.0),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withValues(alpha: 0.15),
+                  color: AppColors.surfaceDark,
                   border: Border(
                     top: BorderSide(color: AppColors.surfaceMuted, width: 0.7),
                   ),
                 ),
                 child: Row(
                   children: [
-                    whiteTextMedium(
+                    primaryTextMedium(
                       'Selected songs (${selectedSong.songsOrder.length})',
                     ),
+                    if (!forPlaylist)
+                      TextButton(
+                        onPressed: () {
+                          songSelectionNotifier.stop();
+                          selectedSongNotifier.clear();
+                        },
+                        child: whiteTextSmall('Cancel'),
+                      ),
                     const Spacer(),
-                    PlayButton(
-                      songs: List.generate(
-                        selectedSong.songsOrder.length,
-                        (index) => selectedSong
-                            .selectedSongs[selectedSong.songsOrder[index]],
-                      ).whereType<Song>().toList(),
-                      callback: () {
-                        songSelectionNotifier.stop();
-                        selectedSongNotifier.clear();
-                      },
-                    ),
-                    w10,
-                    IconButton(
-                      onPressed: () {
-                        songSelectionNotifier.stop();
-                        selectedSongNotifier.clear();
-                      },
-                      icon: Icon(Icons.cancel, color: AppColors.surfaceWhite),
-                    ),
+                    if (!forPlaylist)
+                      PlayButton(
+                        songs: List.generate(
+                          selectedSong.songsOrder.length,
+                          (index) => selectedSong
+                              .selectedSongs[selectedSong.songsOrder[index]],
+                        ).whereType<Song>().toList(),
+                        callback: () {
+                          songSelectionNotifier.stop();
+                          selectedSongNotifier.clear();
+                        },
+                      ),
+                    if (forPlaylist)
+                      CustomTextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        title: 'Add',
+                      ),
                   ],
                 ),
               )

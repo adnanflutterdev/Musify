@@ -105,6 +105,17 @@ Text primaryTextNormal(String text) {
   return Text(text, style: TextStyle(color: AppColors.primary));
 }
 
+Text primaryTextMedium(String text) {
+  return Text(
+    text,
+    style: TextStyle(
+      fontSize: 18,
+      color: AppColors.primary,
+      fontWeight: FontWeight.bold,
+    ),
+  );
+}
+
 Text buttonText(String text) {
   return Text(
     text,

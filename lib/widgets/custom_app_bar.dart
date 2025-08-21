@@ -8,10 +8,12 @@ class CustomAppBar extends StatelessWidget {
     required this.title,
     this.hasLeading = true,
     this.trailing,
+    this.extraPopFunction,
   });
   final bool hasLeading;
   final Widget title;
   final Widget? trailing;
+  final void Function()? extraPopFunction;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,7 +31,10 @@ class CustomAppBar extends StatelessWidget {
             if (!hasLeading) w20,
             if (hasLeading)
               IconButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () {
+                  extraPopFunction != null ? extraPopFunction!() : null;
+                  Navigator.pop(context);
+                },
                 icon: Icon(Icons.arrow_back, color: AppColors.surfaceWhite),
               ),
             Expanded(child: title),

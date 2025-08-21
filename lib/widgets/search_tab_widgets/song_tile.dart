@@ -30,11 +30,7 @@ class SongTile extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: Container(
-        color: isSongSelected
-            ? AppColors.surfaceMuted
-            : isSameSong
-            ? AppColors.primary
-            : Colors.transparent,
+        color: isSameSong ? AppColors.primary : Colors.transparent,
         child: ListTile(
           onLongPress: isSongSelectionOn
               ? () {
@@ -79,7 +75,12 @@ class SongTile extends ConsumerWidget {
           ),
           title: tileTitle(song.songName),
           subtitle: tileSubTitle(song.artistName),
-          trailing: tileTrailing(durationLabel(song.duration)),
+          trailing: isSongSelectionOn
+              ? Icon(
+                  isSongSelected ? Icons.check : null,
+                  color: AppColors.onSuccess,
+                )
+              : tileTrailing(durationLabel(song.duration)),
         ),
       ),
     );
