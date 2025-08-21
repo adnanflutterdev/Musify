@@ -42,7 +42,7 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .update({
               'myPlaylists': FieldValue.arrayUnion([
-                {'title': _controller.text.trim(), 'songIds': songIds},
+                {'title': _controller.text.trim(), 'songs': songIds},
               ]),
             });
         if (!mounted) {

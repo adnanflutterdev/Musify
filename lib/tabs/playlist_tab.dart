@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/screens/create_playlist_screen.dart';
+import 'package:musify/services/providers/playlist_provider.dart';
 import 'package:musify/services/providers/user_data_provider.dart';
 import 'package:musify/utils/colors.dart';
 import 'package:musify/utils/text.dart';
 import 'package:musify/widgets/custom_app_bar.dart';
+import 'package:musify/widgets/home_tab_widgets/song_list.dart';
 
 class PlaylistTab extends ConsumerWidget {
   const PlaylistTab({super.key});
@@ -17,8 +19,7 @@ class PlaylistTab extends ConsumerWidget {
       );
     }
 
-    final playlists =
-        ref.watch(userDataProvider).valueOrNull?.myPlaylists ?? [];
+    final playlists = ref.watch(playlistProvider);
 
     return Column(
       children: [
@@ -34,8 +35,10 @@ class PlaylistTab extends ConsumerWidget {
           Expanded(
             child: ListView.builder(
               itemCount: playlists.length,
-              itemBuilder: (context, index) =>
-                  whiteTextSmall(playlists[index].keys.first),
+              itemBuilder: (context, index) {
+                final playlist = playlists[index];
+                return SongList(title: playlist['title'], songs: playlist['songs']);
+              },
             ),
           ),
         if (playlists.isEmpty)
