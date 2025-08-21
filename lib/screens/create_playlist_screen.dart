@@ -42,7 +42,7 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .update({
               'myPlaylists': FieldValue.arrayUnion([
-                {_controller.text.trim(): songIds},
+                {'title': _controller.text.trim(), 'songIds': songIds},
               ]),
             });
         if (!mounted) {
@@ -105,133 +105,137 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
           backgroundColor: AppColors.surfaceDark,
         ),
         backgroundColor: AppColors.surface,
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomAppBar(
-              title: appBarText('Create playlist'),
-              extraPopFunction: clearProvider,
-            ),
-            h10,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: whiteTextSmall('Enter playlist name'),
-            ),
-            h5,
-            Form(
-              key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: CustomTextFormField(
-                  hintText: 'Playlist name',
-                  controller: _controller,
-                  errorBorder: true,
-                  focusedErorBorder: true,
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Please enter name of playlist';
-                    } else if (value.length < 3) {
-                      return 'playist name length must be greater than 3';
-                    }
-                    return null;
-                  },
+        body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomAppBar(
+                title: appBarText('Create playlist'),
+                extraPopFunction: clearProvider,
+              ),
+              h10,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: whiteTextSmall('Enter playlist name'),
+              ),
+              h5,
+              Form(
+                key: _formKey,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: CustomTextFormField(
+                    hintText: 'Playlist name',
+                    controller: _controller,
+                    errorBorder: true,
+                    focusedErorBorder: true,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Please enter name of playlist';
+                      } else if (value.length < 3) {
+                        return 'playist name length must be greater than 3';
+                      }
+                      return null;
+                    },
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15.0, right: 8.0),
-              child: Row(
-                children: [
-                  whiteTextSmall('Songs'),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: () async {
-                      turnOnOffSongSelectionNotifier.start();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SelectSongScreen(
-                            turnOnOffSongSelectionNotifier:
-                                turnOnOffSongSelectionNotifier,
-                          ),
-                        ),
-                      );
-                    },
-                    icon: Icon(Icons.add, color: AppColors.surfaceMuted),
-                  ),
-                ],
-              ),
-            ),
-            h10,
-            Expanded(
-              child: Stack(
-                children: [
-                  addedSongs.isEmpty
-                      ? Center(child: whiteTextSmall('No songs added'))
-                      : ListView.builder(
-                          itemCount: addedSongs.length,
-                          itemBuilder: (context, index) {
-                            Song song = addedSongs[index];
-                            return ListTile(
-                              minTileHeight: 50,
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 8.0,
-                                vertical: 3.0,
-                              ),
-                              leading: CachedNetworkImage(
-                                imageUrl: song.coverImage,
-                                placeholder: (context, url) => CircleAvatar(
-                                  radius: 23,
-                                  backgroundImage: AssetImage(coverImage),
-                                ),
-                                errorWidget: (context, url, error) =>
-                                    CircleAvatar(
-                                      radius: 23,
-                                      backgroundImage: AssetImage(coverImage),
-                                    ),
-                                imageBuilder: (context, imageProvider) =>
-                                    CircleAvatar(
-                                      radius: 23,
-                                      backgroundImage: imageProvider,
-                                    ),
-                              ),
-                              title: tileTitle(song.songName),
-                              subtitle: tileSubTitle(song.artistName),
-                              trailing: IconButton(
-                                onPressed: () {
-                                  songSelectionNotifer.toggleSongSelection(
-                                    song,
-                                  );
-                                },
-                                icon: Icon(
-                                  Icons.cancel,
-                                  color: AppColors.surfaceMuted,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                  Positioned(
-                    bottom: 10,
-                    right: 10,
-                    child: CustomTextButton(
+              Padding(
+                padding: const EdgeInsets.only(left: 15.0, right: 8.0),
+                child: Row(
+                  children: [
+                    whiteTextSmall('Songs'),
+                    const Spacer(),
+                    IconButton(
                       onPressed: () async {
-                        await createPlaylist(songIds: selectedSongs.songsOrder);
-                        clearProvider();
-                        if (!context.mounted) {
-                          return;
-                        }
-                        Navigator.pop(context);
+                        turnOnOffSongSelectionNotifier.start();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SelectSongScreen(
+                              turnOnOffSongSelectionNotifier:
+                                  turnOnOffSongSelectionNotifier,
+                            ),
+                          ),
+                        );
                       },
-                      title: 'Create',
+                      icon: Icon(Icons.add, color: AppColors.surfaceMuted),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
+              h10,
+              Expanded(
+                child: Stack(
+                  children: [
+                    addedSongs.isEmpty
+                        ? Center(child: whiteTextSmall('No songs added'))
+                        : ListView.builder(
+                            itemCount: addedSongs.length,
+                            itemBuilder: (context, index) {
+                              Song song = addedSongs[index];
+                              return ListTile(
+                                minTileHeight: 50,
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 8.0,
+                                  vertical: 3.0,
+                                ),
+                                leading: CachedNetworkImage(
+                                  imageUrl: song.coverImage,
+                                  placeholder: (context, url) => CircleAvatar(
+                                    radius: 23,
+                                    backgroundImage: AssetImage(coverImage),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      CircleAvatar(
+                                        radius: 23,
+                                        backgroundImage: AssetImage(coverImage),
+                                      ),
+                                  imageBuilder: (context, imageProvider) =>
+                                      CircleAvatar(
+                                        radius: 23,
+                                        backgroundImage: imageProvider,
+                                      ),
+                                ),
+                                title: tileTitle(song.songName),
+                                subtitle: tileSubTitle(song.artistName),
+                                trailing: IconButton(
+                                  onPressed: () {
+                                    songSelectionNotifer.toggleSongSelection(
+                                      song,
+                                    );
+                                  },
+                                  icon: Icon(
+                                    Icons.cancel,
+                                    color: AppColors.surfaceMuted,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                    Positioned(
+                      bottom: 10,
+                      right: 10,
+                      child: CustomTextButton(
+                        onPressed: () async {
+                          await createPlaylist(
+                            songIds: selectedSongs.songsOrder,
+                          );
+                          clearProvider();
+                          if (!context.mounted) {
+                            return;
+                          }
+                          Navigator.pop(context);
+                        },
+                        title: 'Create',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
 
-            h20,
-          ],
+              h20,
+            ],
+          ),
         ),
       ),
     );
