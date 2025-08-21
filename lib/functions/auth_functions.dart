@@ -6,12 +6,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:musify/main.dart';
 import 'package:musify/screens/home_screen.dart';
+import 'package:musify/services/providers/auth_provider.dart';
 import 'package:musify/widgets/snack_bars.dart';
 
 Future<void> login({
   required GlobalKey<FormState> formKey,
-  required TextEditingController email,
-  required TextEditingController pass,
+  required AuthState auth,
   required BuildContext context,
 }) async {
   bool isValid = formKey.currentState!.validate();
@@ -19,8 +19,8 @@ Future<void> login({
   if (isValid) {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email.text.trim(),
-        password: pass.text.trim(),
+        email: auth.email,
+        password: auth.pass,
       );
       if (!context.mounted) {
         return;
@@ -50,10 +50,7 @@ Future<void> login({
 
 Future<void> signup({
   required GlobalKey<FormState> formKey,
-  required TextEditingController name,
-  required TextEditingController email,
-  required TextEditingController pass,
-  required ref,
+  required AuthState auth,
   required BuildContext context,
 }) async {
   bool isValid = formKey.currentState!.validate();
@@ -62,24 +59,24 @@ Future<void> signup({
     try {
       final credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
-            email: email.text.trim(),
-            password: pass.text.trim(),
+            email: auth.email,
+            password: auth.pass,
           );
       final uid = credential.user!.uid;
       String downloadUrl = '';
-      if (ref.image != null) {
+      if (auth.image != null) {
         final storageRef = FirebaseStorage.instance
             .ref()
             .child('userProfile')
             .child('$uid.jpg');
-        await storageRef.putFile(File(ref.image!.path));
+        await storageRef.putFile(File(auth.image!.path));
         downloadUrl = await storageRef.getDownloadURL();
       }
       await FirebaseFirestore.instance.collection('userData').doc(uid).set({
-        'name': name.text,
-        'dob': ref.dob,
-        'gender': ref.gender,
-        'image': ref.image != null ? downloadUrl : '',
+        'name': auth.name,
+        'dob': auth.dob,
+        'gender': auth.gender,
+        'image': auth.image != null ? downloadUrl : '',
         'favourite': [],
         'myAlbum': [],
         'myPlaylists': [],

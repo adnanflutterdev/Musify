@@ -13,10 +13,8 @@ class CustomTextFormField extends StatelessWidget {
     this.onChanged,
     this.validator,
     this.suffixIcon,
-    this.contorller,
     this.keyboardType,
   });
-
   final bool isObscure;
   final String hintText;
   final IconButton? suffixIcon;
@@ -24,15 +22,12 @@ class CustomTextFormField extends StatelessWidget {
   final bool focusedErorBorder;
   final Color filledColor;
   final ValueChanged<String>? onChanged;
-
   final TextInputType? keyboardType;
-  final TextEditingController? contorller;
   final FormFieldValidator<String>? validator;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: contorller,
       keyboardType: keyboardType,
       cursorColor: AppColors.surfaceWhite,
       style: TextStyle(color: AppColors.surfaceWhite),

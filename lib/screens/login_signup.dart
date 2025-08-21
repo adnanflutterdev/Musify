@@ -19,30 +19,11 @@ class LoginSignup extends ConsumerStatefulWidget {
 }
 
 class _LoginSignupState extends ConsumerState<LoginSignup> {
-  final _formKey = GlobalKey<FormState>();
-  late TextEditingController _name;
-  late TextEditingController _email;
-  late TextEditingController _pass;
-
-  @override
-  void initState() {
-    super.initState();
-    _name = TextEditingController();
-    _email = TextEditingController();
-    _pass = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _email.dispose();
-    _pass.dispose();
-  }
-
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(authProvider);
-    final stateNotifier = ref.watch(authProvider.notifier);
+    final authState = ref.watch(authProvider);
+    final authStateNotifier = ref.watch(authProvider.notifier);
 
     return Scaffold(
       backgroundColor: AppColors.surface,
@@ -64,7 +45,7 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                 ],
               ),
               child: Form(
-                key: _formKey,
+                key: formKey,
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
@@ -75,14 +56,14 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                           Image.asset(logo, height: 80),
                           musifyText(),
                           whiteTextSmall(
-                            state.isLoginScreen
+                            authState.isLoginScreen
                                 ? 'Log in to your account'
                                 : 'Create a new account',
                           ),
                           h20,
 
                           // Image here
-                          if (!state.isLoginScreen)
+                          if (!authState.isLoginScreen)
                             GestureDetector(
                               onTap: () {
                                 showModalBottomSheet(
@@ -104,7 +85,7 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                                                     source: ImageSource.camera,
                                                   );
                                               if (result != null) {
-                                                stateNotifier.updateImage(
+                                                authStateNotifier.updateImage(
                                                   result,
                                                 );
                                               }
@@ -125,7 +106,7 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                                                     source: ImageSource.gallery,
                                                   );
                                               if (result != null) {
-                                                stateNotifier.updateImage(
+                                                authStateNotifier.updateImage(
                                                   result,
                                                 );
                                               }
@@ -150,13 +131,13 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                                   color: AppColors.surfaceLight,
                                   shape: BoxShape.circle,
                                 ),
-                                child: state.image == null
+                                child: authState.image == null
                                     ? Icon(
                                         Icons.camera_alt,
                                         color: AppColors.surfaceWhite,
                                       )
                                     : Image.file(
-                                        File(state.image!.path),
+                                        File(authState.image!.path),
                                         fit: BoxFit.fitWidth,
                                       ),
                               ),
@@ -166,18 +147,20 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (!state.isLoginScreen) h20,
-                          if (!state.isLoginScreen)
+                          if (!authState.isLoginScreen) h20,
+                          if (!authState.isLoginScreen)
                             whiteTextSmall('Enter Name'),
-                          if (!state.isLoginScreen) h5,
-                          if (!state.isLoginScreen)
+                          if (!authState.isLoginScreen) h5,
+                          if (!authState.isLoginScreen)
                             CustomTextFormField(
                               hintText: 'Your name',
-                              contorller: _name,
                               keyboardType: TextInputType.name,
                               errorBorder: true,
                               filledColor: AppColors.surfaceLight,
                               focusedErorBorder: true,
+                              onChanged: (newValue) {
+                                authStateNotifier.updateName(newValue.trim());
+                              },
                               validator: (value) {
                                 if (value == null || value.trim().isEmpty) {
                                   return 'name is required';
@@ -189,7 +172,7 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                             ),
 
                           h20,
-                          if (!state.isLoginScreen)
+                          if (!authState.isLoginScreen)
                             Row(
                               children: [
                                 Column(
@@ -216,7 +199,9 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                                             padding: const EdgeInsets.only(
                                               left: 15.0,
                                             ),
-                                            child: whiteTextSmall(state.gender),
+                                            child: whiteTextSmall(
+                                              authState.gender,
+                                            ),
                                           ),
                                           PopupMenuButton(
                                             iconColor: AppColors.surfaceWhite,
@@ -228,25 +213,22 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                                                 PopupMenuItem(
                                                   child: Text('Male'),
                                                   onTap: () {
-                                                    stateNotifier.updategender(
-                                                      'Male',
-                                                    );
+                                                    authStateNotifier
+                                                        .updategender('Male');
                                                   },
                                                 ),
                                                 PopupMenuItem(
                                                   child: Text('Female'),
                                                   onTap: () {
-                                                    stateNotifier.updategender(
-                                                      'Female',
-                                                    );
+                                                    authStateNotifier
+                                                        .updategender('Female');
                                                   },
                                                 ),
                                                 PopupMenuItem(
                                                   child: Text('Others'),
                                                   onTap: () {
-                                                    stateNotifier.updategender(
-                                                      'Others',
-                                                    );
+                                                    authStateNotifier
+                                                        .updategender('Others');
                                                   },
                                                 ),
                                               ];
@@ -282,7 +264,7 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                                             padding: const EdgeInsets.only(
                                               left: 15.0,
                                             ),
-                                            child: errorText(state.dob),
+                                            child: errorText(authState.dob),
                                           ),
                                           IconButton(
                                             onPressed: () async {
@@ -293,7 +275,7 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                                                     lastDate: DateTime(2015),
                                                   );
                                               if (result != null) {
-                                                stateNotifier.updatedob(
+                                                authStateNotifier.updatedob(
                                                   '${result.day}/${result.month}/${result.year}',
                                                 );
                                               }
@@ -310,16 +292,18 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                                 ),
                               ],
                             ),
-                          if (!state.isLoginScreen) h20,
+                          if (!authState.isLoginScreen) h20,
                           whiteTextSmall('Enter Email'),
                           h5,
                           CustomTextFormField(
                             hintText: 'your@example.com',
-                            contorller: _email,
                             keyboardType: TextInputType.emailAddress,
                             errorBorder: true,
                             filledColor: AppColors.surfaceLight,
                             focusedErorBorder: true,
+                            onChanged: (newValue) {
+                              authStateNotifier.updateEmail(newValue.trim());
+                            },
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
                                 return 'Email is required';
@@ -339,23 +323,27 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                           h5,
                           CustomTextFormField(
                             hintText: '******',
-                            contorller: _pass,
-                            isObscure: state.isObscure,
+                            isObscure: authState.isObscure,
                             filledColor: AppColors.surfaceLight,
                             keyboardType: TextInputType.visiblePassword,
                             errorBorder: true,
                             focusedErorBorder: true,
                             suffixIcon: IconButton(
                               onPressed: () {
-                                stateNotifier.updateIsObscure(!state.isObscure);
+                                authStateNotifier.updateIsObscure(
+                                  !authState.isObscure,
+                                );
                               },
                               icon: Icon(
-                                state.isObscure
+                                authState.isObscure
                                     ? Icons.visibility
                                     : Icons.visibility_off,
                                 color: AppColors.primary,
                               ),
                             ),
+                            onChanged: (newValue) {
+                              authStateNotifier.updatePass(newValue.trim());
+                            },
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
                                 return 'Password is required';
@@ -371,26 +359,23 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                           h20,
                           GestureDetector(
                             onTap: () async {
-                              stateNotifier.updateIsSigning(true);
-                              if (state.isLoginScreen) {
+                              authStateNotifier.updateIsSigning(true);
+                              formKey.currentState!.save();
+                              if (authState.isLoginScreen) {
                                 await login(
-                                  formKey: _formKey,
-                                  email: _email,
-                                  pass: _pass,
+                                  formKey: formKey,
                                   context: context,
+                                  auth: authState,
                                 );
                               } else {
                                 await signup(
-                                  formKey: _formKey,
-                                  name: _name,
-                                  email: _email,
-                                  pass: _pass,
-                                  ref: state,
+                                  formKey: formKey,
+                                  auth: authState,
                                   context: context,
                                 );
                               }
 
-                              stateNotifier.updateIsSigning(false);
+                              authStateNotifier.updateIsSigning(false);
                             },
                             child: Container(
                               height: 40,
@@ -400,16 +385,19 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Center(
-                                child: state.isSigning
+                                child: authState.isSigning
                                     ? SizedBox(
                                         width: 30,
                                         height: 30,
-                                        child: CircularProgressIndicator(
-                                          color: AppColors.surfaceWhite,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(3.0),
+                                          child: CircularProgressIndicator(
+                                            color: AppColors.surfaceWhite,
+                                          ),
                                         ),
                                       )
                                     : whiteTextSmall(
-                                        state.isLoginScreen
+                                        authState.isLoginScreen
                                             ? 'Log In'
                                             : 'Sign Up',
                                       ),
@@ -423,20 +411,20 @@ class _LoginSignupState extends ConsumerState<LoginSignup> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           darkText(
-                            ' ${state.isLoginScreen ? 'Don\'t' : 'Already'} have account?',
+                            ' ${authState.isLoginScreen ? 'Don\'t' : 'Already'} have account?',
                           ),
                           TextButton(
                             onPressed: () {
-                              stateNotifier.updateIsLoginScreen(
-                                !state.isLoginScreen,
+                              authStateNotifier.updateIsLoginScreen(
+                                !authState.isLoginScreen,
                               );
-                              _formKey.currentState!.reset();
+                              formKey.currentState!.reset();
                             },
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.all(0),
                             ),
                             child: primaryTextNormal(
-                              state.isLoginScreen ? 'Sign Up' : 'Log in',
+                              authState.isLoginScreen ? 'Sign Up' : 'Log in',
                             ),
                           ),
                         ],

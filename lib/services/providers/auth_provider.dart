@@ -5,9 +5,9 @@ class AuthState {
   final XFile? image;
   final String gender;
   final String dob;
-  // final String name;
-  // final String email;
-  // final String pass;
+  final String name;
+  final String email;
+  final String pass;
   final bool isLoginScreen;
   final bool isSigning;
   final bool isObscure;
@@ -16,9 +16,9 @@ class AuthState {
     this.image,
     this.gender = 'Male',
     this.dob = 'DOB',
-    // this.name = '',
-    // this.email = '',
-    // this.pass = '',
+    this.name = '',
+    this.email = '',
+    this.pass = '',
     this.isLoginScreen = true,
     this.isSigning = false,
     this.isObscure = true,
@@ -37,8 +37,11 @@ class AuthState {
   }) {
     return AuthState(
       image: image ?? this.image,
+      name: name ?? this.name,
       gender: gender ?? this.gender,
       dob: dob ?? this.dob,
+      email: email ?? this.email,
+      pass: pass ?? this.pass,
       isLoginScreen: isLoginScreen ?? this.isLoginScreen,
       isSigning: isSigning ?? this.isSigning,
       isObscure: isObscure ?? this.isObscure,
@@ -61,15 +64,18 @@ class AuthProviderNotifer extends StateNotifier<AuthState> {
     state = state.copyWith(dob: dob);
   }
 
-  //   void updateName(String name) {
-  //   state = state.copyWith(name: name);
-  // }
-  //   void updateEmail(String email) {
-  //   state = state.copyWith(email: email);
-  // }
-  //   void updatePass(String pass) {
-  //   state = state.copyWith(pass: pass);
-  // }
+  void updateName(String name) {
+    state = state.copyWith(name: name);
+  }
+
+  void updateEmail(String email) {
+    state = state.copyWith(email: email);
+  }
+
+  void updatePass(String pass) {
+    state = state.copyWith(pass: pass);
+  }
+
   void updateIsLoginScreen(bool isLoginScreen) {
     state = state.copyWith(isLoginScreen: isLoginScreen);
   }
@@ -80,30 +86,6 @@ class AuthProviderNotifer extends StateNotifier<AuthState> {
 
   void updateIsObscure(bool isObscure) {
     state = state.copyWith(isObscure: isObscure);
-  }
-
-  void updateAll({
-    XFile? image,
-    String? gender,
-    String? dob,
-    // String? name,
-    // String? email,
-    // String? pass,
-    bool? isLoginScreen,
-    bool? isSigning,
-    bool? isObscure,
-  }) {
-    state = state.copyWith(
-      image: image,
-      gender: gender,
-      dob: dob,
-      // name: name,
-      // email: email,
-      // pass: pass,
-      isLoginScreen: isLoginScreen,
-      isSigning: isSigning,
-      isObscure: isObscure,
-    );
   }
 }
 
