@@ -155,7 +155,7 @@ class AudioPlayerHandler extends BaseAudioHandler
 
     // convert to AudioSources
     final sources = _playList
-        .map((e) => AudioSource.uri(Uri.parse(e.id)))
+        .map((mediaItem) => AudioSource.uri(Uri.parse(mediaItem.id),tag: mediaItem))
         .toList();
 
     // set playlist to player

@@ -1,15 +1,25 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:musify/screens/featured_playlist_screen.dart';
+import 'package:musify/screens/playlist_screen.dart';
 import 'package:musify/screens/song_details_screen.dart';
 import 'package:musify/services/modals/song.dart';
 import 'package:musify/utils/colors.dart';
 import 'package:musify/utils/text.dart';
 
 class SongList extends StatelessWidget {
-  const SongList({super.key, required this.title, required this.songs});
+  const SongList({
+    super.key,
+    required this.title,
+    required this.songs,
+    this.editable = false,
+    this.canEditSongsList = false,
+    this.isFavouriteVisible = false,
+  });
   final String title;
   final List<Song> songs;
+  final bool editable;
+  final bool canEditSongsList;
+  final bool isFavouriteVisible;
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +42,13 @@ class SongList extends StatelessWidget {
                   onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          FeaturedPlaylistScreen(title: title, songs: songs),
+                      builder: (context) => PlaylistScreen(
+                        title: title,
+                        songs: songs,
+                        isFavouriteVisible: isFavouriteVisible,
+                        editable: editable,
+                        canEditSongsList: canEditSongsList,
+                      ),
                     ),
                   ),
                   child: darkText('View all'),

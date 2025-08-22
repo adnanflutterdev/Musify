@@ -26,6 +26,9 @@ class HomeTab extends ConsumerWidget {
               return SongList(
                 title: 'Recently Played',
                 songs: ref.watch(recentlyPlayedSongsProvider),
+                canEditSongsList: true,
+                editable: true,
+                // isFavouriteVisible: true,
               );
             },
           ),
@@ -34,6 +37,7 @@ class HomeTab extends ConsumerWidget {
               return SongList(
                 title: 'Favourite Songs',
                 songs: ref.watch(favouriteSongsProvider),
+                canEditSongsList: true,
               );
             },
           ),

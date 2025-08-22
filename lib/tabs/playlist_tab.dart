@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/screens/create_playlist_screen.dart';
 import 'package:musify/services/providers/playlist_provider.dart';
-import 'package:musify/services/providers/user_data_provider.dart';
 import 'package:musify/utils/colors.dart';
 import 'package:musify/utils/text.dart';
 import 'package:musify/widgets/custom_app_bar.dart';
@@ -37,7 +36,12 @@ class PlaylistTab extends ConsumerWidget {
               itemCount: playlists.length,
               itemBuilder: (context, index) {
                 final playlist = playlists[index];
-                return SongList(title: playlist['title'], songs: playlist['songs']);
+                return SongList(
+                  title: playlist['title'],
+                  songs: playlist['songs'],
+                  editable: true,
+                  canEditSongsList: true,
+                );
               },
             ),
           ),

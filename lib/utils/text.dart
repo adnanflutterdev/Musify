@@ -44,6 +44,7 @@ Text whiteTextSmall(String text) {
     text,
     style: TextStyle(color: AppColors.onSurfaceHigh),
     overflow: TextOverflow.ellipsis,
+    textAlign: TextAlign.center,
   );
 }
 

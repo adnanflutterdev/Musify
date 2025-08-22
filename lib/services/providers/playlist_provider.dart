@@ -8,11 +8,12 @@ final playlistProvider = Provider<List<Map>>((ref) {
   final songsMap = ref.watch(songsMapProvider);
   List<Map> playlist = [];
   for (Map map in myPlaylists) {
-    map['songs'] = map['songs']
-        .map((songId) => songsMap[songId])
-        .whereType<Song>()
-        .toList();
-    playlist.add(map);
+   final newMap = Map.of(map);
+  newMap['songs'] = newMap['songs']
+      .map((songId) => songsMap[songId])
+      .whereType<Song>()
+      .toList();
+  playlist.add(newMap);
   }
   return playlist;
 });

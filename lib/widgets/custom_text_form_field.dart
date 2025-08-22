@@ -32,6 +32,9 @@ class CustomTextFormField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
+      textCapitalization: keyboardType == TextInputType.emailAddress
+          ? TextCapitalization.none
+          : TextCapitalization.sentences,
       cursorColor: AppColors.surfaceWhite,
       style: TextStyle(color: AppColors.surfaceWhite),
       onTapOutside: (event) => FocusScope.of(context).unfocus(),
