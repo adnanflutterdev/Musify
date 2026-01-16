@@ -6,7 +6,8 @@ A flutter app for playing and listening songs.
 * 🎵 Music Playback – Play, pause, skip songs, with background support.
 * 📱 Notification Controls – Control playback directly from the notification bar.
 * ❤️ Favorites – Save and manage favorite songs.
-* 🔍 Smart Search – Search songs by name.
+* 🔍 Smart Search – Search songs by song name, movie name, artist name etc.
+* 🎶 Playlist support - Create playlists and enjoy your favourite songs.
 
 ## Technologies used
 * Flutter (Dart)
@@ -34,7 +35,6 @@ You can try **Musify**:
 ## Future work
 * Forget password
 * Viewing User data and editing user data
-* Playlists creation option
 * Add playlists to favorites
 * Edit history and playlist 
 * Suggestion chat.
