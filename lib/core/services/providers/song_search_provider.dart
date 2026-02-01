@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:musify/core/services/modals/song.dart';
 import 'package:musify/core/services/providers/songs_provider.dart';
 
@@ -20,7 +21,7 @@ final searchedTextProvider = StateNotifierProvider<SearchNotifier, String>(
 
 final searchedSongProvider = Provider<List<Song>>((ref) {
   final text = ref.watch(searchedTextProvider).trim().toLowerCase();
-  final allSongs = ref.watch(songsProvider).valueOrNull ?? [];
+  final allSongs = ref.watch(songsProvider).value ?? [];
 
   return text.isEmpty
       ? allSongs

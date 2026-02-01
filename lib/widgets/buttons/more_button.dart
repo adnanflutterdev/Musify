@@ -25,7 +25,7 @@ class MoreButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final myPlaylists =
-        ref.watch(userDataProvider).valueOrNull?.myPlaylists ?? [];
+        ref.watch(userDataProvider).value?.myPlaylists ?? [];
     void changeName() {
       final TextEditingController controller = TextEditingController();
       final formKey = GlobalKey<FormState>();

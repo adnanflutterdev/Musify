@@ -67,6 +67,8 @@ class Musify extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryVariant),
+        scaffoldBackgroundColor: AppColors.surface,
+        appBarTheme: AppBarThemeData(backgroundColor: AppColors.surfaceDark),
       ),
       home: const SplashScreen(),
     );

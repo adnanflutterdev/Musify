@@ -29,13 +29,13 @@ final top20Songs = StreamProvider<List<Song>>((ref) {
 });
 
 final songsMapProvider = Provider<Map<String, Song>>((ref) {
-  final songs = ref.watch(songsProvider).valueOrNull ?? [];
+  final songs = ref.watch(songsProvider).value ?? [];
   return {for (final song in songs) song.id: song};
 });
 
 // Recently played songs by user
 final recentlyPlayedSongsProvider = Provider<List<Song>>((ref) {
-  final userData = ref.watch(userDataProvider).valueOrNull;
+  final userData = ref.watch(userDataProvider).value;
   List recentlyPlayed = userData == null ? [] : userData.recentlyPlayed;
   Map<String, Song> songs = ref.watch(songsMapProvider);
   return recentlyPlayed.map((e) => songs[e]).whereType<Song>().toList();
@@ -43,7 +43,7 @@ final recentlyPlayedSongsProvider = Provider<List<Song>>((ref) {
 
 // Recently played songs by user
 final favouriteSongsProvider = Provider<List<Song>>((ref) {
-  final userData = ref.watch(userDataProvider).valueOrNull;
+  final userData = ref.watch(userDataProvider).value;
   List favouriteSongs = userData == null ? [] : userData.favouriteSongs;
   Map<String, Song> songs = ref.watch(songsMapProvider);
   return favouriteSongs.map((e) => songs[e]).whereType<Song>().toList();

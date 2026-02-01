@@ -29,34 +29,9 @@ class PlaylistScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // List<Widget> actions(SizedBox spacer, bool isColumn) {
-    //   List<Widget> actionButtons = [
-    //     if (isFavouriteVisible) FavouriteButton(songId: ''),
-    //     if (isFavouriteVisible) spacer,
-    //     PlayButton(songs: songs),
-    //   ];
-
-    //   if (isColumn) {
-    //     if (editable || canEditSongsList) {
-    //       actionButtons.insertAll(0, [
-    //         MoreButton(canAddSongs: canEditSongsList, editable: editable,title: title,),
-    //         spacer,
-    //       ]);
-    //     }
-    //   } else {
-    //     if (editable || canEditSongsList) {
-    //       actionButtons.addAll([
-    //         spacer,
-    //         MoreButton(canAddSongs: canEditSongsList, editable: editable),
-    //       ]);
-    //     }
-    //   }
-    //   return actionButtons;
-    // }
-
     return Scaffold(
       backgroundColor: AppColors.surface,
-      appBar: AppBar(backgroundColor: AppColors.surfaceDark, toolbarHeight: 1),
+      appBar: AppBar(toolbarHeight: 1),
       body: SafeArea(
         child: Column(
           children: [
