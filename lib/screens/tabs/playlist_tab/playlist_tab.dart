@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/screens/create_playlist_screen.dart';
-import 'package:musify/services/providers/playlist_provider.dart';
-import 'package:musify/utils/colors.dart';
-import 'package:musify/utils/text.dart';
+import 'package:musify/screens/tabs/playlist_tab/create_playlist_screen.dart';
+import 'package:musify/core/services/providers/playlist_provider.dart';
+import 'package:musify/core/utils/colors.dart';
+import 'package:musify/core/utils/text.dart';
 import 'package:musify/widgets/custom_app_bar.dart';
 import 'package:musify/widgets/home_tab_widgets/song_list.dart';
 

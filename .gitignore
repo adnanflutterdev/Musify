@@ -43,3 +43,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# I don't wanna upload this files
+/lib/firebase_data_updator
+/lib/firebase_options.dart

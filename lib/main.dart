@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:musify/utils/colors.dart';
+import 'package:musify/core/utils/colors.dart';
 import 'package:musify/firebase_options.dart';
-import 'package:musify/utils/screen_size.dart';
+import 'package:musify/core/utils/screen_size.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:musify/screens/splash_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/services/audio/audio_player_handler.dart';
+import 'package:musify/core/services/audio/audio_player_handler.dart';
 
 late final AudioPlayerHandler audioHandler;
 void main() async {

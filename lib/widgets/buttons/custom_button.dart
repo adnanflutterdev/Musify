@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:musify/utils/colors.dart';
-import 'package:musify/utils/text.dart';
+import 'package:musify/core/utils/colors.dart';
+import 'package:musify/core/utils/text.dart';
 
 class CustomTextButton extends StatelessWidget {
   const CustomTextButton({

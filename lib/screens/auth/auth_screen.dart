@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:musify/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:musify/screens/login_signup.dart';
+import 'package:musify/screens/auth/login_signup.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});

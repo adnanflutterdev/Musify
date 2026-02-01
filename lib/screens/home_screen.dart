@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/functions/auth_functions.dart';
-import 'package:musify/services/providers/song_search_provider.dart';
-import 'package:musify/services/providers/tabs_provider.dart';
-import 'package:musify/utils/colors.dart';
-import 'package:musify/utils/images.dart';
-import 'package:musify/utils/spacers.dart';
-import 'package:musify/utils/tabs.dart';
-import 'package:musify/utils/text.dart';
+import 'package:musify/core/services/providers/song_search_provider.dart';
+import 'package:musify/core/services/providers/tabs_provider.dart';
+import 'package:musify/core/utils/colors.dart';
+import 'package:musify/core/utils/images.dart';
+import 'package:musify/core/utils/spacers.dart';
+import 'package:musify/core/utils/tabs.dart';
+import 'package:musify/core/utils/text.dart';
 import 'package:musify/widgets/page_navigation_bar.dart';
 import 'package:musify/widgets/song_selection_bar.dart';
 import 'package:musify/widgets/song_track.dart';
@@ -168,7 +168,6 @@ class _HomeScreen extends State<HomeScreen> {
                           ref.watch(searchedTextProvider.notifier).clearState();
                         }
                       },
-                      scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) => tabs[index],
                     );
                   },

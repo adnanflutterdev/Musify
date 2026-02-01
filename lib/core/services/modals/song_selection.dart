@@ -1,4 +1,4 @@
-import 'package:musify/services/modals/song.dart';
+import 'package:musify/core/services/modals/song.dart';
 
 class SongSelection {
   final Map<String, Song> selectedSongs;

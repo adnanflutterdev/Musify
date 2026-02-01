@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/services/modals/song.dart';
-import 'package:musify/services/providers/songs_provider.dart';
+import 'package:musify/core/services/modals/song.dart';
+import 'package:musify/core/services/providers/songs_provider.dart';
 
 class SearchNotifier extends StateNotifier<String> {
   SearchNotifier() : super('');

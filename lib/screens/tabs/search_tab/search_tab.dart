@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/services/providers/song_search_provider.dart';
+import 'package:musify/core/services/providers/song_search_provider.dart';
 import 'package:musify/widgets/custom_text_form_field.dart';
 import 'package:musify/widgets/search_tab_widgets/searched_songs.dart';
-import 'package:musify/utils/colors.dart';
+import 'package:musify/core/utils/colors.dart';
 
 class SearchTab extends StatelessWidget {
   const SearchTab({super.key,});

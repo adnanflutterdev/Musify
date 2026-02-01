@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/services/modals/song.dart';
-import 'package:musify/services/providers/song_selection_provider.dart';
-import 'package:musify/utils/colors.dart';
-import 'package:musify/utils/text.dart';
+import 'package:musify/core/services/modals/song.dart';
+import 'package:musify/core/services/providers/song_selection_provider.dart';
+import 'package:musify/core/utils/colors.dart';
+import 'package:musify/core/utils/text.dart';
 import 'package:musify/widgets/buttons/custom_button.dart';
 import 'package:musify/widgets/buttons/play_button.dart';
 

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/functions/play_song.dart';
 import 'package:musify/screens/song_details_screen.dart';
-import 'package:musify/services/modals/song.dart';
-import 'package:musify/services/providers/audio_player_provider.dart';
-import 'package:musify/services/providers/song_selection_provider.dart';
-import 'package:musify/utils/colors.dart';
-import 'package:musify/utils/duration_label.dart';
-import 'package:musify/utils/images.dart';
-import 'package:musify/utils/text.dart';
+import 'package:musify/core/services/modals/song.dart';
+import 'package:musify/core/services/providers/audio_player_provider.dart';
+import 'package:musify/core/services/providers/song_selection_provider.dart';
+import 'package:musify/core/utils/colors.dart';
+import 'package:musify/core/utils/duration_label.dart';
+import 'package:musify/core/utils/images.dart';
+import 'package:musify/core/utils/text.dart';
 
 class SongTile extends ConsumerWidget {
   const SongTile({super.key, required this.song, required this.isSameSong});

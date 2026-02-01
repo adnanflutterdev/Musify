@@ -1,12 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/services/modals/song.dart';
-import 'package:musify/services/providers/song_stream_provider.dart';
-import 'package:musify/utils/colors.dart';
-import 'package:musify/utils/spacers.dart';
-import 'package:musify/utils/text.dart';
-import 'package:musify/widgets/buttons/favourite_button.dart';
+import 'package:musify/core/services/modals/song.dart';
+import 'package:musify/core/services/providers/song_stream_provider.dart';
+import 'package:musify/core/utils/colors.dart';
+import 'package:musify/core/utils/spacers.dart';
+import 'package:musify/core/utils/text.dart';
 import 'package:musify/widgets/buttons/more_button.dart';
 import 'package:musify/widgets/buttons/play_button.dart';
 import 'package:musify/widgets/search_tab_widgets/song_tile.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:musify/screens/auth_screen.dart';
-import 'package:musify/utils/colors.dart';
-import 'package:musify/utils/images.dart';
-import 'package:musify/utils/screen_size.dart';
-import 'package:musify/utils/text.dart';
+import 'package:musify/screens/auth/auth_screen.dart';
+import 'package:musify/core/utils/colors.dart';
+import 'package:musify/core/utils/images.dart';
+import 'package:musify/core/utils/screen_size.dart';
+import 'package:musify/core/utils/text.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen>
           MaterialPageRoute(builder: (context) => AuthScreen()),
         );
       }
-    });
+    });         
   }
 
   @override

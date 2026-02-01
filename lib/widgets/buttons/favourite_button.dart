@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/services/providers/user_data_provider.dart';
-import 'package:musify/utils/colors.dart';
+import 'package:musify/core/services/providers/user_data_provider.dart';
+import 'package:musify/core/utils/colors.dart';
 import 'package:musify/widgets/snack_bars.dart';
 
 class FavouriteButton extends ConsumerWidget {

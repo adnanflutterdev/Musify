@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:musify/utils/colors.dart';
-import 'package:musify/utils/text_field_borders.dart';
+import 'package:musify/core/utils/colors.dart';
+import 'package:musify/core/utils/text_field_borders.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({

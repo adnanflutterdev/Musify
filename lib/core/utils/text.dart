@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:musify/utils/colors.dart';
+import 'package:musify/core/utils/colors.dart';
 
 Text splashScreenText(String text) {
   return Text(

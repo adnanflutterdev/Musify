@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/services/providers/tabs_provider.dart';
-import 'package:musify/utils/colors.dart';
-import 'package:musify/utils/screen_size.dart';
-import 'package:musify/utils/spacers.dart';
+import 'package:musify/core/services/providers/tabs_provider.dart';
+import 'package:musify/core/utils/colors.dart';
+import 'package:musify/core/utils/screen_size.dart';
+import 'package:musify/core/utils/spacers.dart';
 
 class PageNavigationBar extends ConsumerWidget {
   const PageNavigationBar({super.key, required this.pageController});

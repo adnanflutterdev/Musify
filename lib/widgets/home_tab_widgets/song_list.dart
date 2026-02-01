@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:musify/screens/playlist_screen.dart';
+import 'package:musify/screens/tabs/playlist_tab/playlist_screen.dart';
 import 'package:musify/screens/song_details_screen.dart';
-import 'package:musify/services/modals/song.dart';
-import 'package:musify/utils/colors.dart';
-import 'package:musify/utils/text.dart';
+import 'package:musify/core/services/modals/song.dart';
+import 'package:musify/core/utils/colors.dart';
+import 'package:musify/core/utils/text.dart';
 
 class SongList extends StatelessWidget {
   const SongList({

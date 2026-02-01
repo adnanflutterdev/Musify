@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/services/modals/song.dart';
-import 'package:musify/services/providers/song_search_provider.dart';
-import 'package:musify/services/providers/song_stream_provider.dart';
+import 'package:musify/core/services/modals/song.dart';
+import 'package:musify/core/services/providers/song_search_provider.dart';
+import 'package:musify/core/services/providers/song_stream_provider.dart';
 import 'package:musify/widgets/search_tab_widgets/song_tile.dart';
 
 class SearchedSongs extends ConsumerWidget {

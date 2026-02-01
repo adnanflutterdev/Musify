@@ -1,10 +1,10 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/services/modals/song.dart';
-import 'package:musify/services/providers/audio_player_provider.dart';
-import 'package:musify/services/providers/song_stream_provider.dart';
-import 'package:musify/utils/colors.dart';
+import 'package:musify/core/services/modals/song.dart';
+import 'package:musify/core/services/providers/audio_player_provider.dart';
+import 'package:musify/core/services/providers/song_stream_provider.dart';
+import 'package:musify/core/utils/colors.dart';
 
 class PlayButton extends ConsumerWidget {
   const PlayButton({super.key, this.size, this.callback, this.song, this.songs})

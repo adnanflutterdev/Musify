@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/services/providers/songs_provider.dart';
+import 'package:musify/core/services/providers/songs_provider.dart';
 import 'package:musify/widgets/home_tab_widgets/song_list.dart';
 
 class HomeTab extends ConsumerWidget {

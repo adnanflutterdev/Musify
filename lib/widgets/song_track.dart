@@ -2,10 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/screens/song_player.dart';
-import 'package:musify/services/providers/audio_player_provider.dart';
-import 'package:musify/services/providers/song_stream_provider.dart';
-import 'package:musify/utils/colors.dart';
-import 'package:musify/utils/text.dart';
+import 'package:musify/core/services/providers/audio_player_provider.dart';
+import 'package:musify/core/services/providers/song_stream_provider.dart';
+import 'package:musify/core/utils/colors.dart';
+import 'package:musify/core/utils/text.dart';
 import 'package:my_progress_bar/my_progress_bar.dart';
 
 class SongTrack extends ConsumerWidget {
