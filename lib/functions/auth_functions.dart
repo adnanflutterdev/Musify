@@ -5,9 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:musify/main.dart';
-import 'package:musify/screens/home_screen.dart';
-import 'package:musify/core/services/providers/auth_provider.dart';
-import 'package:musify/widgets/snack_bars.dart';
+import 'package:musify/feature/home/home_screen.dart';
+import 'package:musify/feature/auth/provider/auth_provider.dart';
+import 'package:musify/core/widgets/snack_bars.dart';
 
 Future<void> login({
   required GlobalKey<FormState> formKey,

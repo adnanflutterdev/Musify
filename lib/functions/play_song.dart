@@ -1,6 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:musify/core/services/audio/audio_player_handler.dart';
-import 'package:musify/core/services/modals/song.dart';
+import 'package:musify/feature/song/models/song.dart';
 
 void playSong({required Song song, required AudioPlayerHandler audioProvider}) {
   audioProvider.playSong(
