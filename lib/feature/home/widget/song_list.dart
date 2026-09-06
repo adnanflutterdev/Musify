@@ -11,20 +11,16 @@ class SongList extends StatelessWidget {
     super.key,
     required this.title,
     required this.songs,
-    this.editable = false,
-    this.canEditSongsList = false,
-    this.isFavouriteVisible = false,
+    this.menuItems,
   });
   final String title;
   final List<Song> songs;
-  final bool editable;
-  final bool canEditSongsList;
-  final bool isFavouriteVisible;
+  final List<PopupMenuItem>? menuItems;
 
   @override
   Widget build(BuildContext context) {
     if (songs.isEmpty) {
-      return SizedBox(width: 1, height: 1);
+      return SizedBox.shrink();
     }
 
     return Padding(
@@ -45,9 +41,7 @@ class SongList extends StatelessWidget {
                       builder: (context) => PlaylistScreen(
                         title: title,
                         songs: songs,
-                        isFavouriteVisible: isFavouriteVisible,
-                        editable: editable,
-                        canEditSongsList: canEditSongsList,
+                        menuItems: menuItems,
                       ),
                     ),
                   ),
@@ -62,7 +56,7 @@ class SongList extends StatelessWidget {
               borderRadius: BorderRadius.circular(15.0),
             ),
             child: SizedBox(
-              height: 120,
+              height: 130,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: ListView.builder(

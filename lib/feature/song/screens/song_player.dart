@@ -106,7 +106,7 @@ class SongPlayer extends ConsumerWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Row(
                     children: [
-                      whiteTextMicro(durationLabel(currentPosition)),
+                      whiteTextMicro(durationLabel(currentPosition.toInt())),
                       const Spacer(),
                       whiteTextMicro(
                         durationLabel(mediaItem.duration!.inSeconds),

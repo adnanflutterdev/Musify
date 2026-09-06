@@ -1,13 +1,84 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:musify/core/extension/text_theme_context.dart';
+import 'package:musify/core/utils/colors.dart';
+import 'package:musify/feature/song/providers/song_selection_provider.dart';
 import 'package:musify/feature/song/providers/songs_provider.dart';
 import 'package:musify/feature/home/widget/song_list.dart';
 
-class HomeTab extends ConsumerWidget {
+class HomeTab extends ConsumerStatefulWidget {
   const HomeTab({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends ConsumerState<HomeTab> {
+  @override
+  Widget build(BuildContext context) {
+    List<PopupMenuItem> recentlyPlayedMenuItems = [
+      PopupMenuItem(
+        height: 40,
+        padding: EdgeInsets.all(0),
+        onTap: () {
+          ref.read(turnOnOffSongSelectionProvider.notifier).start();
+        },
+        child: Center(
+          child: Text('Remove songs', style: context.textTheme.bodySmall),
+        ),
+      ),
+      PopupMenuItem(
+        height: 40,
+        padding: EdgeInsets.all(0),
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text(
+                  'Clear History',
+                  style: context.textTheme.bodyLarge?.copyWith(color: AppColors.onError),
+                ),
+                content: Text(
+                  'Are you sure to delete all recently played songs?',
+                  style: context.textTheme.bodySmall,
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () async {
+                      await FirebaseFirestore.instance
+                          .collection('userData')
+                          .doc(FirebaseAuth.instance.currentUser?.uid)
+                          .update({'recentlyPlayed': []});
+                      if (context.mounted) {
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: Text(
+                      'ok',
+                      style: context.textTheme.bodySmall?.copyWith(
+                        color: AppColors.onError,
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Cancel', style: context.textTheme.bodySmall),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        child: Center(
+          child: Text('Clear History', style: context.textTheme.bodySmall),
+        ),
+      ),
+    ];
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -26,9 +97,7 @@ class HomeTab extends ConsumerWidget {
               return SongList(
                 title: 'Recently Played',
                 songs: ref.watch(recentlyPlayedSongsProvider),
-                canEditSongsList: true,
-                editable: true,
-                // isFavouriteVisible: true,
+                menuItems: recentlyPlayedMenuItems,
               );
             },
           ),
@@ -37,7 +106,6 @@ class HomeTab extends ConsumerWidget {
               return SongList(
                 title: 'Favourite Songs',
                 songs: ref.watch(favouriteSongsProvider),
-                canEditSongsList: true,
               );
             },
           ),

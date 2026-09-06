@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:musify/core/extension/text_theme_context.dart';
 import 'package:musify/functions/auth_functions.dart';
 import 'package:musify/feature/song/providers/song_search_provider.dart';
 import 'package:musify/core/services/providers/tabs_provider.dart';
@@ -9,17 +10,17 @@ import 'package:musify/core/utils/images.dart';
 import 'package:musify/core/utils/spacers.dart';
 import 'package:musify/core/utils/tabs.dart';
 import 'package:musify/core/utils/text.dart';
-import 'package:musify/core/widgets/page_navigation_bar.dart';
+import 'package:musify/feature/home/widget/page_navigation_bar.dart';
 import 'package:musify/feature/song/widgets/song_selection_bar.dart';
 import 'package:musify/feature/song/widgets/song_track.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
   @override
-  State<StatefulWidget> createState() => _HomeScreen();
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomeScreen();
 }
 
-class _HomeScreen extends State<HomeScreen> {
+class _HomeScreen extends ConsumerState<HomeScreen> {
   late PageController _pageController;
   @override
   void initState() {
@@ -35,13 +36,12 @@ class _HomeScreen extends State<HomeScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: AppColors.surfaceVariant,
         title: errorText(title),
-        content: whiteTextSmall(subTitle),
+        content: Text(subTitle, style: context.textTheme.bodySmall),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: whiteTextSmall('Cancel'),
+            child: Text('Cancel', style: context.textTheme.bodySmall),
           ),
           TextButton(onPressed: callBack, child: errorText(title)),
         ],
@@ -68,13 +68,19 @@ class _HomeScreen extends State<HomeScreen> {
         if (didPop) {
           return;
         } else {
-          alertDialog(
-            title: 'Exit app',
-            subTitle: 'Are you sure to want to exit',
-            callBack: () {
-              exitScreen();
-            },
-          );
+          int tabIndex = ref.read(tabProvider);
+          if (tabIndex != 0) {
+            ref.read(tabProvider.notifier).changeTab(0);
+            _pageController.jumpToPage(0);
+          } else {
+            alertDialog(
+              title: 'Exit app',
+              subTitle: 'Are you sure to want to exit',
+              callBack: () {
+                exitScreen();
+              },
+            );
+          }
         }
       },
       child: Scaffold(
@@ -83,6 +89,7 @@ class _HomeScreen extends State<HomeScreen> {
           backgroundColor: AppColors.surfaceDark,
           toolbarHeight: 1,
         ),
+
         body: SafeArea(
           child: Column(
             children: [
@@ -176,10 +183,6 @@ class _HomeScreen extends State<HomeScreen> {
               SongSelectionBar(),
               SongTrack(),
               PageNavigationBar(pageController: _pageController),
-              //  Container(
-              //   height: MediaQuery.of(context).padding.bottom,
-              //   color: AppColors.surfaceDark,
-              // ),
             ],
           ),
         ),

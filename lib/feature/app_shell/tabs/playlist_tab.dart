@@ -1,5 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:musify/core/extension/text_theme_context.dart';
+import 'package:musify/core/services/providers/user_data_provider.dart';
+import 'package:musify/core/utils/spacers.dart';
+import 'package:musify/core/widgets/buttons/custom_button.dart';
+import 'package:musify/core/widgets/custom_text_form_field.dart';
+import 'package:musify/core/widgets/snack_bars.dart';
 import 'package:musify/feature/playlist/create_playlist_screen.dart';
 import 'package:musify/core/services/providers/playlist_provider.dart';
 import 'package:musify/core/utils/colors.dart';
@@ -11,12 +19,212 @@ class PlaylistTab extends ConsumerWidget {
   const PlaylistTab({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final myPlaylists = ref.watch(userDataProvider).value?.myPlaylists ?? [];
+
     void push() {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => CreatePlaylistScreen()),
       );
     }
+
+    void changeName(String title) {
+      final TextEditingController controller = TextEditingController();
+      final formKey = GlobalKey<FormState>();
+
+      showDialog(
+        context: context,
+
+        builder: (context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Enter new name, style: context.textTheme.bodySmall'),
+                h5,
+                Form(
+                  key: formKey,
+                  child: CustomTextFormField(
+                    hintText: 'New name',
+                    controller: controller,
+                    errorBorder: true,
+                    focusedErorBorder: true,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Please enter name of playlist';
+                      } else if (value.length < 3) {
+                        return 'playist name length must be greater than 3';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+              ],
+            ),
+            actions: [
+              CustomTextButton(
+                onPressed: () async {
+                  bool isValid = formKey.currentState!.validate();
+                  if (isValid) {
+                    List playlist = myPlaylists;
+                    int index = playlist.indexWhere(
+                      (map) => map['title'] == title,
+                    );
+                    playlist[index]['title'] = controller.text.trim();
+                    try {
+                      await FirebaseFirestore.instance
+                          .collection('userData')
+                          .doc(FirebaseAuth.instance.currentUser!.uid)
+                          .update({'myPlaylists': playlist});
+                      if (!context.mounted) {
+                        return;
+                      }
+                      showAppSnackbar(
+                        context: context,
+                        message: 'Name updated...',
+                        snackBarType: SnackBarType.success,
+                      );
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    } on FirebaseException catch (_) {
+                      if (!context.mounted) {
+                        return;
+                      }
+                      showAppSnackbar(
+                        context: context,
+                        message: 'Error occured',
+                        snackBarType: SnackBarType.error,
+                      );
+                    }
+                  }
+                },
+                title: 'Update',
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    void deletePlaylistDialog(String title) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Deleting Playlist',
+              style: context.textTheme.bodyLarge?.copyWith(
+                color: AppColors.onError,
+              ),
+            ),
+            content: Text(
+              'Are you sure to delete this playlist?',
+              style: context.textTheme.bodySmall,
+            ),
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  // await FirebaseFirestore.instance
+                  //     .collection('userData')
+                  //     .doc(FirebaseAuth.instance.currentUser?.uid)
+                  //     .update({'recentlyPlayed': []});
+                  // if (context.mounted) {
+                  //   Navigator.pop(context);
+                  // }
+                  List playlist = myPlaylists;
+                  int index = playlist.indexWhere(
+                    (map) => map['title'] == title,
+                  );
+                  playlist.removeAt(index);
+                  try {
+                    await FirebaseFirestore.instance
+                        .collection('userData')
+                        .doc(FirebaseAuth.instance.currentUser!.uid)
+                        .update({'myPlaylists': playlist});
+                    if (!context.mounted) {
+                      return;
+                    }
+                    showAppSnackbar(
+                      context: context,
+                      message: 'Playlist Deleted...',
+                      snackBarType: SnackBarType.success,
+                    );
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  } on FirebaseException catch (_) {
+                    if (!context.mounted) {
+                      return;
+                    }
+                    showAppSnackbar(
+                      context: context,
+                      message: 'Error occured',
+                      snackBarType: SnackBarType.error,
+                    );
+                  }
+                },
+                child: Text(
+                  'Delete',
+                  style: context.textTheme.bodySmall?.copyWith(
+                    color: AppColors.onError,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Cancel', style: context.textTheme.bodySmall),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    List<PopupMenuItem> menuItems(String title) => [
+      PopupMenuItem(
+        height: 40,
+        padding: EdgeInsets.all(0),
+        onTap: () => changeName(title),
+        child: Center(
+          child: Text('Edit name', style: context.textTheme.bodySmall),
+        ),
+      ),
+
+      PopupMenuItem(
+        padding: EdgeInsets.all(0),
+        height: 40,
+
+        child: Center(
+          child: Text('Add songs', style: context.textTheme.bodySmall),
+        ),
+      ),
+
+      PopupMenuItem(
+        padding: EdgeInsets.all(0),
+        height: 40,
+        child: Center(
+          child: Text('Remove songs', style: context.textTheme.bodySmall),
+        ),
+      ),
+      PopupMenuItem(
+        padding: EdgeInsets.all(0),
+        height: 40,
+        onTap: () => deletePlaylistDialog(title),
+        child: Center(
+          child: Text(
+            'Delete Playlist',
+            style: context.textTheme.bodySmall!.copyWith(
+              color: AppColors.onError,
+            ),
+          ),
+        ),
+      ),
+    ];
 
     final playlists = ref.watch(playlistProvider);
 
@@ -39,8 +247,7 @@ class PlaylistTab extends ConsumerWidget {
                 return SongList(
                   title: playlist['title'],
                   songs: playlist['songs'],
-                  editable: true,
-                  canEditSongsList: true,
+                  menuItems: menuItems(playlist['title']),
                 );
               },
             ),
@@ -50,13 +257,15 @@ class PlaylistTab extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                whiteTextSmall('No playlists'),
+                Text('No playlists, style: context.textTheme.bodySmall'),
                 TextButton(
                   onPressed: push,
                   style: TextButton.styleFrom(
                     backgroundColor: AppColors.surfaceVariant,
                   ),
-                  child: whiteTextSmall('Create playlist'),
+                  child: Text(
+                    'Create playlist, style: context.textTheme.bodySmall',
+                  ),
                 ),
               ],
             ),

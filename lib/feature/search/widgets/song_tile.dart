@@ -29,7 +29,7 @@ class SongTile extends ConsumerWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
-      child: Container(
+      child: Material(
         color: isSameSong ? AppColors.primary : Colors.transparent,
         child: ListTile(
           onLongPress: isSongSelectionOn
@@ -45,11 +45,11 @@ class SongTile extends ConsumerWidget {
                   selectedSongNotifier.toggleSongSelection(song);
                 }
               : () {
-                  isSameSong
-                      ? null
-                      : playSong(song: song, audioProvider: audioProvider);
+                  if (!isSameSong) {
+                    playSong(song: song, audioProvider: audioProvider);
+                  }
                 },
-          contentPadding: EdgeInsets.symmetric(horizontal: 5),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 5),
           minTileHeight: 46,
           horizontalTitleGap: 8,
           leading: GestureDetector(

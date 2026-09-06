@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musify/core/theme/my_text_theme.dart';
 import 'package:musify/core/utils/colors.dart';
 import 'package:musify/firebase_options.dart';
 import 'package:musify/core/utils/screen_size.dart';
@@ -66,9 +67,11 @@ class Musify extends StatelessWidget {
       title: 'Musify',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        textTheme: myTextTheme,
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryVariant),
         scaffoldBackgroundColor: AppColors.surface,
         appBarTheme: AppBarThemeData(backgroundColor: AppColors.surfaceDark),
+        dialogTheme: DialogThemeData(backgroundColor: AppColors.surfaceVariant),
       ),
       home: const SplashScreen(),
     );

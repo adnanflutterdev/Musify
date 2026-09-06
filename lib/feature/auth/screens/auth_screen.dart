@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:musify/functions/auth_functions.dart';
 import 'package:musify/feature/auth/provider/auth_provider.dart';
 import 'package:musify/core/utils/colors.dart';
@@ -63,93 +61,95 @@ class _LoginSignupState extends ConsumerState<AuthScreen> {
                           h20,
 
                           // Image here
-                          if (!authState.isLoginScreen)
-                            GestureDetector(
-                              onTap: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return Container(
-                                      width: double.infinity,
-                                      height: 60,
-                                      color: AppColors.surface,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          IconButton(
-                                            onPressed: () async {
-                                              Navigator.pop(context);
-                                              final result = await ImagePicker()
-                                                  .pickImage(
-                                                    source: ImageSource.camera,
-                                                  );
-                                              if (result != null) {
-                                                authStateNotifier.updateImage(
-                                                  result,
-                                                );
-                                              }
-                                            },
-                                            icon: Icon(
-                                              Icons.camera_alt,
-                                              color: AppColors.surfaceWhite,
-                                              size: 30,
-                                            ),
-                                          ),
-                                          w10,
-                                          w10,
-                                          IconButton(
-                                            onPressed: () async {
-                                              Navigator.pop(context);
-                                              final result = await ImagePicker()
-                                                  .pickImage(
-                                                    source: ImageSource.gallery,
-                                                  );
-                                              if (result != null) {
-                                                authStateNotifier.updateImage(
-                                                  result,
-                                                );
-                                              }
-                                            },
-                                            icon: Icon(
-                                              Icons.image,
-                                              color: AppColors.surfaceWhite,
-                                              size: 30,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                              child: Container(
-                                width: 80,
-                                height: 80,
-                                clipBehavior: Clip.hardEdge,
-                                decoration: BoxDecoration(
-                                  color: AppColors.surfaceLight,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: authState.image == null
-                                    ? Icon(
-                                        Icons.camera_alt,
-                                        color: AppColors.surfaceWhite,
-                                      )
-                                    : Image.file(
-                                        File(authState.image!.path),
-                                        fit: BoxFit.fitWidth,
-                                      ),
-                              ),
-                            ),
+                          // Image Section Disabled for now
+                          // if (!authState.isLoginScreen)
+                          //   GestureDetector(
+                          //     onTap: () {
+                          //       showModalBottomSheet(
+                          //         context: context,
+                          //         builder: (context) {
+                          //           return Container(
+                          //             width: double.infinity,
+                          //             height: 60,
+                          //             color: AppColors.surface,
+                          //             child: Row(
+                          //               mainAxisAlignment:
+                          //                   MainAxisAlignment.center,
+                          //               children: [
+                          //                 IconButton(
+                          //                   onPressed: () async {
+                          //                     Navigator.pop(context);
+                          //                     final result = await ImagePicker()
+                          //                         .pickImage(
+                          //                           source: ImageSource.camera,
+                          //                         );
+                          //                     if (result != null) {
+                          //                       authStateNotifier.updateImage(
+                          //                         result,
+                          //                       );
+                          //                     }
+                          //                   },
+                          //                   icon: Icon(
+                          //                     Icons.camera_alt,
+                          //                     color: AppColors.surfaceWhite,
+                          //                     size: 30,
+                          //                   ),
+                          //                 ),
+                          //                 w10,
+                          //                 w10,
+                          //                 IconButton(
+                          //                   onPressed: () async {
+                          //                     Navigator.pop(context);
+                          //                     final result = await ImagePicker()
+                          //                         .pickImage(
+                          //                           source: ImageSource.gallery,
+                          //                         );
+                          //                     if (result != null) {
+                          //                       authStateNotifier.updateImage(
+                          //                         result,
+                          //                       );
+                          //                     }
+                          //                   },
+                          //                   icon: Icon(
+                          //                     Icons.image,
+                          //                     color: AppColors.surfaceWhite,
+                          //                     size: 30,
+                          //                   ),
+                          //                 ),
+                          //               ],
+                          //             ),
+                          //           );
+                          //         },
+                          //       );
+                          //     },
+                          //     child: Container(
+                          //       width: 80,
+                          //       height: 80,
+                          //       clipBehavior: Clip.hardEdge,
+                          //       decoration: BoxDecoration(
+                          //         color: AppColors.surfaceLight,
+                          //         shape: BoxShape.circle,
+                          //       ),
+                          //       child: authState.image == null
+                          //           ? Icon(
+                          //               Icons.camera_alt,
+                          //               color: AppColors.surfaceWhite,
+                          //             )
+                          //           : Image.file(
+                          //               File(authState.image!.path),
+                          //               fit: BoxFit.fitWidth,
+                          //             ),
+                          //     ),
+                          //   ),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (!authState.isLoginScreen) h20,
-                          if (!authState.isLoginScreen)
+                          if (!authState.isLoginScreen) ...[
+                            h20,
                             whiteTextSmall('Enter Name'),
+                          ],
                           if (!authState.isLoginScreen) h5,
                           if (!authState.isLoginScreen)
                             CustomTextFormField(

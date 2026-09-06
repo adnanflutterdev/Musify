@@ -5,25 +5,26 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.10.1
+  sdk: ^3.13.0
 
 
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: ^4.4.0
-  firebase_auth: ^6.1.4
-  cloud_firestore: ^6.1.2
-  image_picker: ^1.1.2
-  flutter_riverpod: ^3.2.0
-  firebase_storage: ^13.0.6
-  just_audio: ^0.10.4
-  audio_service: ^0.18.18
+  firebase_core: ^4.14.0
+  firebase_auth: ^6.6.1
+  cloud_firestore: ^6.9.0
+  image_picker: ^1.2.3
+  flutter_riverpod: ^3.4.3
+  just_audio: ^0.10.6
+  audio_service: ^0.18.19
   my_progress_bar: ^2.1.0
-  audio_session: ^0.2.2
+  audio_session: ^0.2.4
   rxdart: ^0.28.0
-  cached_network_image: ^3.4.1
+  cached_network_image: ^4.0.0
+  path_provider: ^2.1.6
 
+  # firebase_storage: ^13.0.6
 dev_dependencies:
   flutter_test:
     sdk: flutter

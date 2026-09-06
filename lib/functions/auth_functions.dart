@@ -1,9 +1,8 @@
-import 'dart:io';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
 import 'package:musify/main.dart';
 import 'package:musify/feature/home/home_screen.dart';
 import 'package:musify/feature/auth/provider/auth_provider.dart';
@@ -64,19 +63,19 @@ Future<void> signup({
           );
       final uid = credential.user!.uid;
       String downloadUrl = '';
-      if (auth.image != null) {
-        final storageRef = FirebaseStorage.instance
-            .ref()
-            .child('userProfile')
-            .child('$uid.jpg');
-        await storageRef.putFile(File(auth.image!.path));
-        downloadUrl = await storageRef.getDownloadURL();
-      }
+      // if (auth.image != null) {
+      //   final storageRef = FirebaseStorage.instance
+      //       .ref()
+      //       .child('userProfile')
+      //       .child('$uid.jpg');
+      //   await storageRef.putFile(File(auth.image!.path));
+      //   downloadUrl = await storageRef.getDownloadURL();
+      // }
       await FirebaseFirestore.instance.collection('userData').doc(uid).set({
         'name': auth.name,
         'dob': auth.dob,
         'gender': auth.gender,
-        'image': auth.image != null ? downloadUrl : '',
+        'image': downloadUrl,
         'favourite': [],
         'myAlbum': [],
         'myPlaylists': [],
