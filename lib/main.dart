@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:musify/core/theme/my_text_theme.dart';
-import 'package:musify/core/utils/colors.dart';
+import 'package:flutter/services.dart';
+import 'package:musify/core/theme/app_colors.dart';
+import 'package:musify/core/theme/app_theme.dart';
 import 'package:musify/firebase_options.dart';
 import 'package:musify/core/utils/screen_size.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:musify/feature/app_shell/screens/splash_screen.dart';
+import 'package:musify/feature/splash/presentation/screens/splash_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/core/services/audio/audio_player_handler.dart';
 
@@ -18,7 +19,7 @@ void main() async {
   audioHandler = await AudioService.init(
     builder: () => AudioPlayerHandler(),
     config: const AudioServiceConfig(
-      androidNotificationChannelId: 'com.example.musify.audio',
+      androidNotificationChannelId: 'com.musify.app.audio',
       androidNotificationChannelName: 'Audio Playback',
       androidNotificationOngoing: true,
       androidNotificationIcon: 'mipmap/launcher_ic',
@@ -63,17 +64,18 @@ class Musify extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenSize.init(context);
-    return MaterialApp(
-      title: 'Musify',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        textTheme: myTextTheme,
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryVariant),
-        scaffoldBackgroundColor: AppColors.surface,
-        appBarTheme: AppBarThemeData(backgroundColor: AppColors.surfaceDark),
-        dialogTheme: DialogThemeData(backgroundColor: AppColors.surfaceVariant),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarBrightness: .light,statusBarColor: AppThemeColors.lightSurface,
+
       ),
-      home: const SplashScreen(),
+      child: MaterialApp(
+        title: 'Musify',
+        debugShowCheckedModeBanner: false,
+        themeMode: ThemeMode.light,
+        theme: AppTheme.lightTheme,
+        home: const SplashScreen(),
+      ),
     );
   }
 }

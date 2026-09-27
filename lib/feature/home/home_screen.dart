@@ -1,13 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/core/extension/text_theme_context.dart';
-import 'package:musify/functions/auth_functions.dart';
+import 'package:musify/core/const/app_spacing.dart';
+import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/feature/song/providers/song_search_provider.dart';
 import 'package:musify/core/services/providers/tabs_provider.dart';
 import 'package:musify/core/utils/colors.dart';
 import 'package:musify/core/utils/images.dart';
-import 'package:musify/core/utils/spacers.dart';
 import 'package:musify/core/utils/tabs.dart';
 import 'package:musify/core/utils/text.dart';
 import 'package:musify/feature/home/widget/page_navigation_bar.dart';
@@ -37,11 +37,11 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: errorText(title),
-        content: Text(subTitle, style: context.textTheme.bodySmall),
+        content: Text(subTitle, style: context.text.bodySmall),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancel', style: context.textTheme.bodySmall),
+            child: Text('Cancel', style: context.text.bodySmall),
           ),
           TextButton(onPressed: callBack, child: errorText(title)),
         ],
@@ -118,39 +118,50 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
                               children: [
                                 GestureDetector(
                                   onTap: () {},
-                                  child: Image.asset(logo, height: 40),
+                                  child: Image.asset(
+                                    AppImages.logo,
+                                    height: 40,
+                                  ),
                                 ),
-                                w10,
-                                Image.asset(musifyTextLogo, height: 28),
+                                AppSpacing.w12,
+                                Image.asset(
+                                  AppImages.musifyTextLogo,
+                                  height: 28,
+                                ),
                                 const Spacer(),
-                                ElevatedButton.icon(
-                                  onPressed: () {
-                                    alertDialog(
-                                      title: 'Logout',
-                                      subTitle:
-                                          'Are you sure to want to logout',
-                                      callBack: () => logout(context),
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.surfaceVariant,
+                                SizedBox(
+                                  height: 35,
+                                  width: 120,
+                                  child: ElevatedButton.icon(
+                                    onPressed: () {
+                                      FirebaseAuth.instance.signOut();
+                                      // alertDialog(
+                                      //   title: 'Logout',
+                                      //   subTitle:
+                                      //       'Are you sure to want to logout',
+                                      //   callBack: () => logout(context),
+                                      // );
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.surfaceVariant,
 
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 3,
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 3,
+                                      ),
                                     ),
-                                  ),
-                                  icon: Icon(
-                                    Icons.logout_rounded,
-                                    color: AppColors.onError,
-                                    size: 20,
-                                  ),
-                                  label: Text(
-                                    'Logout',
-                                    style: TextStyle(
-                                      fontSize: 15,
+                                    icon: Icon(
+                                      Icons.logout_rounded,
                                       color: AppColors.onError,
-                                      fontWeight: FontWeight.bold,
+                                      size: 20,
+                                    ),
+                                    label: Text(
+                                      'Logout',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: AppColors.onError,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ),

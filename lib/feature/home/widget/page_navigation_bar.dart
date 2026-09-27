@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/services/providers/tabs_provider.dart';
 import 'package:musify/core/utils/colors.dart';
 import 'package:musify/core/utils/screen_size.dart';
-import 'package:musify/core/utils/spacers.dart';
 
 class PageNavigationBar extends ConsumerWidget {
   const PageNavigationBar({super.key, required this.pageController});
@@ -49,7 +49,7 @@ class PageNavigationBar extends ConsumerWidget {
                           : AppColors.surfaceWhite,
                       size: currentTab == index ? 33 : 30,
                     ),
-                    w5,
+                    AppSpacing.w4,
                     Text(
                       tabItems[index].last,
                       style: TextStyle(

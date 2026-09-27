@@ -1,0 +1,27 @@
+playlists
+├── playlist_001
+├── playlist_002
+└── playlist_003
+
+{
+  "ownerId": "user_001",
+
+  "name": "Late Night Vibes",
+
+  "description": "...",
+
+  "image": "...",
+
+  "isPublic": true,
+
+  "songIds": [
+    "song_001",
+    "song_002"
+  ],
+
+  "likeCount": 20,
+  "playCount": 500,
+
+  "createdAt": "Timestamp",
+  "updatedAt": "Timestamp"
+}

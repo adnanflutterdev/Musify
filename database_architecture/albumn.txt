@@ -1,0 +1,32 @@
+albums
+├── album_001
+├── album_002
+└── album_003
+
+{
+  "title": "Example Album",
+
+  "artistIds": [
+    "artist_001"
+  ],
+
+  "coverImage": "https://...",
+
+  "releaseDate": "Timestamp",
+
+  "genreIds": [
+    "pop"
+  ],
+
+  "language": "en",
+
+  "songIds": [
+    "song_001",
+    "song_002",
+    "song_003"
+  ],
+
+  "songCount": 3,
+
+  "createdAt": "Timestamp"
+}

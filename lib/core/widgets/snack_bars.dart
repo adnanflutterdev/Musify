@@ -1,36 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:musify/core/utils/colors.dart';
-import 'package:musify/core/utils/text.dart';
-
-enum SnackBarType { normal, success, error }
+import 'package:musify/core/extension/app_theme_extention.dart';
+import 'package:musify/core/result/result.dart';
 
 void showAppSnackbar({
   required BuildContext context,
-  required String message,
-  SnackBarType snackBarType = SnackBarType.normal,
+  required Result result,
+  bool isNormal = false,
 }) {
-  ScaffoldMessenger.of(context).clearSnackBars();
-  ScaffoldMessenger.of(context).showSnackBar(
-    snackBarType == SnackBarType.normal
-        ? SnackBar(
-            showCloseIcon: true,
-            behavior: SnackBarBehavior.floating,
+  final colors = context.colors;
 
-            backgroundColor: AppColors.neutral,
-            content: normalText(message),
-          )
-        : snackBarType == SnackBarType.success
-        ? SnackBar(
-            showCloseIcon: true,
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: AppColors.success,
-            content: successText(message),
-          )
-        : SnackBar(
-            showCloseIcon: true,
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: AppColors.error,
-            content: errorText(message),
+  ScaffoldMessenger.of(context)
+    ..clearSnackBars()
+    ..showSnackBar(
+      SnackBar(
+        showCloseIcon: true,
+        behavior: SnackBarBehavior.floating,
+
+        backgroundColor: isNormal
+            ? colors.surfaceVariant
+            : (result.success ? colors.success : colors.error),
+
+        content: Text(
+          result.message ?? '',
+          style: context.text.bodyMedium?.copyWith(
+            color: isNormal
+                ? null
+                : (result.success ? colors.onSuccess : colors.onError),
           ),
-  );
+        ),
+      ),
+    );
 }

@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/feature/song/models/song.dart';
 import 'package:musify/feature/song/providers/song_selection_provider.dart';
 import 'package:musify/feature/song/providers/song_stream_provider.dart';
 import 'package:musify/core/utils/colors.dart';
-import 'package:musify/core/utils/spacers.dart';
 import 'package:musify/core/utils/text.dart';
 import 'package:musify/core/widgets/buttons/more_button.dart';
 import 'package:musify/core/widgets/buttons/play_button.dart';
@@ -53,7 +53,7 @@ class PlaylistScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SliverToBoxAdapter(child: h10),
+                  SliverToBoxAdapter(child: AppSpacing.h12,),
                   SliverList(
                     delegate: SliverChildBuilderDelegate((context, index) {
                       Song song = songs[index];
@@ -149,7 +149,7 @@ class PlaylistScreen extends StatelessWidget {
                   children: [PlayButton(songs: songs)],
                 ),
               if (imageSize == 40) const Spacer(),
-              w20,
+              AppSpacing.h20,
             ],
           );
         },

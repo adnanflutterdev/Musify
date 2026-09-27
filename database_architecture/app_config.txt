@@ -1,0 +1,22 @@
+appConfig
+├── general
+├── avatar
+├── player
+├── subscription
+└── maintenance
+
+(1)
+General
+{
+  "appName": "Musify",
+  "minimumAppVersion": "1.0.0",
+  "maintenanceMode": false
+}
+
+(2)
+Player
+{
+  "autoplay": true,
+  "defaultQuality": "high",
+  "allowBackgroundPlay": true
+}

@@ -1,0 +1,15 @@
+Firestore
+│
+├── users
+├── songs
+├── albums
+├── artists
+├── genres
+├── playlists
+├── radioStations
+├── podcasts
+├── searchIndex
+├── appConfig
+└── reports
+
+

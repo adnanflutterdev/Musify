@@ -3,17 +3,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/feature/song/screens/select_song_screen.dart';
 import 'package:musify/feature/song/models/song.dart';
 import 'package:musify/feature/song/providers/song_selection_provider.dart';
 import 'package:musify/core/utils/colors.dart';
 import 'package:musify/core/utils/images.dart';
-import 'package:musify/core/utils/spacers.dart';
 import 'package:musify/core/utils/text.dart';
 import 'package:musify/core/widgets/buttons/custom_button.dart';
 import 'package:musify/core/widgets/custom_app_bar.dart';
 import 'package:musify/core/widgets/custom_text_form_field.dart';
-import 'package:musify/core/widgets/snack_bars.dart';
 
 class CreatePlaylistScreen extends ConsumerStatefulWidget {
   const CreatePlaylistScreen({super.key});
@@ -48,20 +47,20 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
         if (!mounted) {
           return;
         }
-        showAppSnackbar(
-          context: context,
-          message: 'Playlist created successfully',
-          snackBarType: SnackBarType.success,
-        );
+        // showAppSnackbar(
+        //   context: context,
+        //   message: 'Playlist created successfully',
+        //   snackBarType: SnackBarType.success,
+        // );
       } on FirebaseException catch (_) {
         if (!mounted) {
           return;
         }
-        showAppSnackbar(
-          context: context,
-          message: 'Failed to create playlist',
-          snackBarType: SnackBarType.error,
-        );
+        // showAppSnackbar(
+        //   context: context,
+        //   message: 'Failed to create playlist',
+        //   snackBarType: SnackBarType.error,
+        // );
       }
     }
   }
@@ -113,12 +112,12 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
                 title: appBarText('Create playlist'),
                 extraPopFunction: clearProvider,
               ),
-              h10,
+              AppSpacing.h12,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: whiteTextSmall('Enter playlist name'),
               ),
-              h5,
+              AppSpacing.h4,
               Form(
                 key: _formKey,
                 child: Padding(
@@ -163,7 +162,7 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
                   ],
                 ),
               ),
-              h10,
+              AppSpacing.h12,
               Expanded(
                 child: Stack(
                   children: [
@@ -183,12 +182,12 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
                                   imageUrl: song.coverImage,
                                   placeholder: (context, url) => CircleAvatar(
                                     radius: 23,
-                                    backgroundImage: AssetImage(coverImage),
+                                    backgroundImage: AssetImage(AppImages.coverImage),
                                   ),
                                   errorWidget: (context, url, error) =>
                                       CircleAvatar(
                                         radius: 23,
-                                        backgroundImage: AssetImage(coverImage),
+                                        backgroundImage: AssetImage(AppImages.coverImage),
                                       ),
                                   imageBuilder: (context, imageProvider) =>
                                       CircleAvatar(
@@ -233,7 +232,7 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
                 ),
               ),
 
-              h20,
+              AppSpacing.h20,
             ],
           ),
         ),

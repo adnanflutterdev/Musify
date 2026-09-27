@@ -1,11 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/feature/song/models/song.dart';
-import 'package:musify/core/services/providers/user_data_provider.dart';
-
 import 'dart:io';
 import 'dart:convert';
 import 'package:path_provider/path_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:musify/feature/song/models/song.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final songsProvider = StreamProvider<List<Song>>((ref) {
   return FirebaseFirestore.instance
@@ -39,16 +37,18 @@ final songsMapProvider = Provider<Map<String, Song>>((ref) {
 
 // Recently played songs by user
 final recentlyPlayedSongsProvider = Provider<List<Song>>((ref) {
-  final userData = ref.watch(userDataProvider).value;
-  List recentlyPlayed = userData == null ? [] : userData.recentlyPlayed;
+  // final userData = ref.watch(userDataProvider).value;
+  List recentlyPlayed = [];
+  // List recentlyPlayed = userData == null ? [] : userData.recentlyPlayed;
   Map<String, Song> songs = ref.watch(songsMapProvider);
   return recentlyPlayed.map((e) => songs[e]).whereType<Song>().toList();
 });
 
 // Recently played songs by user
 final favouriteSongsProvider = Provider<List<Song>>((ref) {
-  final userData = ref.watch(userDataProvider).value;
-  List favouriteSongs = userData == null ? [] : userData.favouriteSongs;
+  // final userData = ref.watch(userDataProvider).value;
+  List favouriteSongs = [];
+  // List favouriteSongs = userData == null ? [] : userData.favouriteSongs;
   Map<String, Song> songs = ref.watch(songsMapProvider);
   return favouriteSongs.map((e) => songs[e]).whereType<Song>().toList();
 });

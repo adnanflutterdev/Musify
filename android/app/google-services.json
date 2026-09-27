@@ -1,26 +1,36 @@
 {
   "project_info": {
-    "project_number": "973189622114",
-    "project_id": "musify-7fc28",
-    "storage_bucket": "musify-7fc28.appspot.com"
+    "project_number": "699535849199",
+    "project_id": "musify-app-v1",
+    "storage_bucket": "musify-app-v1.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:973189622114:android:2675457e9c27e2e623a43b",
+        "mobilesdk_app_id": "1:699535849199:android:03fc131f79e74a9dee4d1a",
         "android_client_info": {
-          "package_name": "com.example.musify"
+          "package_name": "com.musify.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "699535849199-7ojljpks5ntkv10780lvpm28k20ekurm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyDXwRmQG9h1-mpBS5WVnP7v86S4lMzksW0"
+          "current_key": "AIzaSyBr7PfwlxdZuwkyn3btvYh2tGVmY9o2L0o"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "699535849199-7ojljpks5ntkv10780lvpm28k20ekurm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

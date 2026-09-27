@@ -1,0 +1,181 @@
+users/{userId}
+│
+├── favourites
+├── savedAlbums
+├── savedArtists
+├── savedPlaylists
+├── playlists
+├── recentlyPlayed
+├── listeningHistory
+├── follows
+├── downloads
+└── notifications
+
+{
+  "name": "Adnan",
+  "username": "adnan",
+  "email": "adnan@example.com",
+  "dob": "Timestamp",
+  "gender": "male",
+  "userAvatar": "https://...",
+  "bio": "Music enthusiast",
+
+  "accountType": "normal",
+  "isVerified": false,
+  "isPremium": false,
+
+  "createdAt": "Timestamp",
+  "updatedAt": "Timestamp",
+  "lastActiveAt": "Timestamp"
+}
+
+users/{userId}
+│
+├── favourites
+├── savedAlbums
+├── savedArtists
+├── savedPlaylists
+├── playlists
+├── recentlyPlayed
+├── listeningHistory
+├── follows
+├── downloads
+└── notifications
+
+(1)
+users
+└── userId
+    └── favourites
+        ├── songId1
+        ├── songId2
+        └── songId3
+{
+  "songId": "song_001",
+  "addedAt": "Timestamp"
+}
+
+(2)
+users
+└── userId
+    └── savedAlbums
+        ├── albumId1
+        └── albumId2
+{
+  "albumId": "album_001",
+  "savedAt": "Timestamp"
+}
+
+(3)
+users
+└── userId
+    └── savedArtists
+        ├── artistId1
+        └── artistId2
+{
+  "artistId": "artist_001",
+  "savedAt": "Timestamp"
+}
+
+(4)
+// Playlits by other users.
+users
+└── userId
+    └── savedPlaylists
+        ├── playlistId1
+        └── playlistId2
+{
+  "playlistId": "playlist_001",
+  "savedAt": "Timestamp"
+}
+
+(5)
+// Own playlits.
+users
+└── userId
+    └── playlists
+        ├── playlist_001
+        └── playlist_002
+{
+  "name": "Late Night Vibes",
+  "description": "Songs for late nights",
+  "image": "https://...",
+  "isPublic": true,
+
+  "songIds": [
+    "song_001",
+    "song_005",
+    "song_019"
+  ],
+
+  "createdAt": "Timestamp",
+  "updatedAt": "Timestamp"
+}      
+
+(6)
+users
+└── userId
+    └── recentlyPlayed
+        ├── record_001
+        ├── record_002
+        └── record_003
+{
+  "songId": "song_001",
+  "playedAt": "Timestamp"
+}
+
+(7)
+users
+└── userId
+    └── listeningHistory
+        ├── record_001
+        ├── record_002
+        └── record_003
+{
+  "songId": "song_001",
+  "startedAt": "Timestamp",
+  "endedAt": "Timestamp",
+  "durationPlayed": 182,
+  "completed": true,
+  "source": "playlist",
+  "sourceId": "playlist_001"
+}
+
+(8)
+users
+└── userId
+    └── follows
+        ├── user_002
+        ├── user_003
+        └── user_004
+{
+  "userId": "user_002",
+  "followedAt": "Timestamp"
+}
+
+(9)
+// Offline only. Only in device's local storage
+users
+└── userId
+    └── downloads
+        ├── song_001
+        └── song_002
+{
+  "songId": "song_001",
+  "downloadedAt": "Timestamp"
+}
+
+(10)
+users
+└── userId
+    └── notifications
+        ├── notification_001
+        └── notification_002
+{
+  "type": "new_release",
+  "title": "New release",
+  "message": "Your followed artist released a new song.",
+  "image": "https://...",
+  "referenceId": "song_001",
+  "isRead": false,
+  "createdAt": "Timestamp"
+}        

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/utils/colors.dart';
-import 'package:musify/core/utils/spacers.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
@@ -28,7 +28,7 @@ class CustomAppBar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 5.0),
         child: Row(
           children: [
-            if (!hasLeading) w20,
+            if (!hasLeading) AppSpacing.w20,
             if (hasLeading)
               IconButton(
                 onPressed: () {

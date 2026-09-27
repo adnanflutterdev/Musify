@@ -23,6 +23,7 @@ dependencies:
   rxdart: ^0.28.0
   cached_network_image: ^4.0.0
   path_provider: ^2.1.6
+  uuid: ^4.6.0
 
   # firebase_storage: ^13.0.6
 dev_dependencies:
@@ -39,10 +40,17 @@ flutter:
   assets:
     - assets/images/
 
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  fonts:
+    - family: Serif
+      fonts:
+        - asset: assets/fonts/serif.ttf
+          weight: 400
+        - asset: assets/fonts/serif_bold.ttf
+          weight: 700
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/poppins.ttf
+          weight: 400
+        - asset: assets/fonts/poppins_bold.ttf
+          weight: 700
 

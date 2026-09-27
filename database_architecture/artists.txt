@@ -1,0 +1,21 @@
+artists
+├── artist_001
+├── artist_002
+└── artist_003
+
+{
+  "name": "Artist Name",
+  "bio": "...",
+  "image": "https://...",
+  "coverImage": "https://...",
+
+  "genreIds": [
+    "pop"
+  ],
+
+  "country": "India",
+  "language": "en",
+  "isVerified": true,
+  "followerCount": 1000,
+  "createdAt": "Timestamp"
+}

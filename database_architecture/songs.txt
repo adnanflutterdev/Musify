@@ -1,0 +1,66 @@
+songs
+├── song_001
+├── song_002
+└── song_003
+
+{
+  "title": "Example Song",
+  "slug": "example-song",
+
+  "artistIds": [
+    "artist_001"
+  ],
+
+  "albumId": "album_001",
+
+  "genreIds": [
+    "pop",
+    "indian-pop"
+  ],
+
+  "duration": 271,
+
+  "audio": {
+    "url": "https://...",
+    "format": "mp3",
+    "quality": "320kbps",
+    "bitrate": 320
+  },
+
+  "coverImage": "https://...",
+  "releaseDate": "Timestamp",
+  "language": "en",
+  "explicit": false,
+  "playCount": 0,
+  "likeCount": 0,
+
+  "createdAt": "Timestamp",
+  "updatedAt": "Timestamp"
+}
+
+// If need in future
+songs
+└── song_001
+    └── lyrics
+        └── default
+
+{
+  "language": "en",
+  "text": "...",
+  "synced": false
+}
+
+// For synchronized lyrics
+{
+  "synced": true,
+  "lines": [
+    {
+      "start": 0,
+      "text": "..."
+    },
+    {
+      "start": 5200,
+      "text": "..."
+    }
+  ]
+}

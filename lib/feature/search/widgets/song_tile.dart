@@ -63,11 +63,11 @@ class SongTile extends ConsumerWidget {
               imageUrl: song.coverImage,
               placeholder: (context, url) => CircleAvatar(
                 radius: 23,
-                backgroundImage: AssetImage(coverImage),
+                backgroundImage: AssetImage(AppImages.coverImage),
               ),
               errorWidget: (context, url, error) => CircleAvatar(
                 radius: 23,
-                backgroundImage: AssetImage(coverImage),
+                backgroundImage: AssetImage(AppImages.coverImage),
               ),
               imageBuilder: (context, imageProvider) =>
                   CircleAvatar(radius: 23, backgroundImage: imageProvider),

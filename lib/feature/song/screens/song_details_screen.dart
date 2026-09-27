@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/feature/song/models/song.dart';
 import 'package:musify/core/utils/colors.dart';
 import 'package:musify/core/utils/duration_label.dart';
 import 'package:musify/core/utils/screen_size.dart';
-import 'package:musify/core/utils/spacers.dart';
 import 'package:musify/core/utils/text.dart';
 import 'package:musify/core/widgets/buttons/favourite_button.dart';
 import 'package:musify/core/widgets/buttons/play_button.dart';
@@ -53,7 +53,7 @@ class SongDetailsScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      h20,
+                      AppSpacing.h20,
                       Center(
                         child: CachedNetworkImage(
                           imageUrl: song.coverImage,
@@ -79,19 +79,19 @@ class SongDetailsScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      h10,
+                      AppSpacing.h12,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           FavouriteButton(songId: song.id, size: 40),
-                          w10,
+                          AppSpacing.w12,
                           PlayButton(song: song, size: 40),
-                          w20,
+                          AppSpacing.w20,
                         ],
                       ),
                       // Song Details here
                       songDetailsHeading('Details:'),
-                      h10,
+                      AppSpacing.h12,
                       Padding(
                         padding: const EdgeInsets.only(left: 5.0, bottom: 5.0),
                         child: Wrap(
@@ -135,7 +135,7 @@ class SongDetailsScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      h10,
+                      AppSpacing.h12,
                       songDetailsHeading('Genre(s):'),
                       Wrap(
                         children: song.songCategories
@@ -146,7 +146,7 @@ class SongDetailsScreen extends StatelessWidget {
                             )
                             .toList(),
                       ),
-                      h20,
+                      AppSpacing.h20,
                     ],
                   ),
                 ),

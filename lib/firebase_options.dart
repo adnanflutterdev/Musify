@@ -2,7 +2,7 @@
 // ignore_for_file: type=lint
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
-    show defaultTargetPlatform, kIsWeb, TargetPlatform;
+    show defaultTargetPlatform, TargetPlatform;
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -16,14 +16,9 @@ import 'package:flutter/foundation.dart'
 /// ```
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
-    if (kIsWeb) {
-      return web;
-    }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
-      case TargetPlatform.iOS:
-        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -46,29 +41,11 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBN9VEtiuj-Mun5i9sbHu9-SE_P4j_ncxk',
-    appId: '1:973189622114:web:72ff7273c90746fd23a43b',
-    messagingSenderId: '973189622114',
-    projectId: 'musify-7fc28',
-    authDomain: 'musify-7fc28.firebaseapp.com',
-    storageBucket: 'musify-7fc28.appspot.com',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDXwRmQG9h1-mpBS5WVnP7v86S4lMzksW0',
-    appId: '1:973189622114:android:2675457e9c27e2e623a43b',
-    messagingSenderId: '973189622114',
-    projectId: 'musify-7fc28',
-    storageBucket: 'musify-7fc28.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD5altqKrk_jrqHVF55XmeGxIXZOKee4io',
-    appId: '1:973189622114:ios:e827e9f85dd4593d23a43b',
-    messagingSenderId: '973189622114',
-    projectId: 'musify-7fc28',
-    storageBucket: 'musify-7fc28.appspot.com',
-    iosBundleId: 'com.example.musify',
+    apiKey: 'AIzaSyBr7PfwlxdZuwkyn3btvYh2tGVmY9o2L0o',
+    appId: '1:699535849199:android:03fc131f79e74a9dee4d1a',
+    messagingSenderId: '699535849199',
+    projectId: 'musify-app-v1',
+    storageBucket: 'musify-app-v1.firebasestorage.app',
   );
 }

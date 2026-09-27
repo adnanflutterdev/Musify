@@ -2,12 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/core/extension/text_theme_context.dart';
-import 'package:musify/core/services/providers/user_data_provider.dart';
-import 'package:musify/core/utils/spacers.dart';
+import 'package:musify/core/const/app_spacing.dart';
+import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/widgets/buttons/custom_button.dart';
 import 'package:musify/core/widgets/custom_text_form_field.dart';
-import 'package:musify/core/widgets/snack_bars.dart';
 import 'package:musify/feature/playlist/create_playlist_screen.dart';
 import 'package:musify/core/services/providers/playlist_provider.dart';
 import 'package:musify/core/utils/colors.dart';
@@ -19,7 +17,8 @@ class PlaylistTab extends ConsumerWidget {
   const PlaylistTab({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final myPlaylists = ref.watch(userDataProvider).value?.myPlaylists ?? [];
+    final myPlaylists = [];
+    // final myPlaylists = ref.watch(userDataProvider).value?.myPlaylists ?? [];
 
     void push() {
       Navigator.push(
@@ -45,7 +44,7 @@ class PlaylistTab extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Enter new name, style: context.textTheme.bodySmall'),
-                h5,
+                AppSpacing.h4,
                 Form(
                   key: formKey,
                   child: CustomTextFormField(
@@ -83,22 +82,22 @@ class PlaylistTab extends ConsumerWidget {
                       if (!context.mounted) {
                         return;
                       }
-                      showAppSnackbar(
-                        context: context,
-                        message: 'Name updated...',
-                        snackBarType: SnackBarType.success,
-                      );
+                      // showAppSnackbar(
+                      //   context: context,
+                      //   message: 'Name updated...',
+                      //   snackBarType: SnackBarType.success,
+                      // );
                       Navigator.pop(context);
                       Navigator.pop(context);
                     } on FirebaseException catch (_) {
                       if (!context.mounted) {
                         return;
                       }
-                      showAppSnackbar(
-                        context: context,
-                        message: 'Error occured',
-                        snackBarType: SnackBarType.error,
-                      );
+                      // showAppSnackbar(
+                      //   context: context,
+                      //   message: 'Error occured',
+                      //   snackBarType: SnackBarType.error,
+                      // );
                     }
                   }
                 },
@@ -117,13 +116,13 @@ class PlaylistTab extends ConsumerWidget {
           return AlertDialog(
             title: Text(
               'Deleting Playlist',
-              style: context.textTheme.bodyLarge?.copyWith(
+              style: context.text.bodyLarge?.copyWith(
                 color: AppColors.onError,
               ),
             ),
             content: Text(
               'Are you sure to delete this playlist?',
-              style: context.textTheme.bodySmall,
+              style: context.text.bodySmall,
             ),
             actions: [
               TextButton(
@@ -148,27 +147,27 @@ class PlaylistTab extends ConsumerWidget {
                     if (!context.mounted) {
                       return;
                     }
-                    showAppSnackbar(
-                      context: context,
-                      message: 'Playlist Deleted...',
-                      snackBarType: SnackBarType.success,
-                    );
+                    // showAppSnackbar(
+                    //   context: context,
+                    //   message: 'Playlist Deleted...',
+                    //   snackBarType: SnackBarType.success,
+                    // );
                     Navigator.pop(context);
                     Navigator.pop(context);
                   } on FirebaseException catch (_) {
                     if (!context.mounted) {
                       return;
                     }
-                    showAppSnackbar(
-                      context: context,
-                      message: 'Error occured',
-                      snackBarType: SnackBarType.error,
-                    );
+                    // showAppSnackbar(
+                    //   context: context,
+                    //   message: 'Error occured',
+                    //   snackBarType: SnackBarType.error,
+                    // );
                   }
                 },
                 child: Text(
                   'Delete',
-                  style: context.textTheme.bodySmall?.copyWith(
+                  style: context.text.bodySmall?.copyWith(
                     color: AppColors.onError,
                   ),
                 ),
@@ -177,7 +176,7 @@ class PlaylistTab extends ConsumerWidget {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text('Cancel', style: context.textTheme.bodySmall),
+                child: Text('Cancel', style: context.text.bodySmall),
               ),
             ],
           );
@@ -191,7 +190,7 @@ class PlaylistTab extends ConsumerWidget {
         padding: EdgeInsets.all(0),
         onTap: () => changeName(title),
         child: Center(
-          child: Text('Edit name', style: context.textTheme.bodySmall),
+          child: Text('Edit name', style: context.text.bodySmall),
         ),
       ),
 
@@ -200,7 +199,7 @@ class PlaylistTab extends ConsumerWidget {
         height: 40,
 
         child: Center(
-          child: Text('Add songs', style: context.textTheme.bodySmall),
+          child: Text('Add songs', style: context.text.bodySmall),
         ),
       ),
 
@@ -208,7 +207,7 @@ class PlaylistTab extends ConsumerWidget {
         padding: EdgeInsets.all(0),
         height: 40,
         child: Center(
-          child: Text('Remove songs', style: context.textTheme.bodySmall),
+          child: Text('Remove songs', style: context.text.bodySmall),
         ),
       ),
       PopupMenuItem(
@@ -218,7 +217,7 @@ class PlaylistTab extends ConsumerWidget {
         child: Center(
           child: Text(
             'Delete Playlist',
-            style: context.textTheme.bodySmall!.copyWith(
+            style: context.text.bodySmall!.copyWith(
               color: AppColors.onError,
             ),
           ),

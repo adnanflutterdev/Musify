@@ -1,0 +1,16 @@
+genres
+├── pop
+├── rock
+├── hip-hop
+├── electronic
+├── classical
+├── indie
+└── ...
+
+{
+  "name": "Pop",
+  "slug": "pop",
+  "image": "https://...",
+  "description": "...",
+  "songCount": 1200
+}

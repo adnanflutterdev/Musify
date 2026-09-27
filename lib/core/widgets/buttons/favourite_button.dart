@@ -2,9 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/core/services/providers/user_data_provider.dart';
 import 'package:musify/core/utils/colors.dart';
-import 'package:musify/core/widgets/snack_bars.dart';
 
 class FavouriteButton extends ConsumerWidget {
   const FavouriteButton({super.key, required this.songId, this.size});
@@ -13,7 +11,8 @@ class FavouriteButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final favouriteSongs = ref.watch(userDataProvider).value!.favouriteSongs;
+    final favouriteSongs = [];
+    // final favouriteSongs = ref.watch(userDataProvider).value!.favouriteSongs;
     bool isFavourite = favouriteSongs.contains(songId);
     return GestureDetector(
       onTap: () async {
@@ -29,24 +28,24 @@ class FavouriteButton extends ConsumerWidget {
           if (!context.mounted) {
             return;
           }
-          showAppSnackbar(
-            context: context,
-            message: isFavourite
-                ? 'Song removed from favourite songs playlist...'
-                : 'Song added to favourite songs playlist...',
-            snackBarType: isFavourite
-                ? SnackBarType.normal
-                : SnackBarType.success,
-          );
-        } on FirebaseException catch (err) {
+          // showAppSnackbar(
+          //   context: context,
+          //   message: isFavourite
+          //       ? 'Song removed from favourite songs playlist...'
+          //       : 'Song added to favourite songs playlist...',
+          //   snackBarType: isFavourite
+          //       ? SnackBarType.normal
+          //       : SnackBarType.success,
+          // );
+        } on FirebaseException catch (_) {
           if (!context.mounted) {
             return;
           }
-          showAppSnackbar(
-            context: context,
-            message: err.toString(),
-            snackBarType: SnackBarType.error,
-          );
+          // showAppSnackbar(
+          //   context: context,
+          //   message: err.toString(),
+          //   snackBarType: SnackBarType.error,
+          // );
         }
       },
       child: Container(

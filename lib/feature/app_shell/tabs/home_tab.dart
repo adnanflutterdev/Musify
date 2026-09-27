@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/core/extension/text_theme_context.dart';
+import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/utils/colors.dart';
 import 'package:musify/feature/song/providers/song_selection_provider.dart';
 import 'package:musify/feature/song/providers/songs_provider.dart';
@@ -26,7 +26,7 @@ class _HomeTabState extends ConsumerState<HomeTab> {
           ref.read(turnOnOffSongSelectionProvider.notifier).start();
         },
         child: Center(
-          child: Text('Remove songs', style: context.textTheme.bodySmall),
+          child: Text('Remove songs', style: context.text.bodySmall),
         ),
       ),
       PopupMenuItem(
@@ -39,11 +39,11 @@ class _HomeTabState extends ConsumerState<HomeTab> {
               return AlertDialog(
                 title: Text(
                   'Clear History',
-                  style: context.textTheme.bodyLarge?.copyWith(color: AppColors.onError),
+                  style: context.text.bodyLarge?.copyWith(color: AppColors.onError),
                 ),
                 content: Text(
                   'Are you sure to delete all recently played songs?',
-                  style: context.textTheme.bodySmall,
+                  style: context.text.bodySmall,
                 ),
                 actions: [
                   TextButton(
@@ -58,7 +58,7 @@ class _HomeTabState extends ConsumerState<HomeTab> {
                     },
                     child: Text(
                       'ok',
-                      style: context.textTheme.bodySmall?.copyWith(
+                      style: context.text.bodySmall?.copyWith(
                         color: AppColors.onError,
                       ),
                     ),
@@ -67,7 +67,7 @@ class _HomeTabState extends ConsumerState<HomeTab> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text('Cancel', style: context.textTheme.bodySmall),
+                    child: Text('Cancel', style: context.text.bodySmall),
                   ),
                 ],
               );
@@ -75,7 +75,7 @@ class _HomeTabState extends ConsumerState<HomeTab> {
           );
         },
         child: Center(
-          child: Text('Clear History', style: context.textTheme.bodySmall),
+          child: Text('Clear History', style: context.text.bodySmall),
         ),
       ),
     ];

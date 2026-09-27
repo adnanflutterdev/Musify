@@ -3,16 +3,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/services/providers/audio_player_provider.dart';
 import 'package:musify/feature/song/providers/song_stream_provider.dart';
 import 'package:musify/core/utils/colors.dart';
 import 'package:musify/core/utils/duration_label.dart';
 import 'package:musify/core/utils/screen_size.dart';
-import 'package:musify/core/utils/spacers.dart';
 import 'package:musify/core/utils/text.dart';
 import 'package:musify/core/widgets/buttons/favourite_button.dart';
 import 'package:musify/core/widgets/custom_app_bar.dart';
-import 'package:musify/core/widgets/snack_bars.dart';
 import 'package:my_progress_bar/progress_bar.dart';
 
 class SongPlayer extends ConsumerWidget {
@@ -97,10 +96,10 @@ class SongPlayer extends ConsumerWidget {
                       songId: mediaItem.extras!['songId'],
                       size: 40,
                     ),
-                    w20,
+                    AppSpacing.w20,
                   ],
                 ),
-                h20,
+                AppSpacing.h20,
                 // Duration labels
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -131,7 +130,7 @@ class SongPlayer extends ConsumerWidget {
                     },
                   ),
                 ),
-                h10,
+                AppSpacing.h12,
                 Padding(
                   padding: EdgeInsetsGeometry.symmetric(horizontal: 20.0),
                   child: Row(
@@ -139,11 +138,11 @@ class SongPlayer extends ConsumerWidget {
                     children: [
                       IconButton(
                         onPressed: () async {
-                          showAppSnackbar(
-                            context: context,
-                            message:
-                                'Shuffle mode turned ${isSuffled ? 'off' : 'on'}...',
-                          );
+                          // showAppSnackbar(
+                          //   context: context,
+                          //   message:
+                          //       'Shuffle mode turned ${isSuffled ? 'off' : 'on'}...',
+                          // );
                           await audioProvider.changeShuffleMode(!isSuffled);
                         },
                         icon: Icon(
@@ -165,7 +164,7 @@ class SongPlayer extends ConsumerWidget {
                           color: AppColors.surfaceWhite,
                         ),
                       ),
-                      w20,
+                      AppSpacing.w20,
                       GestureDetector(
                         onTap: () {
                           if (isPlaying) {
@@ -191,7 +190,7 @@ class SongPlayer extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      w20,
+                      AppSpacing.w20,
                       IconButton(
                         onPressed: () {
                           audioProvider.skipToNext();
