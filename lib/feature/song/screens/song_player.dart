@@ -44,20 +44,22 @@ class SongPlayer extends ConsumerWidget {
             return Column(
               children: [
                 // AppBar
-                CustomAppBar(title: doubleText(
-                            text1: mediaItem.title,
-                            style1: TextStyle(
-                              color: AppColors.primary,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            text2: mediaItem.artist!,
-                            style2: TextStyle(
-                              color: AppColors.onSurfaceMedium,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),),
+                CustomAppBar(
+                  title: doubleText(
+                    text1: mediaItem.title,
+                    style1: const TextStyle(
+                      color: AppColors.primary,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    text2: mediaItem.artist!,
+                    style2: const TextStyle(
+                      color: AppColors.onSurfaceMedium,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
                 const Spacer(),
                 Center(
                   child: CachedNetworkImage(
@@ -132,7 +134,7 @@ class SongPlayer extends ConsumerWidget {
                 ),
                 AppSpacing.h12,
                 Padding(
-                  padding: EdgeInsetsGeometry.symmetric(horizontal: 20.0),
+                  padding: const EdgeInsetsGeometry.symmetric(horizontal: 20.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -158,7 +160,7 @@ class SongPlayer extends ConsumerWidget {
                         onPressed: () {
                           audioProvider.skipToPrevious();
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.skip_previous_rounded,
                           size: 35,
                           color: AppColors.surfaceWhite,
@@ -174,7 +176,7 @@ class SongPlayer extends ConsumerWidget {
                           }
                         },
                         child: Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: AppColors.primaryVariant,
                           ),
@@ -195,7 +197,7 @@ class SongPlayer extends ConsumerWidget {
                         onPressed: () {
                           audioProvider.skipToNext();
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.skip_next_rounded,
                           size: 35,
                           color: AppColors.surfaceWhite,
@@ -271,7 +273,7 @@ class SongPlayer extends ConsumerWidget {
           },
           error: (error, stackTrace) =>
               Center(child: errorText('Error Occured')),
-          loading: () => Center(
+          loading: () => const Center(
             child: CircularProgressIndicator(color: AppColors.surfaceWhite),
           ),
         ),

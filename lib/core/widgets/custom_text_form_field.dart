@@ -116,16 +116,20 @@ class AppTextField extends StatelessWidget {
               color: context.colors.textSecondary,
               fontWeight: FontWeight.w400,
             ),
-            prefixIcon: IconButton(
-              onPressed: () {},
-              icon: Icon(prefixIcon, size: iconSize, color: iconColor),
-            ),
+            prefixIcon: prefixIcon != null
+                ? IconButton(
+                    onPressed: () {},
+                    icon: Icon(prefixIcon, size: iconSize, color: iconColor),
+                  )
+                : null,
             suffixIcon: isSuffixIconLoading
                 ? const CircularProgressIndicator()
-                : IconButton(
+                : suffixIcon != null
+                ? IconButton(
                     onPressed: onSuffixIconTapped,
                     icon: Icon(suffixIcon, size: iconSize, color: iconColor),
-                  ),
+                  )
+                : null,
           ),
 
           forceErrorText: forceErrorText,
@@ -187,7 +191,7 @@ class CustomTextFormField extends StatelessWidget {
           ? TextCapitalization.none
           : TextCapitalization.sentences,
       cursorColor: AppColors.surfaceWhite,
-      style: TextStyle(color: AppColors.surfaceWhite),
+      style: const TextStyle(color: AppColors.surfaceWhite),
       onTapOutside: (event) => FocusScope.of(context).unfocus(),
       obscureText: isObscure,
       obscuringCharacter: '*',
@@ -195,9 +199,9 @@ class CustomTextFormField extends StatelessWidget {
         filled: true,
         hintText: hintText,
         fillColor: filledColor,
-        hintStyle: TextStyle(color: AppColors.onSurfaceLow),
+        hintStyle: const TextStyle(color: AppColors.onSurfaceLow),
         suffixIcon: suffixIcon,
-        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
         enabledBorder: outlinedBorder(
           color: AppColors.surfaceWhite,
           width: 0.7,
@@ -206,7 +210,10 @@ class CustomTextFormField extends StatelessWidget {
         errorBorder: errorBorder
             ? outlinedBorder(color: AppColors.error, width: 0.5)
             : null,
-        errorStyle: TextStyle(color: AppColors.textFieldOnError, fontSize: 10),
+        errorStyle: const TextStyle(
+          color: AppColors.textFieldOnError,
+          fontSize: 10,
+        ),
         focusedErrorBorder: focusedErorBorder
             ? outlinedBorder(color: AppColors.primary, width: 1.0)
             : null,

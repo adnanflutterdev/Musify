@@ -46,6 +46,8 @@ app.*.map.json
 
 # I don't wanna upload this files
 /lib/firebase_data_updator
-# /lib/firebase_options.dart
+/lib/firebase_options.dart
 /android/sha256
+/lib/secrets.dart
 /database_architectur
+/firebase.json

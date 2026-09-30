@@ -32,20 +32,22 @@ class SongDetailsScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            CustomAppBar(title: doubleText(
+            CustomAppBar(
+              title: doubleText(
                 text1: song.songName,
-                style1: TextStyle(
+                style1: const TextStyle(
                   color: AppColors.primary,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
                 text2: song.artistName,
-                style2: TextStyle(
+                style2: const TextStyle(
                   color: AppColors.onSurfaceMedium,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),
-              ),),
+              ),
+            ),
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
@@ -102,7 +104,7 @@ class SongDetailsScreen extends StatelessWidget {
                                 width: ScreenSize.width / 2.3,
                                 child: doubleText(
                                   text1: songDetails[index].first,
-                                  style1: TextStyle(
+                                  style1: const TextStyle(
                                     color: AppColors.onSurfaceMedium,
                                   ),
                                   text2: songDetails[index].last != ''
@@ -110,7 +112,7 @@ class SongDetailsScreen extends StatelessWidget {
                                                 .toUpperCase() +
                                             songDetails[index].last.substring(1)
                                       : '_______',
-                                  style2: TextStyle(
+                                  style2: const TextStyle(
                                     color: AppColors.surfaceWhite,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -152,7 +154,7 @@ class SongDetailsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SongTrack(),
+            const SongTrack(),
           ],
         ),
       ),

@@ -99,7 +99,7 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
 
                   return tabIndex == 0
                       ? Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: AppColors.surfaceDark,
                             border: Border(
                               bottom: BorderSide(
@@ -145,17 +145,17 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: AppColors.surfaceVariant,
 
-                                      padding: EdgeInsets.symmetric(
+                                      padding: const EdgeInsets.symmetric(
                                         horizontal: 10,
                                         vertical: 3,
                                       ),
                                     ),
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.logout_rounded,
                                       color: AppColors.onError,
                                       size: 20,
                                     ),
-                                    label: Text(
+                                    label: const Text(
                                       'Logout',
                                       style: TextStyle(
                                         fontSize: 15,
@@ -191,8 +191,8 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
                   },
                 ),
               ),
-              SongSelectionBar(),
-              SongTrack(),
+              const SongSelectionBar(),
+              const SongTrack(),
               PageNavigationBar(pageController: _pageController),
             ],
           ),

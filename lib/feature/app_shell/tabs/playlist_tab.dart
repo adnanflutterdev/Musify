@@ -23,7 +23,7 @@ class PlaylistTab extends ConsumerWidget {
     void push() {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => CreatePlaylistScreen()),
+        MaterialPageRoute(builder: (context) => const CreatePlaylistScreen()),
       );
     }
 
@@ -43,7 +43,9 @@ class PlaylistTab extends ConsumerWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Enter new name, style: context.textTheme.bodySmall'),
+                const Text(
+                  'Enter new name, style: context.textTheme.bodySmall',
+                ),
                 AppSpacing.h4,
                 Form(
                   key: formKey,
@@ -116,9 +118,7 @@ class PlaylistTab extends ConsumerWidget {
           return AlertDialog(
             title: Text(
               'Deleting Playlist',
-              style: context.text.bodyLarge?.copyWith(
-                color: AppColors.onError,
-              ),
+              style: context.text.bodyLarge?.copyWith(color: AppColors.onError),
             ),
             content: Text(
               'Are you sure to delete this playlist?',
@@ -187,39 +187,33 @@ class PlaylistTab extends ConsumerWidget {
     List<PopupMenuItem> menuItems(String title) => [
       PopupMenuItem(
         height: 40,
-        padding: EdgeInsets.all(0),
+        padding: const EdgeInsets.all(0),
         onTap: () => changeName(title),
-        child: Center(
-          child: Text('Edit name', style: context.text.bodySmall),
-        ),
+        child: Center(child: Text('Edit name', style: context.text.bodySmall)),
       ),
 
       PopupMenuItem(
-        padding: EdgeInsets.all(0),
+        padding: const EdgeInsets.all(0),
         height: 40,
 
-        child: Center(
-          child: Text('Add songs', style: context.text.bodySmall),
-        ),
+        child: Center(child: Text('Add songs', style: context.text.bodySmall)),
       ),
 
       PopupMenuItem(
-        padding: EdgeInsets.all(0),
+        padding: const EdgeInsets.all(0),
         height: 40,
         child: Center(
           child: Text('Remove songs', style: context.text.bodySmall),
         ),
       ),
       PopupMenuItem(
-        padding: EdgeInsets.all(0),
+        padding: const EdgeInsets.all(0),
         height: 40,
         onTap: () => deletePlaylistDialog(title),
         child: Center(
           child: Text(
             'Delete Playlist',
-            style: context.text.bodySmall!.copyWith(
-              color: AppColors.onError,
-            ),
+            style: context.text.bodySmall!.copyWith(color: AppColors.onError),
           ),
         ),
       ),
@@ -234,7 +228,7 @@ class PlaylistTab extends ConsumerWidget {
           hasLeading: false,
           trailing: IconButton(
             onPressed: push,
-            icon: Icon(Icons.add_sharp, color: AppColors.surfaceWhite),
+            icon: const Icon(Icons.add_sharp, color: AppColors.surfaceWhite),
           ),
         ),
         if (playlists.isNotEmpty)
@@ -256,13 +250,13 @@ class PlaylistTab extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('No playlists, style: context.textTheme.bodySmall'),
+                const Text('No playlists, style: context.textTheme.bodySmall'),
                 TextButton(
                   onPressed: push,
                   style: TextButton.styleFrom(
                     backgroundColor: AppColors.surfaceVariant,
                   ),
-                  child: Text(
+                  child: const Text(
                     'Create playlist, style: context.textTheme.bodySmall',
                   ),
                 ),

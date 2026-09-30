@@ -4,10 +4,7 @@ import 'package:musify/core/utils/colors.dart';
 import 'package:musify/core/utils/screen_size.dart';
 
 class MoreButton extends ConsumerWidget {
-  const MoreButton({
-    super.key,
-    required this.menuItems,
-  });
+  const MoreButton({super.key, required this.menuItems});
   final List<PopupMenuItem> menuItems;
 
   @override
@@ -21,7 +18,7 @@ class MoreButton extends ConsumerWidget {
           context: context,
           color: AppColors.surface,
 
-          menuPadding: EdgeInsets.all(5),
+          menuPadding: const EdgeInsets.all(5),
           position: RelativeRect.fromLTRB(
             dx,
             dy,
@@ -32,12 +29,12 @@ class MoreButton extends ConsumerWidget {
         );
       },
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           shape: BoxShape.circle,
           color: AppColors.surfaceVariant,
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(2.5),
+        child: const Padding(
+          padding: EdgeInsets.all(2.5),
           child: Icon(Icons.more_vert, color: AppColors.surfaceWhite, size: 25),
         ),
       ),

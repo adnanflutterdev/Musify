@@ -1,47 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:musify/core/const/app_shadow.dart';
 import 'package:musify/core/const/app_spacing.dart';
-import 'package:musify/core/utils/colors.dart';
+import 'package:musify/core/extension/app_theme_extention.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
     super.key,
     required this.title,
-    this.hasLeading = true,
+
+    this.leading,
     this.trailing,
-    this.extraPopFunction,
+    this.titleSpacing,
+    this.trailingSpacing,
+    this.backgroundColor,
+    this.onTap,
+
+    this.hasLeading = true,
   });
   final bool hasLeading;
   final Widget title;
+  final Widget? leading;
   final Widget? trailing;
-  final void Function()? extraPopFunction;
+  final SizedBox? titleSpacing;
+  final SizedBox? trailingSpacing;
+  final Color? backgroundColor;
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.surfaceDark,
-        border: Border(
-          bottom: BorderSide(color: AppColors.surfaceMuted, width: 0.7),
+    return Column(
+      children: [
+        Container(
+          height: MediaQuery.of(context).padding.top,
+          color: context.colors.surface,
         ),
-      ),
-
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5.0),
-        child: Row(
-          children: [
-            if (!hasLeading) AppSpacing.w20,
-            if (hasLeading)
-              IconButton(
-                onPressed: () {
-                  extraPopFunction != null ? extraPopFunction!() : null;
-                  Navigator.pop(context);
-                },
-                icon: Icon(Icons.arrow_back, color: AppColors.surfaceWhite),
-              ),
-            Expanded(child: title),
-            ?trailing,
-          ],
+        Container(
+          decoration: BoxDecoration(
+            color: context.colors.surface,
+            boxShadow: [
+              AppShadow.shadowLvl1(context, offset: const Offset(0, 3)),
+            ],
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 6.0),
+          child: Row(
+            children: [
+              if (!hasLeading) AppSpacing.w12,
+              if (leading != null) ...[
+                AppSpacing.w12,
+                ?leading,
+                AppSpacing.w8,
+              ] else if (hasLeading)
+                IconButton(
+                  onPressed:
+                      onTap ??
+                      () {
+                        Navigator.pop(context);
+                      },
+                  icon: const Icon(Icons.arrow_back),
+                ),
+              ?titleSpacing,
+              Expanded(child: title),
+              if (trailing != null) ...[
+                ?trailingSpacing,
+                ?trailing,
+                ?trailingSpacing,
+              ],
+            ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

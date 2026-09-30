@@ -34,8 +34,8 @@ class SelectSongScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomAppBar(title: appBarText('Add Songs')),
-              Expanded(child: SearchTab()),
-              SongSelectionBar(forPlaylist: true),
+              const Expanded(child: SearchTab()),
+              const SongSelectionBar(forPlaylist: true),
             ],
           ),
         ),

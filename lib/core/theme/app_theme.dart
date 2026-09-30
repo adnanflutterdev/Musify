@@ -52,9 +52,7 @@ class AppTheme {
       elevation: 0,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(16),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
     ),
 
@@ -73,46 +71,31 @@ class AppTheme {
       filled: true,
       fillColor: AppThemeColors.lightSurfaceVariant,
 
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 14,
-      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
 
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(
-          color: AppThemeColors.lightBorder,
-        ),
+        borderSide: const BorderSide(color: AppThemeColors.lightBorder),
       ),
 
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(
-          color: AppThemeColors.lightBorder,
-        ),
+        borderSide: const BorderSide(color: AppThemeColors.lightBorder),
       ),
 
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(
-          color: AppThemeColors.primary,
-          width: 2,
-        ),
+        borderSide: const BorderSide(color: AppThemeColors.primary, width: 2),
       ),
 
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(
-          color: AppThemeColors.error,
-        ),
+        borderSide: const BorderSide(color: AppThemeColors.error),
       ),
 
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(
-          color: AppThemeColors.error,
-          width: 2,
-        ),
+        borderSide: const BorderSide(color: AppThemeColors.error, width: 2),
       ),
 
       hintStyle: AppTextStyles.bodyMedium.copyWith(
@@ -123,9 +106,7 @@ class AppTheme {
         color: AppThemeColors.lightTextSecondary,
       ),
 
-      errorStyle: AppTextStyles.bodySmall.copyWith(
-        color: AppThemeColors.error,
-      ),
+      errorStyle: AppTextStyles.bodySmall.copyWith(color: AppThemeColors.error),
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
@@ -135,14 +116,9 @@ class AppTheme {
 
         elevation: 0,
 
-        minimumSize: const Size(
-          double.infinity,
-          50,
-        ),
+        minimumSize: const Size(double.infinity, 50),
 
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
 
         textStyle: AppTextStyles.labelLarge,
       ),
@@ -152,18 +128,11 @@ class AppTheme {
       style: OutlinedButton.styleFrom(
         foregroundColor: AppThemeColors.primary,
 
-        minimumSize: const Size(
-          double.infinity,
-          50,
-        ),
+        minimumSize: const Size(double.infinity, 50),
 
-        side: const BorderSide(
-          color: AppThemeColors.primary,
-        ),
+        side: const BorderSide(color: AppThemeColors.primary),
 
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
 
         textStyle: AppTextStyles.labelLarge,
       ),
@@ -194,13 +163,9 @@ class AppTheme {
       backgroundColor: AppThemeColors.lightSurface,
       indicatorColor: AppThemeColors.primary.withValues(alpha: 0.15),
 
-      labelTextStyle: WidgetStatePropertyAll(
-        AppTextStyles.labelSmall,
-      ),
+      labelTextStyle: const WidgetStatePropertyAll(AppTextStyles.labelSmall),
 
-      iconTheme: const WidgetStatePropertyAll(
-        IconThemeData(size: 24),
-      ),
+      iconTheme: const WidgetStatePropertyAll(IconThemeData(size: 24)),
     ),
 
     sliderTheme: SliderThemeData(
@@ -221,18 +186,14 @@ class AppTheme {
       contentTextStyle: AppTextStyles.bodyMedium.copyWith(
         color: AppThemeColors.white,
       ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ),
 
     chipTheme: ChipThemeData(
       backgroundColor: AppThemeColors.lightSurfaceVariant,
       selectedColor: AppThemeColors.primary,
       labelStyle: AppTextStyles.labelMedium,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
     ),
   );
 
@@ -282,9 +243,7 @@ class AppTheme {
       elevation: 0,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(16),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
     ),
 
@@ -303,38 +262,26 @@ class AppTheme {
       filled: true,
       fillColor: AppThemeColors.darkSurfaceVariant,
 
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 14,
-      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
 
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(
-          color: AppThemeColors.darkBorder,
-        ),
+        borderSide: const BorderSide(color: AppThemeColors.darkBorder),
       ),
 
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(
-          color: AppThemeColors.darkBorder,
-        ),
+        borderSide: const BorderSide(color: AppThemeColors.darkBorder),
       ),
 
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(
-          color: AppThemeColors.primary,
-          width: 2,
-        ),
+        borderSide: const BorderSide(color: AppThemeColors.primary, width: 2),
       ),
 
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(
-          color: AppThemeColors.textFieldError,
-        ),
+        borderSide: const BorderSide(color: AppThemeColors.textFieldError),
       ),
 
       focusedErrorBorder: OutlineInputBorder(
@@ -365,14 +312,9 @@ class AppTheme {
 
         elevation: 0,
 
-        minimumSize: const Size(
-          double.infinity,
-          50,
-        ),
+        minimumSize: const Size(double.infinity, 50),
 
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
 
         textStyle: AppTextStyles.labelLarge,
       ),
@@ -382,18 +324,11 @@ class AppTheme {
       style: OutlinedButton.styleFrom(
         foregroundColor: AppThemeColors.primary,
 
-        minimumSize: const Size(
-          double.infinity,
-          50,
-        ),
+        minimumSize: const Size(double.infinity, 50),
 
-        side: const BorderSide(
-          color: AppThemeColors.primary,
-        ),
+        side: const BorderSide(color: AppThemeColors.primary),
 
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
 
         textStyle: AppTextStyles.labelLarge,
       ),
@@ -424,13 +359,9 @@ class AppTheme {
       backgroundColor: AppThemeColors.darkSurface,
       indicatorColor: AppThemeColors.primary.withValues(alpha: 0.15),
 
-      labelTextStyle: WidgetStatePropertyAll(
-        AppTextStyles.labelSmall,
-      ),
+      labelTextStyle: const WidgetStatePropertyAll(AppTextStyles.labelSmall),
 
-      iconTheme: const WidgetStatePropertyAll(
-        IconThemeData(size: 24),
-      ),
+      iconTheme: const WidgetStatePropertyAll(IconThemeData(size: 24)),
     ),
 
     sliderTheme: SliderThemeData(
@@ -451,18 +382,14 @@ class AppTheme {
       contentTextStyle: AppTextStyles.bodyMedium.copyWith(
         color: AppThemeColors.darkTextPrimary,
       ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ),
 
     chipTheme: ChipThemeData(
       backgroundColor: AppThemeColors.darkSurfaceVariant,
       selectedColor: AppThemeColors.primary,
       labelStyle: AppTextStyles.labelMedium,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
     ),
   );
 

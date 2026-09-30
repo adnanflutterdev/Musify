@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:uuid/uuid.dart';
 
 enum AccountType { user, creator, admin }
 
@@ -43,10 +42,10 @@ class UserData {
     required this.lastActiveAt,
   });
 
-  factory UserData.setNewUser({required String name,required String email}) {
+  factory UserData.setNewUser({required String uid,required String name,required String email}) {
     final now = DateTime.now();
     return UserData(
-      uid: Uuid().v4(),
+      uid: uid,
       name: name,
       username: name.split('@').first,
       email: email,
@@ -88,6 +87,7 @@ class UserData {
 
   Map<String, dynamic> toFirestore() {
     return {
+      'uid':uid,
       'name': name,
       'username': username,
       'email': email,

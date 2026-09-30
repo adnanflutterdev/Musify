@@ -22,8 +22,9 @@ class PlayButton extends ConsumerWidget {
     final songStream = ref.watch(songStreamProvider);
     final audioProvider = ref.watch(audioPlayerProvider);
     return songStream.when(
-      error: (error, stackTrace) => Text('Error'),
-      loading: () => CircularProgressIndicator(color: AppColors.surfaceWhite),
+      error: (error, stackTrace) => const Text('Error'),
+      loading: () =>
+          const CircularProgressIndicator(color: AppColors.surfaceWhite),
       data: (data) {
         final mediaItem = data.mediaItem;
         final isPlaying = data.playbackState.playing;
@@ -77,7 +78,7 @@ class PlayButton extends ConsumerWidget {
               ? Container(
                   width: size ?? 30,
                   height: size ?? 30,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: AppColors.primaryVariant,
                   ),

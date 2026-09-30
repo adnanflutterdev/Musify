@@ -13,7 +13,7 @@ class PageNavigationBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     int currentTab = ref.watch(tabProvider);
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.surfaceDark,
         border: Border(
           top: BorderSide(color: AppColors.surfaceMuted, width: 0.7),
@@ -29,7 +29,7 @@ class PageNavigationBar extends ConsumerWidget {
             onTap: () {
               pageController.animateToPage(
                 index,
-                duration: Duration(milliseconds: 300),
+                duration: const Duration(milliseconds: 300),
                 curve: Curves.easeIn,
               );
             },

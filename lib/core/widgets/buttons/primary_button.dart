@@ -82,7 +82,7 @@ class PrimaryButton extends StatelessWidget {
             borderRadius: .circular(AppSpacing.radiusLg),
             side: BorderSide(width: 0.1, color: context.colors.shadowLvl1),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           iconAlignment: alignment,
           iconSize: iconSize,
           iconColor: foregroundColor ?? context.colors.white,

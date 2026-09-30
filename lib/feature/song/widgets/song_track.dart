@@ -23,88 +23,91 @@ class SongTrack extends ConsumerWidget {
             final bufferedPosition = data.bufferedPosition;
 
             return mediaItem == null
-    ? const SizedBox.shrink()
-    : Container(
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(
-              color: AppColors.surfaceMuted,
-              width: 0.7,
-            ),
-          ),
-        ),
-        child: Material(
-          color: AppColors.surfaceDark,
-          child: ListTile(
-            minTileHeight: 45,
-            minVerticalPadding: 3,
-            horizontalTitleGap: 10,
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SongPlayer(),
-              ),
-            ),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 8.0,
-            ),
-            leading: CachedNetworkImage(
-              imageUrl: mediaItem.artUri.toString(),
-              placeholder: (context, url) => CircleAvatar(
-                radius: 22,
-                backgroundColor: AppColors.surface,
-              ),
-              imageBuilder: (context, imageProvider) => CircleAvatar(
-                radius: 20,
-                backgroundImage: imageProvider,
-              ),
-            ),
-            title: Padding(
-              padding: const EdgeInsets.only(left: 5.0),
-              child: tileTitle(mediaItem.title),
-            ),
-            subtitle: HorizontalProgressBar(
-              maxValue: mediaItem.duration!.inSeconds.toDouble(),
-              currentPosition: currentPosition,
-              progressColor: AppColors.primary.withValues(alpha: 0.7),
-              bufferedColor: AppColors.surfaceMuted,
-              bufferedPosition: bufferedPosition,
-              thumbColor: AppColors.primaryVariant,
-              trackHeight: 4,
-              thumbDiameter: 12,
-              onChanged: (value) {
-                audioProvider.seek(
-                  Duration(seconds: value.toInt()),
-                );
-              },
-            ),
-            trailing: GestureDetector(
-              onTap: () {
-                if (isPlaying) {
-                  audioProvider.pause();
-                } else {
-                  audioProvider.play();
-                }
-              },
-              child: Container(
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.primaryVariant,
-                ),
-                child: Icon(
-                  isPlaying ? Icons.pause : Icons.play_arrow,
-                  color: AppColors.surfaceWhite,
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
+                ? const SizedBox.shrink()
+                : Container(
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        top: BorderSide(
+                          color: AppColors.surfaceMuted,
+                          width: 0.7,
+                        ),
+                      ),
+                    ),
+                    child: Material(
+                      color: AppColors.surfaceDark,
+                      child: ListTile(
+                        minTileHeight: 45,
+                        minVerticalPadding: 3,
+                        horizontalTitleGap: 10,
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SongPlayer(),
+                          ),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 8.0,
+                        ),
+                        leading: CachedNetworkImage(
+                          imageUrl: mediaItem.artUri.toString(),
+                          placeholder: (context, url) => const CircleAvatar(
+                            radius: 22,
+                            backgroundColor: AppColors.surface,
+                          ),
+                          imageBuilder: (context, imageProvider) =>
+                              CircleAvatar(
+                                radius: 20,
+                                backgroundImage: imageProvider,
+                              ),
+                        ),
+                        title: Padding(
+                          padding: const EdgeInsets.only(left: 5.0),
+                          child: tileTitle(mediaItem.title),
+                        ),
+                        subtitle: HorizontalProgressBar(
+                          maxValue: mediaItem.duration!.inSeconds.toDouble(),
+                          currentPosition: currentPosition,
+                          progressColor: AppColors.primary.withValues(
+                            alpha: 0.7,
+                          ),
+                          bufferedColor: AppColors.surfaceMuted,
+                          bufferedPosition: bufferedPosition,
+                          thumbColor: AppColors.primaryVariant,
+                          trackHeight: 4,
+                          thumbDiameter: 12,
+                          onChanged: (value) {
+                            audioProvider.seek(
+                              Duration(seconds: value.toInt()),
+                            );
+                          },
+                        ),
+                        trailing: GestureDetector(
+                          onTap: () {
+                            if (isPlaying) {
+                              audioProvider.pause();
+                            } else {
+                              audioProvider.play();
+                            }
+                          },
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.primaryVariant,
+                            ),
+                            child: Icon(
+                              isPlaying ? Icons.pause : Icons.play_arrow,
+                              color: AppColors.surfaceWhite,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
           },
           error: (error, stackTrace) => Container(),
-          loading: () => Center(child: CircularProgressIndicator()),
+          loading: () => const Center(child: CircularProgressIndicator()),
         ) ??
         Container();
   }

@@ -53,7 +53,7 @@ class PlaylistScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SliverToBoxAdapter(child: AppSpacing.h12,),
+                  const SliverToBoxAdapter(child: AppSpacing.h12),
                   SliverList(
                     delegate: SliverChildBuilderDelegate((context, index) {
                       Song song = songs[index];
@@ -73,8 +73,8 @@ class PlaylistScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SongSelectionBar(),
-            SongTrack(),
+            const SongSelectionBar(),
+            const SongTrack(),
           ],
         ),
       ),
@@ -108,7 +108,10 @@ class PlaylistScreen extends StatelessWidget {
                       ref.read(turnOnOffSongSelectionProvider.notifier).stop();
                       Navigator.pop(context);
                     },
-                    icon: Icon(Icons.arrow_back, color: AppColors.surfaceWhite),
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: AppColors.surfaceWhite,
+                    ),
                   );
                 },
               ),

@@ -7,6 +7,8 @@ import 'package:musify/core/extension/string_extention.dart';
 import 'package:musify/core/utils/app_validators.dart';
 import 'package:musify/core/widgets/buttons/primary_button.dart';
 import 'package:musify/core/utils/images.dart';
+import 'package:musify/core/widgets/custom_app_bar.dart';
+import 'package:musify/core/widgets/custom_scaffold.dart';
 import 'package:musify/core/widgets/custom_text_form_field.dart';
 import 'package:musify/core/widgets/snack_bars.dart';
 import 'package:musify/feature/auth/domain/usecase/login_usecase.dart';
@@ -41,7 +43,7 @@ class _LoginSignupState extends State<AuthScreen> {
     _cnfPassController = TextEditingController();
   }
 
-  Future<void> _validate(WidgetRef ref) async {
+  Future<void> _authenticate(WidgetRef ref) async {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState?.save();
       final authNotifier = ref.read(authProvider.notifier);
@@ -52,10 +54,7 @@ class _LoginSignupState extends State<AuthScreen> {
           _passController.text.trim(),
         );
         final result = await authNotifier.login(params);
-
-        if (!result.success && mounted) {
-          showAppSnackbar(context: context, result: result);
-        }
+        if (mounted) showAppSnackbar(context: context, result: result);
       } else {
         final SignupParams params = SignupParams(
           _nameController.text.trim().capitalize,
@@ -63,11 +62,15 @@ class _LoginSignupState extends State<AuthScreen> {
           _passController.text.trim(),
         );
         final result = await authNotifier.signup(params);
-        if (!result.success && mounted) {
-          showAppSnackbar(context: context, result: result);
-        }
+        if (mounted) showAppSnackbar(context: context, result: result);
       }
     }
+  }
+
+  Future<void> _googleSignIn(WidgetRef ref) async {
+    final result = await ref.read(authProvider.notifier).googleSignin();
+
+    if (mounted) showAppSnackbar(context: context, result: result);
   }
 
   @override
@@ -82,61 +85,41 @@ class _LoginSignupState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        top: false,
-        child: Column(
-          children: [
-            _buildAppBar(),
-            AppSpacing.h20,
-            _buildForm(),
-            AppSpacing.h20,
-            _buildToggleButton(),
-            AppSpacing.h12,
-          ],
-        ),
+    return CustomScaffold(
+      appBar: _buildAppBar(),
+      body: Column(
+        children: [
+          AppSpacing.h20,
+          _buildForm(),
+          AppSpacing.h20,
+          _buildToggleButton(),
+          AppSpacing.h12,
+        ],
       ),
     );
   }
 
-  Widget _buildAppBar() {
+  CustomAppBar _buildAppBar() {
     final colors = context.colors;
-    return Column(
-      children: [
-        Container(
-          height: MediaQuery.of(context).padding.top,
-          color: colors.surface,
+    return CustomAppBar(
+      leading: Container(
+        decoration: BoxDecoration(
+          color: colors.background,
+          shape: .circle,
+          boxShadow: [AppShadow.shadowLvl1(context)],
         ),
-        Container(
-          color: colors.surface,
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          child: Row(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: colors.background,
-                  shape: .circle,
-                  boxShadow: [AppShadow.shadowLvl1(context)],
-                ),
-                padding: EdgeInsets.all(8),
-                child: Image.asset(AppImages.logo, height: 35),
-              ),
-              AppSpacing.w8,
-              Flexible(
-                child: Text(
-                  _isLoginScreen ? 'Welcome Back 👋' : 'Create new account',
-                  style: context.text.displaySmall?.copyWith(
-                    color: colors.primary,
-                    letterSpacing: 1.1,
-                    fontFamily: 'Serif',
-                  ),
-                  textScaler: .noScaling,
-                ),
-              ),
-            ],
-          ),
+        padding: const EdgeInsets.all(8),
+        child: Image.asset(AppImages.logo, height: 35),
+      ),
+      title: Text(
+        _isLoginScreen ? 'Welcome Back 👋' : 'Create new account',
+        style: context.text.displaySmall?.copyWith(
+          color: colors.primary,
+          letterSpacing: 1.1,
+          fontFamily: 'Serif',
         ),
-      ],
+        textScaler: .noScaling,
+      ),
     );
   }
 
@@ -265,7 +248,7 @@ class _LoginSignupState extends State<AuthScreen> {
                 ),
 
                 AppSpacing.h20,
-                Row(
+                const Row(
                   children: [
                     Expanded(child: Divider()),
                     Text(' OR '),
@@ -274,15 +257,7 @@ class _LoginSignupState extends State<AuthScreen> {
                 ),
                 AppSpacing.h20,
 
-                PrimaryButton(
-                  onPressed: () {},
-                  elevation: 2,
-                  label: 'Continue with Google',
-                  backgroundColor: colors.surface,
-                  foregroundColor: colors.textPrimary,
-                  style: context.text.headlineMedium,
-                  leading: Image.asset(AppImages.google, height: 35),
-                ),
+                _buildGoogleAuthButton(),
               ],
             ),
           ),
@@ -297,9 +272,27 @@ class _LoginSignupState extends State<AuthScreen> {
         final authState = ref.watch(authProvider);
 
         return PrimaryButton(
-          onPressed: () => _validate(ref),
+          onPressed: () => _authenticate(ref),
           isLoading: authState.isLoading,
           label: _isLoginScreen ? 'Login' : 'Signup',
+        );
+      },
+    );
+  }
+
+  Widget _buildGoogleAuthButton() {
+    return Consumer(
+      builder: (context, ref, _) {
+        final auth = ref.watch(authProvider);
+        return PrimaryButton(
+          onPressed:() =>  _googleSignIn(ref),
+          elevation: 2,
+          isLoading: auth.isLoading,
+          label: 'Continue with Google',
+          backgroundColor: context.colors.surface,
+          foregroundColor: context.colors.textPrimary,
+          style: context.text.headlineMedium,
+          leading: Image.asset(AppImages.google, height: 35),
         );
       },
     );
@@ -321,7 +314,7 @@ class _LoginSignupState extends State<AuthScreen> {
             style: context.text.bodyMedium,
             children: [
               if (_isLoginScreen) ...[
-                TextSpan(text: 'New to '),
+                const TextSpan(text: 'New to '),
                 TextSpan(
                   text: 'Musify',
                   style: context.text.bodyMedium?.copyWith(
@@ -329,8 +322,8 @@ class _LoginSignupState extends State<AuthScreen> {
                   ),
                 ),
               ] else
-                TextSpan(text: 'Already have an account'),
-              TextSpan(text: '? '),
+                const TextSpan(text: 'Already have an account'),
+              const TextSpan(text: '? '),
               TextSpan(
                 text: _isLoginScreen ? 'Signup' : 'Login',
                 style: context.text.bodyMedium?.copyWith(

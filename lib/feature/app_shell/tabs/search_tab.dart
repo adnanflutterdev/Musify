@@ -6,8 +6,7 @@ import 'package:musify/feature/search/widgets/searched_songs.dart';
 import 'package:musify/core/utils/colors.dart';
 
 class SearchTab extends StatelessWidget {
-  const SearchTab({super.key,});
-
+  const SearchTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,7 @@ class SearchTab extends StatelessWidget {
             final searchedTextNotifier = ref.watch(
               searchedTextProvider.notifier,
             );
-           
+
             return Container(
               color: AppColors.surfaceDark,
               child: Padding(
@@ -34,7 +33,7 @@ class SearchTab extends StatelessWidget {
             );
           },
         ),
-        Expanded(child: SearchedSongs()),
+        const Expanded(child: SearchedSongs()),
       ],
     );
   }

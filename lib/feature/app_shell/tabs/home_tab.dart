@@ -21,7 +21,7 @@ class _HomeTabState extends ConsumerState<HomeTab> {
     List<PopupMenuItem> recentlyPlayedMenuItems = [
       PopupMenuItem(
         height: 40,
-        padding: EdgeInsets.all(0),
+        padding: const EdgeInsets.all(0),
         onTap: () {
           ref.read(turnOnOffSongSelectionProvider.notifier).start();
         },
@@ -31,7 +31,7 @@ class _HomeTabState extends ConsumerState<HomeTab> {
       ),
       PopupMenuItem(
         height: 40,
-        padding: EdgeInsets.all(0),
+        padding: const EdgeInsets.all(0),
         onTap: () {
           showDialog(
             context: context,
@@ -39,7 +39,9 @@ class _HomeTabState extends ConsumerState<HomeTab> {
               return AlertDialog(
                 title: Text(
                   'Clear History',
-                  style: context.text.bodyLarge?.copyWith(color: AppColors.onError),
+                  style: context.text.bodyLarge?.copyWith(
+                    color: AppColors.onError,
+                  ),
                 ),
                 content: Text(
                   'Are you sure to delete all recently played songs?',

@@ -24,8 +24,8 @@ class SongSelectionBar extends StatelessWidget {
         return isSongSelectionOn
             ? Container(
                 height: 50,
-                padding: EdgeInsets.symmetric(horizontal: 10.0),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                decoration: const BoxDecoration(
                   color: AppColors.surfaceDark,
                   border: Border(
                     top: BorderSide(color: AppColors.surfaceMuted, width: 0.7),

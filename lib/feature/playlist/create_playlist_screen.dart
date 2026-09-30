@@ -110,7 +110,7 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
             children: [
               CustomAppBar(
                 title: appBarText('Create playlist'),
-                extraPopFunction: clearProvider,
+                onTap: clearProvider,
               ),
               AppSpacing.h12,
               Padding(
@@ -157,7 +157,10 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
                           ),
                         );
                       },
-                      icon: Icon(Icons.add, color: AppColors.surfaceMuted),
+                      icon: const Icon(
+                        Icons.add,
+                        color: AppColors.surfaceMuted,
+                      ),
                     ),
                   ],
                 ),
@@ -174,7 +177,7 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
                               Song song = addedSongs[index];
                               return ListTile(
                                 minTileHeight: 50,
-                                contentPadding: EdgeInsets.symmetric(
+                                contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 8.0,
                                   vertical: 3.0,
                                 ),
@@ -182,12 +185,16 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
                                   imageUrl: song.coverImage,
                                   placeholder: (context, url) => CircleAvatar(
                                     radius: 23,
-                                    backgroundImage: AssetImage(AppImages.coverImage),
+                                    backgroundImage: AssetImage(
+                                      AppImages.coverImage,
+                                    ),
                                   ),
                                   errorWidget: (context, url, error) =>
                                       CircleAvatar(
                                         radius: 23,
-                                        backgroundImage: AssetImage(AppImages.coverImage),
+                                        backgroundImage: AssetImage(
+                                          AppImages.coverImage,
+                                        ),
                                       ),
                                   imageBuilder: (context, imageProvider) =>
                                       CircleAvatar(
@@ -203,7 +210,7 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
                                       song,
                                     );
                                   },
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.cancel,
                                     color: AppColors.surfaceMuted,
                                   ),

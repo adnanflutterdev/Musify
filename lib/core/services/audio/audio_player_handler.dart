@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:audio_service/audio_service.dart';
 import 'package:audio_session/audio_session.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -56,7 +57,7 @@ class AudioPlayerHandler extends BaseAudioHandler
   Future<void> _init() async {
     // Set up audio Session
     final session = await AudioSession.instance;
-    await session.configure(AudioSessionConfiguration.music());
+    await session.configure(const AudioSessionConfiguration.music());
 
     // Forward JustAudio states to AudioService
     _player.playbackEventStream.listen((event) {
@@ -155,7 +156,10 @@ class AudioPlayerHandler extends BaseAudioHandler
 
     // convert to AudioSources
     final sources = _playList
-        .map((mediaItem) => AudioSource.uri(Uri.parse(mediaItem.id),tag: mediaItem))
+        .map(
+          (mediaItem) =>
+              AudioSource.uri(Uri.parse(mediaItem.id), tag: mediaItem),
+        )
         .toList();
 
     // set playlist to player

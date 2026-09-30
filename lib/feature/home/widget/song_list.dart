@@ -20,7 +20,7 @@ class SongList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (songs.isEmpty) {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
 
     return Padding(
