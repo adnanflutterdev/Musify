@@ -6,12 +6,10 @@ import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/widgets/buttons/custom_button.dart';
 import 'package:musify/core/widgets/custom_text_form_field.dart';
-import 'package:musify/feature/playlist/create_playlist_screen.dart';
+import 'package:musify/feature/playlist/presentation/screens/create_playlist_screen.dart';
 import 'package:musify/core/services/providers/playlist_provider.dart';
 import 'package:musify/core/utils/colors.dart';
-import 'package:musify/core/utils/text.dart';
-import 'package:musify/core/widgets/custom_app_bar.dart';
-import 'package:musify/feature/home/widget/song_list.dart';
+import 'package:musify/feature/home/presentation/widget/song_list.dart';
 
 class PlaylistTab extends ConsumerWidget {
   const PlaylistTab({super.key});
@@ -223,14 +221,6 @@ class PlaylistTab extends ConsumerWidget {
 
     return Column(
       children: [
-        CustomAppBar(
-          title: appBarText('My Playlists'),
-          hasLeading: false,
-          trailing: IconButton(
-            onPressed: push,
-            icon: const Icon(Icons.add_sharp, color: AppColors.surfaceWhite),
-          ),
-        ),
         if (playlists.isNotEmpty)
           Expanded(
             child: ListView.builder(
@@ -250,15 +240,13 @@ class PlaylistTab extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('No playlists, style: context.textTheme.bodySmall'),
+                Text('No playlists', style: context.text.bodySmall),
                 TextButton(
                   onPressed: push,
                   style: TextButton.styleFrom(
                     backgroundColor: AppColors.surfaceVariant,
                   ),
-                  child: const Text(
-                    'Create playlist, style: context.textTheme.bodySmall',
-                  ),
+                  child: Text('Create playlist', style: context.text.bodySmall),
                 ),
               ],
             ),

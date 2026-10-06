@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musify/feature/auth/presentation/screens/email_verification_screen.dart';
-import 'package:musify/feature/home/home_screen.dart';
+import 'package:musify/feature/app/presentation/screen/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:musify/feature/auth/presentation/screens/auth_screen.dart';
 

@@ -102,15 +102,7 @@ class _LoginSignupState extends State<AuthScreen> {
   CustomAppBar _buildAppBar() {
     final colors = context.colors;
     return CustomAppBar(
-      leading: Container(
-        decoration: BoxDecoration(
-          color: colors.background,
-          shape: .circle,
-          boxShadow: [AppShadow.shadowLvl1(context)],
-        ),
-        padding: const EdgeInsets.all(8),
-        child: Image.asset(AppImages.logo, height: 35),
-      ),
+      buildAppLogo: true,
       title: Text(
         _isLoginScreen ? 'Welcome Back 👋' : 'Create new account',
         style: context.text.displaySmall?.copyWith(
@@ -285,7 +277,7 @@ class _LoginSignupState extends State<AuthScreen> {
       builder: (context, ref, _) {
         final auth = ref.watch(authProvider);
         return PrimaryButton(
-          onPressed:() =>  _googleSignIn(ref),
+          onPressed: () => _googleSignIn(ref),
           elevation: 2,
           isLoading: auth.isLoading,
           label: 'Continue with Google',

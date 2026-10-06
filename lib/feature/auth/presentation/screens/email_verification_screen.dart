@@ -4,7 +4,6 @@ import 'package:musify/core/const/app_shadow.dart';
 import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/di/di.dart';
 import 'package:musify/core/extension/app_theme_extention.dart';
-import 'package:musify/core/utils/images.dart';
 import 'package:musify/core/widgets/buttons/primary_button.dart';
 import 'package:musify/core/widgets/custom_app_bar.dart';
 import 'package:musify/core/widgets/custom_scaffold.dart';
@@ -39,15 +38,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
 
     return CustomScaffold(
       appBar: CustomAppBar(
-        leading: Container(
-          decoration: BoxDecoration(
-            color: colors.background,
-            shape: BoxShape.circle,
-            boxShadow: [AppShadow.shadowLvl1(context)],
-          ),
-          padding: const EdgeInsets.all(8),
-          child: Image.asset(AppImages.logo, height: 35),
-        ),
+        buildAppLogo: true,
         title: Text(
           'Verify email',
           style: context.text.displaySmall?.copyWith(
@@ -232,8 +223,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                   const SizedBox(height: 6),
 
                   TextButton(
-                    onPressed: () {
-                    },
+                    onPressed: () {},
                     child: Text(
                       'Resend email',
                       style: context.text.bodyMedium?.copyWith(

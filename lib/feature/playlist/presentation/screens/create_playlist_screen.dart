@@ -87,6 +87,7 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
     void clearProvider() {
       turnOnOffSongSelectionNotifier.stop();
       songSelectionNotifer.clear();
+      Navigator.pop(context);
     }
 
     return PopScope(

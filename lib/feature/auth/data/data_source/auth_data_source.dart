@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:musify/feature/auth/domain/usecase/login_usecase.dart';
 import 'package:musify/feature/auth/domain/usecase/signup_usecase.dart';
-import 'package:musify/feature/user/data/models/user_data.dart';
+import 'package:musify/feature/account/data/models/user_data.dart';
 import 'package:musify/secrets.dart';
 
 class AuthDataSource {

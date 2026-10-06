@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:musify/core/utils/model_helper.dart';
+import 'package:musify/feature/account/data/models/configs/avatar.dart';
+import 'package:musify/feature/account/data/models/configs/subscription.dart';
 
 enum AccountType { user, creator, admin }
 
 extension AccountTypeX on AccountType {
- static AccountType accountType(String type) =>
+  static AccountType accountType(String type) =>
       AccountType.values.firstWhere((t) => t.name == type);
 }
 
@@ -14,12 +17,11 @@ class UserData {
   final String email;
   final DateTime? dob;
   final String? gender;
-  final String? userAvatar;
+  final Avatar? userAvatar;
   final String? bio;
 
   final AccountType accountType;
-  final bool isVerified;
-  final bool isPremium;
+  final SubscriptionPlan? subscription;
 
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -35,27 +37,29 @@ class UserData {
     this.userAvatar,
     required this.bio,
     required this.accountType,
-    required this.isVerified,
-    required this.isPremium,
+    this.subscription,
     required this.createdAt,
     required this.updatedAt,
     required this.lastActiveAt,
   });
 
-  factory UserData.setNewUser({required String uid,required String name,required String email}) {
+  factory UserData.setNewUser({
+    required String uid,
+    required String name,
+    required String email,
+  }) {
     final now = DateTime.now();
     return UserData(
       uid: uid,
       name: name,
-      username: name.split('@').first,
+      username: email.split('@').first,
       email: email,
       dob: null,
       gender: null,
       userAvatar: null,
       bio: null,
       accountType: AccountType.user,
-      isVerified: false,
-      isPremium: true,
+      subscription: null,
       createdAt: now,
       updatedAt: now,
       lastActiveAt: now,
@@ -70,24 +74,27 @@ class UserData {
       name: data['name'] ?? '',
       username: data['username'] ?? '',
       email: data['email'] ?? '',
-      dob:  _timestampToDateTime(data['dob']),
+      dob: parseDate(data['dob']),
       gender: data['gender'],
-      userAvatar: data['userAvatar'],
+      userAvatar: data['userAvatar'] != null
+          ? Avatar.fromFirebase(data['userAvatar'])
+          : null,
       bio: data['bio'],
 
       accountType: AccountTypeX.accountType(data['accountType']),
-      isVerified: data['isVerified'] ?? false,
-      isPremium: data['isPremium'] ?? false,
+      subscription: data['subscription'] != null
+          ? SubscriptionPlan.fromJson(data['subscription'])
+          : null,
 
-      createdAt: _timestampToDateTime(data['createdAt']),
-      updatedAt: _timestampToDateTime(data['updatedAt']),
-      lastActiveAt: _timestampToDateTime(data['lastActiveAt']),
+      createdAt: parseDate(data['createdAt']),
+      updatedAt: parseDate(data['updatedAt']),
+      lastActiveAt: parseDate(data['lastActiveAt']),
     );
   }
 
   Map<String, dynamic> toFirestore() {
     return {
-      'uid':uid,
+      'uid': uid,
       'name': name,
       'username': username,
       'email': email,
@@ -97,8 +104,7 @@ class UserData {
       'bio': bio,
 
       'accountType': accountType.name,
-      'isVerified': isVerified,
-      'isPremium': isPremium,
+      'subscription': subscription,
 
       'createdAt': createdAt != null ? Timestamp.fromDate(createdAt!) : null,
       'updatedAt': updatedAt != null ? Timestamp.fromDate(updatedAt!) : null,
@@ -108,49 +114,45 @@ class UserData {
     };
   }
 
-  static DateTime? _timestampToDateTime(dynamic value) {
-    if (value is Timestamp) {
-      return value.toDate();
-    }
-
-    if (value is DateTime) {
-      return value;
-    }
-
-    return null;
-  }
-
-  UserData copyWith({
-    String? uid,
+ static Map<String, dynamic> update({
     String? name,
     String? username,
     String? email,
     DateTime? dob,
     String? gender,
-    String? userAvatar,
+    Avatar? userAvatar,
     String? bio,
     AccountType? accountType,
-    bool? isVerified,
-    bool? isPremium,
+    SubscriptionPlan? subscription,
     DateTime? createdAt,
     DateTime? updatedAt,
     DateTime? lastActiveAt,
   }) {
-    return UserData(
-      uid: uid ?? this.uid,
-      name: name ?? this.name,
-      username: username ?? this.username,
-      email: email ?? this.email,
-      dob: dob ?? this.dob,
-      gender: gender ?? this.gender,
-      userAvatar: userAvatar ?? this.userAvatar,
-      bio: bio ?? this.bio,
-      accountType: accountType ?? this.accountType,
-      isVerified: isVerified ?? this.isVerified,
-      isPremium: isPremium ?? this.isPremium,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      lastActiveAt: lastActiveAt ?? this.lastActiveAt,
-    );
+    return {
+      'name': ?name,
+      'username': ?username,
+      'email': ?email,
+      'dob': ?dob,
+      'gender': ?gender,
+      'userAvatar': ?userAvatar,
+      'bio': ?bio,
+      'accountType': ?accountType,
+      'subscription': ?subscription,
+      'createdAt': ?createdAt,
+      'updatedAt': ?updatedAt,
+      'lastActiveAt': ?lastActiveAt,
+      if (name != null) 'name': name,
+    if (username != null) 'username': username,
+    if (email != null) 'email': email,
+    if (dob != null) 'dob': dob,
+    if (gender != null) 'gender': gender,
+    if (userAvatar != null) 'userAvatar': userAvatar,
+    if (bio != null) 'bio': bio,
+    if (accountType != null) 'accountType': accountType,
+    if (subscription != null) 'subscription': subscription,
+    if (createdAt != null) 'createdAt': createdAt,
+    if (updatedAt != null) 'updatedAt': updatedAt,
+    if (lastActiveAt != null) 'lastActiveAt': lastActiveAt,
+    };
   }
 }

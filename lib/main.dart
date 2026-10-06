@@ -68,6 +68,7 @@ class Musify extends StatelessWidget {
       value: const SystemUiOverlayStyle(
         statusBarBrightness: .light,
         statusBarColor: AppThemeColors.lightSurface,
+        systemNavigationBarColor: AppThemeColors.darkBackground,
       ),
       child: MaterialApp(
         title: 'Musify',

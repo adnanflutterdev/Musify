@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musify/feature/song/providers/song_selection_provider.dart';
-import 'package:musify/feature/app_shell/tabs/search_tab.dart';
+import 'package:musify/feature/search/presentation/screens/search_tab.dart';
 import 'package:musify/core/utils/colors.dart';
 import 'package:musify/core/utils/text.dart';
 import 'package:musify/core/widgets/custom_app_bar.dart';

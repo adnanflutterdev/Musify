@@ -9,7 +9,7 @@ import 'package:musify/core/utils/colors.dart';
 import 'package:musify/core/utils/text.dart';
 import 'package:musify/core/widgets/buttons/more_button.dart';
 import 'package:musify/core/widgets/buttons/play_button.dart';
-import 'package:musify/feature/search/widgets/song_tile.dart';
+import 'package:musify/feature/search/presentation/widgets/song_tile.dart';
 import 'package:musify/feature/song/widgets/song_selection_bar.dart';
 import 'package:musify/feature/song/widgets/song_track.dart';
 

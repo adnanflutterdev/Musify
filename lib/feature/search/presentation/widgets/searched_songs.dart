@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/feature/song/models/song.dart';
 import 'package:musify/feature/song/providers/song_search_provider.dart';
 import 'package:musify/feature/song/providers/song_stream_provider.dart';
-import 'package:musify/feature/search/widgets/song_tile.dart';
+import 'package:musify/feature/search/presentation/widgets/song_tile.dart';
 
 class SearchedSongs extends ConsumerWidget {
   const SearchedSongs({super.key});

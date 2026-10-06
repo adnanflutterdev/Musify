@@ -6,7 +6,7 @@ import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/utils/colors.dart';
 import 'package:musify/feature/song/providers/song_selection_provider.dart';
 import 'package:musify/feature/song/providers/songs_provider.dart';
-import 'package:musify/feature/home/widget/song_list.dart';
+import 'package:musify/feature/home/presentation/widget/song_list.dart';
 
 class HomeTab extends ConsumerStatefulWidget {
   const HomeTab({super.key});

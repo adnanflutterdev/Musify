@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:musify/feature/playlist/playlist_screen.dart';
+import 'package:musify/feature/playlist/presentation/screens/playlist_screen.dart';
 import 'package:musify/feature/song/screens/song_details_screen.dart';
 import 'package:musify/feature/song/models/song.dart';
 import 'package:musify/core/utils/colors.dart';

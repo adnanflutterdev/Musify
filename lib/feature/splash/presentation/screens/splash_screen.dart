@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:musify/core/utils/text.dart';
-import 'package:musify/core/utils/colors.dart';
 import 'package:musify/core/utils/images.dart';
 import 'package:musify/core/utils/screen_size.dart';
+import 'package:musify/core/widgets/custom_scaffold.dart';
+import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/feature/auth/presentation/screens/auth_state.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -49,8 +49,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(toolbarHeight: 1),
+    return CustomScaffold(
       body: SafeArea(
         child: Container(
           width: ScreenSize.width,
@@ -60,8 +59,8 @@ class _SplashScreenState extends State<SplashScreen>
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                AppColors.surface,
-                AppColors.surface.withValues(alpha: 0.7),
+                context.colors.background,
+                context.colors.background.withValues(alpha: 0.7),
               ],
             ),
           ),
@@ -73,12 +72,11 @@ class _SplashScreenState extends State<SplashScreen>
                   child: Image.asset(AppImages.logo),
                 ),
               ),
-              Positioned(
+              const Positioned(
+                left: 0,
+                right: 0,
                 bottom: 10,
-                child: SizedBox(
-                  width: ScreenSize.width,
-                  child: splashScreenText('Musify yourself...'),
-                ),
+                child: Text('Musify yourself...',textAlign: .center,),
               ),
             ],
           ),

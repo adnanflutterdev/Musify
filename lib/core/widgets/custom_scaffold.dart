@@ -8,8 +8,10 @@ class CustomScaffold extends StatelessWidget {
     this.backgroundColor,
     this.floatingActionButton,
     this.appBar,
+    this.footer,
   });
   final Widget body;
+  final Widget? footer;
   final Color? backgroundColor;
   final Widget? floatingActionButton;
   final CustomAppBar? appBar;
@@ -22,7 +24,11 @@ class CustomScaffold extends StatelessWidget {
         child: Column(
           children: [
             ?appBar,
-            Expanded(child: body),
+            Expanded(child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: body,
+            )),
+            ?footer,
           ],
         ),
       ),

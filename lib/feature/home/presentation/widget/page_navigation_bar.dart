@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/core/const/app_spacing.dart';
-import 'package:musify/core/services/providers/tabs_provider.dart';
+import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/utils/colors.dart';
 import 'package:musify/core/utils/screen_size.dart';
+import 'package:musify/feature/app/presentation/provider/tab_provider.dart';
 
-class PageNavigationBar extends ConsumerWidget {
-  const PageNavigationBar({super.key, required this.pageController});
+class PageNavigationBar extends StatelessWidget {
+  const PageNavigationBar({
+    super.key,
+    required this.tabIndex,
+    required this.pageController,
+  });
+  final int tabIndex;
   final PageController pageController;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    int currentTab = ref.watch(tabProvider);
+  Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.surfaceDark,
-        border: Border(
+      decoration: BoxDecoration(
+        color: context.colors.surface,
+        border: const Border(
           top: BorderSide(color: AppColors.surfaceMuted, width: 0.7),
           bottom: BorderSide(color: AppColors.surfaceMuted, width: 0.7),
         ),
@@ -23,9 +26,9 @@ class PageNavigationBar extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: List.generate(
-          tabItems.length,
-          (index) => GestureDetector(
+        children: List.generate(tabItems.length, (index) {
+          final tab = tabItems[index];
+          return GestureDetector(
             onTap: () {
               pageController.animateToPage(
                 index,
@@ -43,20 +46,15 @@ class PageNavigationBar extends ConsumerWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
-                      tabItems[index].first,
-                      color: currentTab == index
-                          ? AppColors.primary
-                          : AppColors.surfaceWhite,
-                      size: currentTab == index ? 33 : 30,
+                      tab.icon,
+                      color: tabIndex == index ? AppColors.primary : null,
+                      size: tabIndex == index ? 33 : 30,
                     ),
-                    AppSpacing.w4,
                     Text(
-                      tabItems[index].last,
+                      tab.label,
                       style: TextStyle(
-                        color: currentTab == index
-                            ? AppColors.primary
-                            : AppColors.surfaceWhite,
-                        fontWeight: currentTab == index
+                        color: tabIndex == index ? AppColors.primary : null,
+                        fontWeight: tabIndex == index
                             ? FontWeight.bold
                             : FontWeight.normal,
                         fontSize: 12,
@@ -66,8 +64,8 @@ class PageNavigationBar extends ConsumerWidget {
                 ),
               ),
             ),
-          ),
-        ),
+          );
+        }),
       ),
     );
   }
