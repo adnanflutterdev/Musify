@@ -1,20 +1,24 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:musify/core/widgets/custom_scaffold.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:musify/core/widgets/async_when.dart';
+import 'package:musify/feature/account/presentation/provider/user_data_provider.dart';
 
-class AccountTab extends StatefulWidget {
+class AccountTab extends ConsumerStatefulWidget {
   const AccountTab({super.key});
 
   @override
-  State<AccountTab> createState() => _AccountTabState();
+  ConsumerState<AccountTab> createState() => _AccountTabState();
 }
 
-class _AccountTabState extends State<AccountTab> {
+class _AccountTabState extends ConsumerState<AccountTab> {
   @override
   Widget build(BuildContext context) {
-    return const CustomScaffold(body: Column(children: [
-        ],
-      ));
+    final user = ref.watch(getUserDataProvider);
+    return AsyncWhen(
+      value: user,
+      onData: (data) {
+        return Container();
+      },
+    );
   }
 }

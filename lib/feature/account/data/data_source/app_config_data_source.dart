@@ -7,17 +7,17 @@ class AppConfigDataSource {
 
   AppConfigDataSource(this.firestore);
 
-  Future<AppConfig?> getAppConfig() async {
+  Future<GeneralConfigs?> getGeneralConfigs() async {
     final appConfig = await firestore
         .collection('appConfigs')
         .doc('general')
         .get();
 
     if (!appConfig.exists || appConfig.data() == null) return null;
-    return AppConfig.fromJson(appConfig.data()!);
+    return GeneralConfigs.fromJson(appConfig.data()!);
   }
 
-  Future<Avatar> getAppAvatars() async {
+  Future<Avatar?> getAppAvatars() async {
     final avatars = await firestore
         .collection('appConfigs')
         .doc('avatars')

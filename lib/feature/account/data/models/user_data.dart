@@ -100,11 +100,11 @@ class UserData {
       'email': email,
       'dob': dob != null ? Timestamp.fromDate(dob!) : null,
       'gender': gender,
-      'userAvatar': userAvatar,
+      'userAvatar': userAvatar?.toFirebase(),
       'bio': bio,
 
       'accountType': accountType.name,
-      'subscription': subscription,
+      'subscription': subscription?.toFirebase(),
 
       'createdAt': createdAt != null ? Timestamp.fromDate(createdAt!) : null,
       'updatedAt': updatedAt != null ? Timestamp.fromDate(updatedAt!) : null,
@@ -114,7 +114,7 @@ class UserData {
     };
   }
 
- static Map<String, dynamic> update({
+  static Map<String, dynamic> update({
     String? name,
     String? username,
     String? email,
@@ -141,18 +141,6 @@ class UserData {
       'createdAt': ?createdAt,
       'updatedAt': ?updatedAt,
       'lastActiveAt': ?lastActiveAt,
-      if (name != null) 'name': name,
-    if (username != null) 'username': username,
-    if (email != null) 'email': email,
-    if (dob != null) 'dob': dob,
-    if (gender != null) 'gender': gender,
-    if (userAvatar != null) 'userAvatar': userAvatar,
-    if (bio != null) 'bio': bio,
-    if (accountType != null) 'accountType': accountType,
-    if (subscription != null) 'subscription': subscription,
-    if (createdAt != null) 'createdAt': createdAt,
-    if (updatedAt != null) 'updatedAt': updatedAt,
-    if (lastActiveAt != null) 'lastActiveAt': lastActiveAt,
     };
   }
 }
