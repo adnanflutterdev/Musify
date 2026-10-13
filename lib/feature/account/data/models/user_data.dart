@@ -1,13 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/utils/model_helper.dart';
 import 'package:musify/feature/account/data/models/configs/avatar.dart';
 import 'package:musify/feature/account/data/models/configs/subscription.dart';
 
 enum AccountType { user, creator, admin }
 
+enum Gender { male, female, others }
+
 extension AccountTypeX on AccountType {
   static AccountType accountType(String type) =>
       AccountType.values.firstWhere((t) => t.name == type);
+}
+
+extension GenderX on Gender {
+  static Gender gender(String type) =>
+      Gender.values.firstWhere((g) => g.name == type);
 }
 
 class UserData {
@@ -16,8 +25,8 @@ class UserData {
   final String username;
   final String email;
   final DateTime? dob;
-  final String? gender;
-  final Avatar? userAvatar;
+  final Gender? gender;
+  final AvatarData? userAvatar;
   final String? bio;
 
   final AccountType accountType;
@@ -52,7 +61,7 @@ class UserData {
     return UserData(
       uid: uid,
       name: name,
-      username: email.split('@').first,
+      username: '',
       email: email,
       dob: null,
       gender: null,
@@ -75,9 +84,9 @@ class UserData {
       username: data['username'] ?? '',
       email: data['email'] ?? '',
       dob: parseDate(data['dob']),
-      gender: data['gender'],
+      gender: data['gender'] != null ? GenderX.gender(data['gender']) : null,
       userAvatar: data['userAvatar'] != null
-          ? Avatar.fromFirebase(data['userAvatar'])
+          ? AvatarData.fromFirebase(data['userAvatar'])
           : null,
       bio: data['bio'],
 
@@ -99,7 +108,7 @@ class UserData {
       'username': username,
       'email': email,
       'dob': dob != null ? Timestamp.fromDate(dob!) : null,
-      'gender': gender,
+      'gender': gender?.name,
       'userAvatar': userAvatar?.toFirebase(),
       'bio': bio,
 
@@ -114,13 +123,30 @@ class UserData {
     };
   }
 
+  Icon getAccountIcon({required BuildContext context, double? size}) {
+    switch (accountType) {
+      case AccountType.user:
+        return Icon(Icons.person, size: size ?? 18);
+
+      case AccountType.creator:
+        return Icon(Icons.mic, size: size ?? 18, color: context.colors.success);
+
+      case AccountType.admin:
+        return Icon(
+          Icons.admin_panel_settings,
+          size: size ?? 18,
+          color: context.colors.primary,
+        );
+    }
+  }
+
   static Map<String, dynamic> update({
     String? name,
     String? username,
     String? email,
     DateTime? dob,
-    String? gender,
-    Avatar? userAvatar,
+    Gender? gender,
+    AvatarData? userAvatar,
     String? bio,
     AccountType? accountType,
     SubscriptionPlan? subscription,
@@ -132,15 +158,17 @@ class UserData {
       'name': ?name,
       'username': ?username,
       'email': ?email,
-      'dob': ?dob,
-      'gender': ?gender,
-      'userAvatar': ?userAvatar,
+      'dob': ?dob != null ? Timestamp.fromDate(dob) : null,
+      'gender': ?gender?.name,
+      'userAvatar': ?userAvatar?.toFirebase(),
       'bio': ?bio,
-      'accountType': ?accountType,
-      'subscription': ?subscription,
-      'createdAt': ?createdAt,
-      'updatedAt': ?updatedAt,
-      'lastActiveAt': ?lastActiveAt,
+      'accountType': ?accountType?.name,
+      'subscription': ?subscription?.toFirebase(),
+      'createdAt': ?createdAt != null ? Timestamp.fromDate(createdAt) : null,
+      'updatedAt': ?updatedAt != null ? Timestamp.fromDate(updatedAt) : null,
+      'lastActiveAt': ?lastActiveAt != null
+          ? Timestamp.fromDate(lastActiveAt)
+          : null,
     };
   }
 }

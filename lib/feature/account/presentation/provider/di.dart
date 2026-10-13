@@ -4,9 +4,13 @@ import 'package:musify/feature/account/data/data_source/app_config_data_source.d
 import 'package:musify/feature/account/data/data_source/user_data_source.dart';
 import 'package:musify/feature/account/data/repository/app_config_repository_impl.dart';
 import 'package:musify/feature/account/data/repository/user_repository_impl.dart';
+import 'package:musify/feature/account/domain/usecase/delete_username_usecase.dart';
 import 'package:musify/feature/account/domain/usecase/get_avatar_usecase.dart';
 import 'package:musify/feature/account/domain/usecase/get_general_configs_usecase.dart';
 import 'package:musify/feature/account/domain/usecase/get_user_data_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/is_username_available_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/set_usename_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/update_user_data_usecase.dart';
 
 final appConfigDataSourceProvider = Provider((ref) {
   final firestore = ref.read(firestoreProvider);
@@ -42,4 +46,24 @@ final getAvatarUsecaseProvider = Provider((ref) {
 final getUserDataUsecaseProvider = Provider((ref) {
   final userRepository = ref.read(userRepositoryProvider);
   return GetUserDataUsecase(userRepository);
+});
+
+final updateUserDataUsecaseProvider = Provider((ref) {
+  final userRepository = ref.read(userRepositoryProvider);
+  return UpdateUserDataUsecase(userRepository);
+});
+
+final isUsernameAvailabeUsecaseProvider = Provider((ref) {
+  final userRepository = ref.read(userRepositoryProvider);
+  return IsUsernameAvailableUsecase(userRepository);
+});
+
+final deleteUsernameUsecaseProvider = Provider((ref) {
+  final userRepository = ref.read(userRepositoryProvider);
+  return DeleteUsernameUsecase(userRepository);
+});
+
+final setUsernameUsecaseProvider = Provider((ref) {
+  final userRepository = ref.read(userRepositoryProvider);
+  return SetUsenameUsecase(userRepository);
 });

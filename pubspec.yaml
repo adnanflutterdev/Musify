@@ -25,6 +25,8 @@ dependencies:
   path_provider: ^2.1.6
   uuid: ^4.6.0
   google_sign_in: ^7.2.0
+  http: ^1.6.0
+  intl: ^0.20.3
 
   # firebase_storage: ^13.0.6
 dev_dependencies:
@@ -54,4 +56,9 @@ flutter:
           weight: 400
         - asset: assets/fonts/poppins_bold.ttf
           weight: 700
+    - family: Poppins Italic
+      fonts:
+        - asset: assets/fonts/poppins_italic.ttf
+          weight: 400
+        
 

@@ -66,9 +66,16 @@ class Musify extends StatelessWidget {
     ScreenSize.init(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
-        statusBarBrightness: .light,
+        statusBarBrightness: Brightness.light,
         statusBarColor: AppThemeColors.lightSurface,
-        systemNavigationBarColor: AppThemeColors.darkBackground,
+
+        // System navigation bar
+        systemNavigationBarColor: Colors.transparent,
+        systemNavigationBarDividerColor: Colors.transparent,
+        systemNavigationBarIconBrightness: Brightness.light,
+
+        // Allow content to draw behind the system navigation bar
+        systemNavigationBarContrastEnforced: false,
       ),
       child: MaterialApp(
         title: 'Musify',

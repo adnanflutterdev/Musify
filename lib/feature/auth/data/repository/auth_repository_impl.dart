@@ -89,14 +89,14 @@ class AuthRepositoryImpl implements AuthRepository {
       await dataSource.sendEmailVerificationLink();
       return Result.success(
         data: null,
-        message: 'Email verification link is sent to your email',
+        message: 'Email verification link is sent to your email. If not fount check in spam folder.\nYou need to login again.',
       );
     } on FirebaseException catch (e) {
       return Result.failure(
-        e.message ?? 'Email verification link is sent to your email',
+        e.message ?? 'Email verification link is sent to your email. If not fount check in spam folder.\nYou need to login again.',
       );
     } catch (e) {
-      return Result.failure('Email verification link is sent to your email');
+      return Result.failure('Email verification link is sent to your email. If not fount check in spam folder.\nYou need to login again.');
     }
   }
 }

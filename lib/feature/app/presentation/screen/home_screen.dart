@@ -7,6 +7,7 @@ import 'package:musify/core/utils/app_dialogs.dart';
 import 'package:musify/core/widgets/custom_app_bar.dart';
 import 'package:musify/core/widgets/custom_scaffold.dart';
 import 'package:musify/core/widgets/custom_text_form_field.dart';
+import 'package:musify/feature/account/presentation/provider/edit_profile_provider.dart';
 import 'package:musify/feature/app/presentation/provider/tab_provider.dart';
 import 'package:musify/feature/home/presentation/screens/home_tab.dart';
 import 'package:musify/feature/playlist/presentation/screens/create_playlist_screen.dart';
@@ -79,6 +80,7 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
       canPop: false,
       onPopInvokedWithResult: (didPop, _) => _onPop(didPop, tabIndex),
       child: CustomScaffold(
+        haveBottomPadding: false,
         appBar: _buildAppBar(tabIndex),
         body: Column(
           children: [
@@ -148,13 +150,16 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
           ),
         );
       case == 3:
+        final editingProfile = ref.watch(editProfileProvider);
+        final editProfileNotifier = ref.watch(editProfileProvider.notifier);
         return CustomAppBar(
           hasLeading: false,
           title: Text('Account', style: context.text.displaySmall),
           trailing: IconButton(
             onPressed: () {
+              editProfileNotifier.toggle();
             },
-            icon: const Icon(Icons.edit),
+            icon: Icon(editingProfile ? Icons.close : Icons.edit),
           ),
         );
       default:

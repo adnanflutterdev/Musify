@@ -17,55 +17,65 @@ class PageNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: context.colors.surface,
-        border: const Border(
-          top: BorderSide(color: AppColors.surfaceMuted, width: 0.7),
-          bottom: BorderSide(color: AppColors.surfaceMuted, width: 0.7),
+        gradient: LinearGradient(
+          begin: .topCenter,
+          end: .bottomCenter,
+          stops: context.colors.gradientStopsR,
+          colors: context.colors.gradient.reversed.toList(),
+        ),
+
+        border: Border(
+          top: BorderSide(color: context.colors.border, width: 0.7),
         ),
       ),
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: List.generate(tabItems.length, (index) {
-          final tab = tabItems[index];
-          return GestureDetector(
-            onTap: () {
-              pageController.animateToPage(
-                index,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeIn,
-              );
-            },
-            child: Container(
-              width: ScreenSize.width / 4,
+      padding: const EdgeInsets.only(top: 5.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: List.generate(tabItems.length, (index) {
+              final tab = tabItems[index];
+              return GestureDetector(
+                onTap: () {
+                  pageController.animateToPage(
+                    index,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeIn,
+                  );
+                },
+                child: Container(
+                  width: ScreenSize.width / 4,
 
-              color: AppColors.surfaceDark,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      tab.icon,
-                      color: tabIndex == index ? AppColors.primary : null,
-                      size: tabIndex == index ? 33 : 30,
+                  color: context.colors.transparent,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          tab.icon,
+                          color: tabIndex == index ? AppColors.primary : null,
+                          size: tabIndex == index ? 33 : 30,
+                        ),
+                        Text(
+                          tab.label,
+                          style: TextStyle(
+                            color: tabIndex == index ? AppColors.primary : null,
+                            fontWeight: tabIndex == index
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      tab.label,
-                      style: TextStyle(
-                        color: tabIndex == index ? AppColors.primary : null,
-                        fontWeight: tabIndex == index
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          );
-        }),
+              );
+            }),
+          ),
+          const SizedBox(height: kBottomNavigationBarHeight - 10),
+        ],
       ),
     );
   }

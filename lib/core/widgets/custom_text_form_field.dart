@@ -36,6 +36,7 @@ class AppTextField extends StatelessWidget {
     this.maxLengths,
     this.forceErrorText,
     this.header,
+    this.contentPadding,
   });
   final String? label;
   final double iconSize;
@@ -66,6 +67,7 @@ class AppTextField extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   final String? forceErrorText;
   final Widget? header;
+  final EdgeInsets? contentPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +88,7 @@ class AppTextField extends StatelessWidget {
                     ),
                   ),
                 ),
-              const Spacer(),
+              AppSpacing.w12,
               ?secondaryLabel,
             ],
           ),
@@ -116,11 +118,15 @@ class AppTextField extends StatelessWidget {
               color: context.colors.textSecondary,
               fontWeight: FontWeight.w400,
             ),
+            prefixIconConstraints: prefixIcon != null
+                ? const BoxConstraints(minWidth: 40)
+                : null,
+            contentPadding:
+                contentPadding ??
+                const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+
             prefixIcon: prefixIcon != null
-                ? IconButton(
-                    onPressed: () {},
-                    icon: Icon(prefixIcon, size: iconSize, color: iconColor),
-                  )
+                ? Icon(prefixIcon, size: iconSize, color: iconColor)
                 : null,
             suffixIcon: isSuffixIconLoading
                 ? const CircularProgressIndicator()

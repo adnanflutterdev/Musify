@@ -6,6 +6,7 @@ void showAppSnackbar({
   required BuildContext context,
   required Result result,
   bool isNormal = false,
+  Duration duaration = const Duration(seconds: 4),
 }) {
   final colors = context.colors;
 
@@ -14,7 +15,9 @@ void showAppSnackbar({
     ..showSnackBar(
       SnackBar(
         showCloseIcon: true,
+        closeIconColor: context.colors.textPrimary,
         behavior: SnackBarBehavior.floating,
+        duration: duaration,
 
         backgroundColor: isNormal
             ? colors.surfaceVariant

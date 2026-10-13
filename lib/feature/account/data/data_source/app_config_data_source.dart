@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:musify/core/utils/images.dart';
 import 'package:musify/feature/account/data/models/configs/app_configs.dart';
 import 'package:musify/feature/account/data/models/configs/avatar.dart';
 
@@ -20,11 +21,17 @@ class AppConfigDataSource {
   Future<Avatar?> getAppAvatars() async {
     final avatars = await firestore
         .collection('appConfigs')
-        .doc('avatars')
+        .doc('avatar')
         .get();
 
     if (!avatars.exists || avatars.data() == null) {
-      return Avatar(enabled: false, avatars: []);
+      AvatarData defaultAvatar = AvatarData(
+        id: 'id',
+        name: 'default',
+        url: AppImages.coverImageOnline,
+        isActive: true,
+      );
+      return Avatar(enabled: false,defaultAvatar: defaultAvatar, avatars: []);
     }
     return Avatar.fromFirebase(avatars.data()!);
   }

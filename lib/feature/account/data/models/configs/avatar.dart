@@ -1,12 +1,14 @@
 class Avatar {
   final bool enabled;
+  final AvatarData defaultAvatar;
   final List<AvatarData> avatars;
 
-  Avatar({required this.enabled, required this.avatars});
+  Avatar({required this.enabled,required this.defaultAvatar, required this.avatars});
 
   factory Avatar.fromFirebase(Map<String, dynamic> data) {
     return Avatar(
       enabled: data['enabled'],
+      defaultAvatar: AvatarData.fromFirebase(data['default']),
       avatars: (data['avatars'] as List<dynamic>)
           .map((a) => AvatarData.fromFirebase(a as Map<String, dynamic>))
           .toList(),
@@ -16,6 +18,7 @@ class Avatar {
   Map<String, dynamic> toFirebase() {
     return {
       'enabled': enabled,
+      'default':defaultAvatar.toFirebase(),
       'avatars': avatars.map((a) => a.toFirebase).toList(),
     };
   }

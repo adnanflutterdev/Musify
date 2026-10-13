@@ -40,9 +40,10 @@ class AppConfigRepositoryImpl implements AppConfigRepository {
       return Result.success(data: avatar);
     } on FirebaseException catch (e) {
       return Result.failure(e.message ?? 'Failed to load avatars');
-    } catch (e) {
+    } catch (e,s) {
       if (kDebugMode) {
         print(e);
+        print(s);
       }
       return Result.failure('Failed to load avatars');
     }

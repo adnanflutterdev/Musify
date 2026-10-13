@@ -5,9 +5,26 @@ class AppValidators {
     if (value == null || value.trim().isEmpty) {
       return 'Name is required';
     }
+    if (value.trim().length < 3) {
+      return 'Name is too short';
+    }
     final regExp = RegExp(r'^[a-zA-Z ]{3,}$');
     if (!regExp.hasMatch(value.trim())) {
-      return 'Name is too short';
+      return 'Use alphabets only';
+    }
+    return null;
+  }
+
+  static String? username(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return null;
+    }
+    if (value.trim().length < 3) {
+      return 'Username is too short';
+    }
+    final regExp = RegExp(r'^[a-zA-Z0-9._]{3,}$');
+    if (!regExp.hasMatch(value.trim())) {
+      return 'Use alpahbets, period, and underscore only';
     }
     return null;
   }

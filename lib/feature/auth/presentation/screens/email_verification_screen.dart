@@ -26,9 +26,22 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
 
     final result = await notifier.sendEmailVerification();
     if (mounted) {
-      showAppSnackbar(context: context, result: result);
-      _isverficationSent = true;
-      setState(() {});
+      showAppSnackbar(
+        context: context,
+        result: result,
+        duaration: const Duration(seconds: 8),
+      );
+
+      setState(() {
+        _isverficationSent = true;
+      });
+
+      if (result.success) {
+        await Future.delayed(const Duration(seconds: 2), () async {
+          await notifier.logout();
+          if (mounted) Navigator.pop(context);
+        });
+      }
     }
   }
 
@@ -183,12 +196,11 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                   ),
 
                   AppSpacing.h20,
-
                   // Already verified
                   ...[
                     TextButton(
                       onPressed: () {
-                        auth.signOut();
+                        ref.read(authProvider.notifier).logout();
                       },
                       child: Text(
                         'I have verified my email!\nLogin again',
@@ -205,10 +217,13 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        Icons.info_outline_rounded,
-                        size: 17,
-                        color: colors.textTertiary.withValues(alpha: 0.5),
+                      Tooltip(
+                        message: 'Check spam folder in case you didn\'t email verification link.',
+                        child: Icon(
+                          Icons.info_outline_rounded,
+                          size: 17,
+                          color: colors.textTertiary.withValues(alpha: 0.5),
+                        ),
                       ),
                       const SizedBox(width: 6),
                       Text(
@@ -223,7 +238,9 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                   const SizedBox(height: 6),
 
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      sendEmailVerifcation(ref);
+                    },
                     child: Text(
                       'Resend email',
                       style: context.text.bodyMedium?.copyWith(

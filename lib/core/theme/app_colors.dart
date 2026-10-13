@@ -31,9 +31,19 @@ class AppThemeColors {
   static const Color lightBorder = Color(0xFFE5E7EB);
   static const Color lightDivider = Color(0xFFE5E7EB);
 
-    // Shadow
+  // Shadow
   static const Color lightShadowLvl1 = Colors.black26;
   static const Color lightShadowLvl2 = Colors.black38;
+
+  // Gradient for appbar,navbar,etc.
+  static const List<Color> lightGradient = [
+    Color(0xFFF9FAFB),
+    Color(0xFFFCFCFD),
+    Color(0xFFFFFFFF),
+  ];
+
+  static const List<double> gradientStopsT = [0.0, 0.3, 1.0];
+  static const List<double> gradientStopsR = [0.0, 0.7, 1.0];
 
   // ============================================================
   // DARK THEME
@@ -58,6 +68,13 @@ class AppThemeColors {
   // Shadow
   static const Color darkShadowLvl1 = Color(0x00000000);
   static const Color darkShadowLvl2 = Color(0x00000000);
+
+  // Gradient for appbar,navbar,etc.
+  static const List<Color> darkGradient = [
+    Color(0xFF111827),
+    Color(0xFF182130),
+    Color(0xFF1F2937),
+  ];
 
   // ============================================================
   // STATUS
@@ -108,6 +125,9 @@ class AppThemeColors {
         divider: darkDivider,
         shadowLvl1: darkShadowLvl1,
         shadowLvl2: darkShadowLvl2,
+        gradient: darkGradient,
+        gradientStopsT: gradientStopsT,
+        gradientStopsR: gradientStopsR,
         error: error,
         onError: onError,
         success: success,
@@ -138,6 +158,9 @@ class AppThemeColors {
         divider: lightDivider,
         shadowLvl1: lightShadowLvl1,
         shadowLvl2: lightShadowLvl2,
+        gradient: lightGradient,
+        gradientStopsT: gradientStopsT,
+        gradientStopsR: gradientStopsR,
         error: error,
         onError: onError,
         success: success,
@@ -177,6 +200,9 @@ class AppColors {
   final Color divider;
   final Color shadowLvl1;
   final Color shadowLvl2;
+  final List<Color> gradient;
+  final List<double> gradientStopsT;
+  final List<double> gradientStopsR;
   final Color error;
   final Color onError;
   final Color success;
@@ -206,6 +232,9 @@ class AppColors {
     required this.divider,
     required this.shadowLvl1,
     required this.shadowLvl2,
+    required this.gradient,
+    required this.gradientStopsT,
+    required this.gradientStopsR,
     required this.error,
     required this.onError,
     required this.success,
