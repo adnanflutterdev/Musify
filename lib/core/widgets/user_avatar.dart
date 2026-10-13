@@ -4,10 +4,16 @@ import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/feature/account/data/models/configs/avatar.dart';
 
 class UserAvatar extends StatelessWidget {
-  const UserAvatar({super.key, required this.avatar, this.showBorder = true});
+  const UserAvatar({
+    super.key,
+    required this.avatar,
+    this.showBorder = true,
+    this.size = 150,
+  });
 
   final AvatarData avatar;
   final bool showBorder;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +21,8 @@ class UserAvatar extends StatelessWidget {
       imageUrl: avatar.url,
       imageBuilder: (context, imageProvider) {
         return Container(
-          width: 150,
-          height: 150,
+          width: size,
+          height: size,
           decoration: BoxDecoration(
             shape: .circle,
             image: DecorationImage(image: imageProvider, fit: .cover),

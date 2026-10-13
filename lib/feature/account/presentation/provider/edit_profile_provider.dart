@@ -11,4 +11,6 @@ class EditProfileNotifier extends Notifier<bool> {
   }
 }
 
-final editProfileProvider = NotifierProvider(() => EditProfileNotifier());
+final editProfileProvider = NotifierProvider.autoDispose(
+  () => EditProfileNotifier(),
+);

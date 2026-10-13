@@ -41,7 +41,7 @@ class _AccountTabState extends ConsumerState<AccountTab> {
               if (user.userAvatar == null)
                 _buildDefaultAvatar()
               else
-                UserAvatar(avatar: user.userAvatar!),
+                UserAvatar(avatar: user.userAvatar!, size: 180),
 
               AppSpacing.h16,
 
@@ -61,7 +61,7 @@ class _AccountTabState extends ConsumerState<AccountTab> {
         if (avatar == null) {
           return const SizedBox.shrink();
         }
-        return UserAvatar(avatar: avatar.defaultAvatar);
+        return UserAvatar(avatar: avatar.defaultAvatar, size: 180);
       },
     );
   }

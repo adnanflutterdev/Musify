@@ -479,7 +479,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               hintText: 'Add your bio',
               controller: _bioController,
               minLines: 1,
-              maxLines: 4,
+              maxLines: 10,
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 8,
                 vertical: 12,

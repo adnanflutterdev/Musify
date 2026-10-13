@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:musify/core/extension/app_theme_extention.dart';
-import 'package:musify/core/utils/colors.dart';
 import 'package:musify/core/utils/screen_size.dart';
 import 'package:musify/feature/app/presentation/provider/tab_provider.dart';
 
@@ -54,13 +53,17 @@ class PageNavigationBar extends StatelessWidget {
                       children: [
                         Icon(
                           tab.icon,
-                          color: tabIndex == index ? AppColors.primary : null,
+                          color: tabIndex == index
+                              ? context.colors.primary
+                              : null,
                           size: tabIndex == index ? 33 : 30,
                         ),
                         Text(
                           tab.label,
                           style: TextStyle(
-                            color: tabIndex == index ? AppColors.primary : null,
+                            color: tabIndex == index
+                                ? context.colors.primary
+                                : null,
                             fontWeight: tabIndex == index
                                 ? FontWeight.bold
                                 : FontWeight.normal,
