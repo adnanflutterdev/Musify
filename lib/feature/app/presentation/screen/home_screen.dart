@@ -80,7 +80,6 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
       canPop: false,
       onPopInvokedWithResult: (didPop, _) => _onPop(didPop, tabIndex),
       child: CustomScaffold(
-        haveBottomPadding: false,
         appBar: _buildAppBar(tabIndex),
         body: Column(
           children: [

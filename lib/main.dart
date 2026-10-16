@@ -73,9 +73,6 @@ class Musify extends StatelessWidget {
         systemNavigationBarColor: Colors.transparent,
         systemNavigationBarDividerColor: Colors.transparent,
         systemNavigationBarIconBrightness: Brightness.light,
-
-        // Allow content to draw behind the system navigation bar
-        systemNavigationBarContrastEnforced: false,
       ),
       child: MaterialApp(
         title: 'Musify',

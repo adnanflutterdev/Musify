@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/utils/screen_size.dart';
 import 'package:musify/feature/app/presentation/provider/tab_provider.dart';
@@ -27,7 +28,7 @@ class PageNavigationBar extends StatelessWidget {
           top: BorderSide(color: context.colors.border, width: 0.7),
         ),
       ),
-      padding: const EdgeInsets.only(top: 5.0),
+      padding: const EdgeInsets.only(top: AppSpacing.sm, bottom: AppSpacing.md),
       child: Column(
         children: [
           Row(
@@ -77,7 +78,6 @@ class PageNavigationBar extends StatelessWidget {
               );
             }),
           ),
-          const SizedBox(height: kBottomNavigationBarHeight - 10),
         ],
       ),
     );
