@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/core/const/app_spacing.dart';
+import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/feature/song/models/song.dart';
 import 'package:musify/feature/song/providers/song_selection_provider.dart';
 import 'package:musify/feature/song/providers/song_stream_provider.dart';
@@ -106,7 +107,7 @@ class PlaylistScreen extends StatelessWidget {
                   return IconButton(
                     onPressed: () {
                       ref.read(turnOnOffSongSelectionProvider.notifier).stop();
-                      Navigator.pop(context);
+                      AppNavigator.pop();
                     },
                     icon: const Icon(
                       Icons.arrow_back,

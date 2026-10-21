@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/core/const/app_spacing.dart';
-import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/utils/app_dialogs.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/core/widgets/custom_app_bar.dart';
 import 'package:musify/core/widgets/custom_scaffold.dart';
-import 'package:musify/core/widgets/custom_text_form_field.dart';
-import 'package:musify/feature/account/presentation/provider/edit_profile_provider.dart';
-import 'package:musify/feature/app/presentation/provider/tab_provider.dart';
-import 'package:musify/feature/home/presentation/screens/home_tab.dart';
-import 'package:musify/feature/playlist/presentation/screens/create_playlist_screen.dart';
-import 'package:musify/feature/playlist/presentation/screens/playlist_tab.dart';
-import 'package:musify/feature/search/presentation/screens/search_tab.dart';
-import 'package:musify/feature/song/providers/song_search_provider.dart';
-import 'package:musify/feature/home/presentation/widget/page_navigation_bar.dart';
-import 'package:musify/feature/song/widgets/song_selection_bar.dart';
 import 'package:musify/feature/song/widgets/song_track.dart';
+import 'package:musify/core/extension/app_theme_extention.dart';
+import 'package:musify/core/widgets/custom_text_form_field.dart';
+import 'package:musify/feature/song/widgets/song_selection_bar.dart';
+import 'package:musify/feature/home/presentation/screens/home_tab.dart';
+import 'package:musify/feature/song/providers/song_search_provider.dart';
+import 'package:musify/feature/app/presentation/provider/tab_provider.dart';
+import 'package:musify/feature/search/presentation/screens/search_tab.dart';
 import 'package:musify/feature/account/presentation/screens/account_tab.dart';
+import 'package:musify/feature/playlist/presentation/screens/playlist_tab.dart';
+import 'package:musify/feature/home/presentation/widget/page_navigation_bar.dart';
+import 'package:musify/feature/playlist/presentation/screens/create_playlist_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -135,31 +135,27 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
       case == 2:
         return CustomAppBar(
           hasLeading: false,
-          title: Text('My Playlists', style: context.text.displaySmall),
+          title: Text(
+            'My Playlists',
+            textScaler: .noScaling,
+            style: context.text.displayMedium,
+          ),
           trailing: IconButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const CreatePlaylistScreen(),
-                ),
-              );
+              AppNavigator.push(const CreatePlaylistScreen());
             },
             icon: const Icon(Icons.add_sharp),
           ),
         );
       case == 3:
-        final editingProfile = ref.watch(editProfileProvider);
-        final editProfileNotifier = ref.watch(editProfileProvider.notifier);
         return CustomAppBar(
           hasLeading: false,
-          title: Text('Account', style: context.text.displaySmall),
-          trailing: IconButton(
-            onPressed: () {
-              editProfileNotifier.toggle();
-            },
-            icon: Icon(editingProfile ? Icons.close : Icons.edit),
+          title: Text(
+            'Account',
+            textScaler: .noScaling,
+            style: context.text.displayMedium,
           ),
+          trailing: const SizedBox(height: 48),
         );
       default:
         return null;

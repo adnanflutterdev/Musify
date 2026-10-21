@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/core/extension/app_theme_extention.dart';
+import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/core/utils/colors.dart';
 import 'package:musify/feature/song/providers/song_selection_provider.dart';
 import 'package:musify/feature/song/providers/songs_provider.dart';
@@ -55,7 +56,7 @@ class _HomeTabState extends ConsumerState<HomeTab> {
                           .doc(FirebaseAuth.instance.currentUser?.uid)
                           .update({'recentlyPlayed': []});
                       if (context.mounted) {
-                        Navigator.pop(context);
+                        AppNavigator.pop();
                       }
                     },
                     child: Text(
@@ -67,7 +68,7 @@ class _HomeTabState extends ConsumerState<HomeTab> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      AppNavigator.pop();
                     },
                     child: Text('Cancel', style: context.text.bodySmall),
                   ),

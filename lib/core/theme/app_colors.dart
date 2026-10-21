@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musify/core/utils/app_preferences.dart';
 
 class AppThemeColors {
   AppThemeColors._();
@@ -7,9 +8,36 @@ class AppThemeColors {
   // BRAND / PRIMARY
   // ============================================================
 
-  static const Color primary = Color(0xFFF472B6);
-  static const Color primaryDark = Color(0xFFEC4899);
-  static const Color primaryLight = Color(0xFFF9A8D4);
+  static const List<Color> primary = [
+    // Original Accent Color(Pink)
+    Color(0xFFF472B6),
+    // Purple
+    Color(0xFFA78BFA),
+    // Electric blue
+    Color(0xFF60A5FA),
+    // Cyan
+    Color(0xFF22D3EE),
+  ];
+  static const List<Color> primaryDark = [
+    // Original Accent Color(Pink)
+    Color(0xFFEC4899),
+    // Purple
+    Color(0xFF8B5CF6),
+    // Electric blue
+    Color(0xFF3B82F6),
+    // Cyan
+    Color(0xFF06B6D4),
+  ];
+  static const List<Color> primaryLight = [
+    // Original Accent Color(Pink)
+    Color(0xFFF9A8D4),
+    // Purple
+    Color(0xFFC4B5FD),
+    // Electric blue
+    Color(0xFF93C5FD),
+    // Cyan
+    Color(0xFF67E8F9),
+  ];
 
   // ============================================================
   // LIGHT THEME
@@ -25,8 +53,8 @@ class AppThemeColors {
   static const Color lightSurfaceVariant = Color(0xFFF3F4F6);
 
   static const Color lightTextPrimary = Color(0xFF111827);
-  static const Color lightTextSecondary = Color(0xFF4B5563);
-  static const Color lightTextTertiary = Color(0xFF6B7280);
+  static const Color lightTextSecondary = Color(0xFF374151);
+  static const Color lightTextTertiary = Color(0xFF9CA3AF);
 
   static const Color lightBorder = Color(0xFFE5E7EB);
   static const Color lightDivider = Color(0xFFE5E7EB);
@@ -80,16 +108,21 @@ class AppThemeColors {
   // STATUS
   // ============================================================
 
-  static const Color error = Color(0xFFB91C1C);
+  // Light theme
+  static const Color lightError = Color(0xFFB91C1C);
+  static const Color lightSuccess = Color(0xFF166534);
+  static const Color lightWarning = Color(0xFF92400E);
+  static const Color lightInfo = Color(0xFF1D4ED8);
+
+  // Dark theme
+  static const Color darkError = Color(0xFFF87171);
+  static const Color darkSuccess = Color(0xFF4ADE80);
+  static const Color darkWarning = Color(0xFFFBBF24);
+  static const Color darkInfo = Color(0xFF60A5FA);
+
   static const Color onError = Color(0xFFFEE2E2);
-
-  static const Color success = Color(0xFF297D48);
   static const Color onSuccess = Color(0xFFDCFCE7);
-
-  static const Color warning = Color(0xFFD97706);
   static const Color onWarning = Color(0xFFFEF3C7);
-
-  static const Color info = Color(0xFF2563EB);
   static const Color onInfo = Color(0xFFDBEAFE);
 
   // ============================================================
@@ -103,6 +136,18 @@ class AppThemeColors {
   // COMMON
   // ============================================================
 
+  static const Color scrim = Color(0x66000000);
+
+  // Light theme
+  static const Color lightDisabled = Color(0xFFD1D5DB);
+  static const Color lightSelection = Color(0xFFFCE7F3);
+  static const Color lightSkeleton = Color(0xFFE5E7EB);
+
+  // Dark theme
+  static const Color darkDisabled = Color(0xFF4B5563);
+  static const Color darkSelection = Color(0xFF831843);
+  static const Color darkSkeleton = Color(0xFF374151);
+
   static const Color white = Colors.white;
   static const Color black = Colors.black;
   static const Color transparent = Colors.transparent;
@@ -110,11 +155,12 @@ class AppThemeColors {
   static const Color textFieldError = Color(0xFFFF4040);
 
   static AppColors getColors(Brightness brightness) {
+    final index = AppPreferences.getAccentColorIndex();
     if (brightness == .dark) {
       return AppColors(
-        primary: primary,
-        primaryDark: primaryDark,
-        primaryLight: primaryLight,
+        primary: primary[index],
+        primaryDark: primaryDark[index],
+        primaryLight: primaryLight[index],
         background: darkBackground,
         surface: darkSurface,
         surfaceVariant: darkSurfaceVariant,
@@ -128,13 +174,13 @@ class AppThemeColors {
         gradient: darkGradient,
         gradientStopsT: gradientStopsT,
         gradientStopsR: gradientStopsR,
-        error: error,
+        error: darkError,
         onError: onError,
-        success: success,
+        success: darkSuccess,
         onSuccess: onSuccess,
-        warning: warning,
+        warning: darkWarning,
         onWarning: onWarning,
-        info: info,
+        info: darkInfo,
         onInfo: onInfo,
         neutral: neutral,
         onNeutral: onNeutral,
@@ -142,12 +188,16 @@ class AppThemeColors {
         black: black,
         transparent: transparent,
         textFieldError: textFieldError,
+        scrim: scrim,
+        disabled: darkDisabled,
+        selection: darkSelection,
+        skeleton: darkSelection,
       );
     } else {
       return AppColors(
-        primary: primary,
-        primaryDark: primaryDark,
-        primaryLight: primaryLight,
+        primary: primary[index],
+        primaryDark: primaryDark[index],
+        primaryLight: primaryLight[index],
         background: lightBackground,
         surface: lightSurface,
         surfaceVariant: lightSurfaceVariant,
@@ -161,13 +211,13 @@ class AppThemeColors {
         gradient: lightGradient,
         gradientStopsT: gradientStopsT,
         gradientStopsR: gradientStopsR,
-        error: error,
+        error: lightError,
         onError: onError,
-        success: success,
+        success: lightSuccess,
         onSuccess: onSuccess,
-        warning: warning,
+        warning: lightWarning,
         onWarning: onWarning,
-        info: info,
+        info: lightInfo,
         onInfo: onInfo,
         neutral: neutral,
         onNeutral: onNeutral,
@@ -175,6 +225,10 @@ class AppThemeColors {
         black: black,
         transparent: transparent,
         textFieldError: textFieldError,
+        scrim: scrim,
+        disabled: lightDisabled,
+        selection: lightSelection,
+        skeleton: lightSelection,
       );
     }
   }
@@ -218,6 +272,11 @@ class AppColors {
   final Color transparent;
   final Color textFieldError;
 
+  final Color scrim;
+  final Color disabled;
+  final Color selection;
+  final Color skeleton;
+
   AppColors({
     required this.primary,
     required this.primaryDark,
@@ -249,5 +308,9 @@ class AppColors {
     required this.black,
     required this.transparent,
     required this.textFieldError,
+    required this.scrim,
+    required this.disabled,
+    required this.selection,
+    required this.skeleton,
   });
 }

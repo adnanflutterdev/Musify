@@ -70,7 +70,9 @@ class _LoginSignupState extends State<AuthScreen> {
   Future<void> _googleSignIn(WidgetRef ref) async {
     final result = await ref.read(authProvider.notifier).googleSignin();
 
-    if (mounted) showAppSnackbar(context: context, result: result);
+    if (mounted) {
+      showAppSnackbar(context: context, result: result);
+    }
   }
 
   @override

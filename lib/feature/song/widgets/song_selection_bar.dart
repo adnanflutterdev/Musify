@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/feature/song/models/song.dart';
 import 'package:musify/feature/song/providers/song_selection_provider.dart';
 import 'package:musify/core/utils/colors.dart';
@@ -60,7 +61,7 @@ class SongSelectionBar extends StatelessWidget {
                     if (forPlaylist)
                       CustomTextButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          AppNavigator.pop();
                         },
                         title: 'Add',
                       ),

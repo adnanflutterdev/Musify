@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/core/result/result.dart';
 import 'package:musify/core/typedefs/typedefs.dart';
 import 'package:musify/core/usecase/usecase.dart';
 import 'package:musify/feature/account/data/models/user_data.dart';
@@ -11,6 +9,7 @@ import 'package:musify/feature/account/domain/usecase/is_username_available_usec
 import 'package:musify/feature/account/domain/usecase/set_usename_usecase.dart';
 import 'package:musify/feature/account/domain/usecase/update_user_data_usecase.dart';
 import 'package:musify/feature/account/presentation/provider/di.dart';
+import 'package:musify/feature/auth/presentation/provider/auth_provider.dart';
 
 class UpdateUserDataNotifier extends AsyncNotifier<void> {
   late UpdateUserDataUsecase _updateUserDataUsecase;
@@ -57,16 +56,19 @@ class UpdateUserDataNotifier extends AsyncNotifier<void> {
   }
 }
 
-final getUserDataProvider = FutureProvider<UserData?>((ref) async {
+final userDataProvider = FutureProvider<UserData?>((ref) async {
+  final user = await ref.watch(authStateProvider.future);
+
+  if (user == null) return null;
+
   final getUserDataUsecase = ref.read(getUserDataUsecaseProvider);
+  final result = await getUserDataUsecase(NoParams());
 
-  Result<UserData?> userData = await getUserDataUsecase(NoParams());
-
-  if (userData.success) {
-    return Future<UserData>.value(userData.data);
-  } else {
-    return Future.error(userData.message ?? 'Failed to load your data');
+  if (result.success) {
+    return result.data;
   }
+
+  throw Exception(result.message ?? 'Failed to load user data');
 });
 
 final updateUserDataProvider = AsyncNotifierProvider(

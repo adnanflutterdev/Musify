@@ -28,7 +28,7 @@ class PageNavigationBar extends StatelessWidget {
           top: BorderSide(color: context.colors.border, width: 0.7),
         ),
       ),
-      padding: const EdgeInsets.only(top: AppSpacing.sm, bottom: AppSpacing.md),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
       child: Column(
         children: [
           Row(

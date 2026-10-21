@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/core/const/app_spacing.dart';
+import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/feature/song/screens/select_song_screen.dart';
 import 'package:musify/feature/song/models/song.dart';
 import 'package:musify/feature/song/providers/song_selection_provider.dart';
@@ -87,7 +88,7 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
     void clearProvider() {
       turnOnOffSongSelectionNotifier.stop();
       songSelectionNotifer.clear();
-      Navigator.pop(context);
+      AppNavigator.pop();
     }
 
     return PopScope(
@@ -97,7 +98,7 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
           return;
         }
         clearProvider();
-        Navigator.pop(context);
+        AppNavigator.pop();
       },
       child: Scaffold(
         appBar: AppBar(
@@ -148,13 +149,10 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
                     IconButton(
                       onPressed: () async {
                         turnOnOffSongSelectionNotifier.start();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SelectSongScreen(
-                              turnOnOffSongSelectionNotifier:
-                                  turnOnOffSongSelectionNotifier,
-                            ),
+                        AppNavigator.push(
+                          SelectSongScreen(
+                            turnOnOffSongSelectionNotifier:
+                                turnOnOffSongSelectionNotifier,
                           ),
                         );
                       },
@@ -231,7 +229,7 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
                           if (!context.mounted) {
                             return;
                           }
-                          Navigator.pop(context);
+                          AppNavigator.pop();
                         },
                         title: 'Create',
                       ),

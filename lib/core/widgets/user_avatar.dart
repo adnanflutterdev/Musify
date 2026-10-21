@@ -34,13 +34,24 @@ class UserAvatar extends StatelessWidget {
       },
       placeholder: (context, url) {
         return Container(
-          width: 150,
-          height: 150,
+          width: size,
+          height: size,
           decoration: BoxDecoration(
             shape: .circle,
             color: context.colors.surface,
-            border: Border.all(width: 2, color: context.colors.primary),
           ),
+        );
+      },
+
+      errorWidget: (context, url, error) {
+        return Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            shape: .circle,
+            color: context.colors.surface,
+          ),
+          child: Center(child: Icon(Icons.person, size: (4 / 5) * size)),
         );
       },
     );

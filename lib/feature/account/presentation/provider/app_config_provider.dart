@@ -5,7 +5,7 @@ import 'package:musify/feature/account/data/models/configs/app_configs.dart';
 import 'package:musify/feature/account/data/models/configs/avatar.dart';
 import 'package:musify/feature/account/presentation/provider/di.dart';
 
-final getGeneralConfigProvider = FutureProvider<GeneralConfigs?>((ref) async {
+final generalConfigProvider = FutureProvider<GeneralConfigs?>((ref) async {
   final getGeneralConfigsUsecase = ref.read(getGeneralConfigUsecaseProvider);
 
   Result<GeneralConfigs?> generalConfig = await getGeneralConfigsUsecase(
@@ -19,7 +19,7 @@ final getGeneralConfigProvider = FutureProvider<GeneralConfigs?>((ref) async {
   }
 });
 
-final getAvatarProvider = FutureProvider<Avatar?>((ref) async {
+final avatarProvider = FutureProvider<Avatar?>((ref) async {
   final getGeneralConfigsUsecase = ref.read(getAvatarUsecaseProvider);
 
   Result<Avatar?> avatar = await getGeneralConfigsUsecase(NoParams());

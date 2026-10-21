@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/functions/play_song.dart';
 import 'package:musify/feature/song/screens/song_details_screen.dart';
 import 'package:musify/feature/song/models/song.dart';
@@ -53,12 +54,7 @@ class SongTile extends ConsumerWidget {
           minTileHeight: 46,
           horizontalTitleGap: 8,
           leading: GestureDetector(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SongDetailsScreen(song: song),
-              ),
-            ),
+            onTap: () => AppNavigator.push(SongDetailsScreen(song: song)),
             child: CachedNetworkImage(
               imageUrl: song.coverImage,
               placeholder: (context, url) => CircleAvatar(

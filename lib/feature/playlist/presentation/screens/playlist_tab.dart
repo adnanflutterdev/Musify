@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/extension/app_theme_extention.dart';
+import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/core/widgets/buttons/custom_button.dart';
 import 'package:musify/core/widgets/custom_text_form_field.dart';
 import 'package:musify/feature/playlist/presentation/screens/create_playlist_screen.dart';
@@ -19,10 +20,7 @@ class PlaylistTab extends ConsumerWidget {
     // final myPlaylists = ref.watch(userDataProvider).value?.myPlaylists ?? [];
 
     void push() {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const CreatePlaylistScreen()),
-      );
+      AppNavigator.push(const CreatePlaylistScreen());
     }
 
     void changeName(String title) {
@@ -87,8 +85,8 @@ class PlaylistTab extends ConsumerWidget {
                       //   message: 'Name updated...',
                       //   snackBarType: SnackBarType.success,
                       // );
-                      Navigator.pop(context);
-                      Navigator.pop(context);
+                      AppNavigator.pop();
+                      AppNavigator.pop();
                     } on FirebaseException catch (_) {
                       if (!context.mounted) {
                         return;
@@ -130,7 +128,7 @@ class PlaylistTab extends ConsumerWidget {
                   //     .doc(FirebaseAuth.instance.currentUser?.uid)
                   //     .update({'recentlyPlayed': []});
                   // if (context.mounted) {
-                  //   Navigator.pop(context);
+                  //   AppNavigator.pop();
                   // }
                   List playlist = myPlaylists;
                   int index = playlist.indexWhere(
@@ -150,8 +148,8 @@ class PlaylistTab extends ConsumerWidget {
                     //   message: 'Playlist Deleted...',
                     //   snackBarType: SnackBarType.success,
                     // );
-                    Navigator.pop(context);
-                    Navigator.pop(context);
+                    AppNavigator.pop();
+                    AppNavigator.pop();
                   } on FirebaseException catch (_) {
                     if (!context.mounted) {
                       return;
@@ -172,7 +170,7 @@ class PlaylistTab extends ConsumerWidget {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  AppNavigator.pop();
                 },
                 child: Text('Cancel', style: context.text.bodySmall),
               ),

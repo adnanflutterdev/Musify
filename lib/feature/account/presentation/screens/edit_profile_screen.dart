@@ -6,6 +6,7 @@ import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/extension/string_extention.dart';
 import 'package:musify/core/result/result.dart';
+import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/core/utils/app_validators.dart';
 import 'package:musify/core/widgets/async_when.dart';
 import 'package:musify/core/widgets/buttons/primary_button.dart';
@@ -76,7 +77,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       useSafeArea: true,
       isScrollControlled: true,
       builder: (context) {
-        final avatarRef = ref.watch(getAvatarProvider);
+        final avatarRef = ref.watch(avatarProvider);
         return FractionallySizedBox(
           heightFactor: 0.8,
           child: Container(
@@ -107,7 +108,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
                       IconButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          AppNavigator.pop();
                         },
                         icon: const Icon(Icons.close),
                       ),
@@ -140,7 +141,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                                 child: InkWell(
                                   onTap: () {
                                     _selectedAvatar.value = currentAvatar;
-                                    Navigator.pop(context);
+                                    AppNavigator.pop();
                                   },
                                   splashColor: context.colors.primary
                                       .withValues(alpha: 0.2),
@@ -267,7 +268,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       showAppSnackbar(context: context, result: updateResult);
     }
     if (updateResult.success && mounted) {
-      final _ = ref.invalidate(getUserDataProvider);
+      final _ = ref.invalidate(userDataProvider);
       ref.read(editProfileProvider.notifier).toggle();
     }
   }
@@ -400,39 +401,42 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                 AppSpacing.w8,
                 Expanded(
                   flex: 4,
-                  child: Column(
-                    crossAxisAlignment: .start,
-                    children: [
-                      Text('Account Type', style: context.text.bodyLarge),
-                      AppSpacing.h4,
-                      InkWell(
-                        onTap: () {
-                          showAppSnackbar(
-                            context: context,
-                            result: Result.failure(
-                              'You can\'t update account type',
-                            ),
-                          );
-                        },
-                        child: IgnorePointer(
-                          child: DropdownButtonFormField(
-                            isExpanded: true,
-                            initialValue: widget.user.accountType,
-                            hint: const Text('Select accountType'),
+                  child: Opacity(
+                    opacity: 0.5,
+                    child: Column(
+                      crossAxisAlignment: .start,
+                      children: [
+                        Text('Account Type', style: context.text.bodyLarge),
+                        AppSpacing.h4,
+                        InkWell(
+                          onTap: () {
+                            showAppSnackbar(
+                              context: context,
+                              result: Result.failure(
+                                'You can\'t update account type',
+                              ),
+                            );
+                          },
+                          child: IgnorePointer(
+                            child: DropdownButtonFormField(
+                              isExpanded: true,
+                              initialValue: widget.user.accountType,
+                              hint: const Text('Select accountType'),
 
-                            items: AccountType.values
-                                .map(
-                                  (gender) => DropdownMenuItem(
-                                    value: gender,
-                                    child: Text(gender.name.capitalize),
-                                  ),
-                                )
-                                .toList(),
-                            onChanged: (value) {},
+                              items: AccountType.values
+                                  .map(
+                                    (gender) => DropdownMenuItem(
+                                      value: gender,
+                                      child: Text(gender.name.capitalize),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (value) {},
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -461,15 +465,18 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               onTap: () {
                 showAppSnackbar(
                   context: context,
-                  result: Result.failure('You can\'t email from here'),
+                  result: Result.failure('You can\'t update email from here'),
                 );
               },
-              child: IgnorePointer(
-                child: AppTextField(
-                  label: 'Email',
-                  isReadOnly: true,
-                  prefixIcon: Icons.email,
-                  controller: _emailController,
+              child: Opacity(
+                opacity: 0.5,
+                child: IgnorePointer(
+                  child: AppTextField(
+                    label: 'Email',
+                    isReadOnly: true,
+                    prefixIcon: Icons.email,
+                    controller: _emailController,
+                  ),
                 ),
               ),
             ),

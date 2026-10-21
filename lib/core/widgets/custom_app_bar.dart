@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:musify/core/const/app_shadow.dart';
 import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/extension/app_theme_extention.dart';
+import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/core/utils/images.dart';
 
 class CustomAppBar extends StatelessWidget {
@@ -75,9 +76,12 @@ class CustomAppBar extends StatelessWidget {
                         onPressed:
                             onTap ??
                             () {
-                              Navigator.pop(context);
+                              AppNavigator.pop();
                             },
-                        icon: const Icon(Icons.arrow_back),
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          size: 30,
+                        ),
                       ),
                     ?titleSpacing,
                     Expanded(child: title),

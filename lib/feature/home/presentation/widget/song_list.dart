@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/feature/playlist/presentation/screens/playlist_screen.dart';
 import 'package:musify/feature/song/screens/song_details_screen.dart';
 import 'package:musify/feature/song/models/song.dart';
@@ -35,14 +36,11 @@ class SongList extends StatelessWidget {
                 whiteTextMedium(title),
                 const Spacer(),
                 TextButton(
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PlaylistScreen(
-                        title: title,
-                        songs: songs,
-                        menuItems: menuItems,
-                      ),
+                  onPressed: () => AppNavigator.push(
+                    PlaylistScreen(
+                      title: title,
+                      songs: songs,
+                      menuItems: menuItems,
                     ),
                   ),
                   child: darkText('View all'),
@@ -67,12 +65,8 @@ class SongList extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: GestureDetector(
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                SongDetailsScreen(song: songs[index]),
-                          ),
+                        onTap: () => AppNavigator.push(
+                          SongDetailsScreen(song: songs[index]),
                         ),
                         child: CachedNetworkImage(
                           imageUrl: song.coverImage,

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/feature/song/screens/song_player.dart';
 import 'package:musify/core/services/providers/audio_player_provider.dart';
 import 'package:musify/feature/song/providers/song_stream_provider.dart';
@@ -39,12 +40,7 @@ class SongTrack extends ConsumerWidget {
                         minTileHeight: 45,
                         minVerticalPadding: 3,
                         horizontalTitleGap: 10,
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SongPlayer(),
-                          ),
-                        ),
+                        onTap: () => AppNavigator.push(const SongPlayer()),
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 8.0,
                         ),

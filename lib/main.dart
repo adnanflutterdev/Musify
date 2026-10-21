@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:musify/core/model/appearance_theme.dart';
+import 'package:musify/core/services/providers/theme_provider.dart';
 import 'package:musify/core/theme/app_colors.dart';
 import 'package:musify/core/theme/app_theme.dart';
+import 'package:musify/core/utils/app_navigator.dart';
+import 'package:musify/core/utils/app_preferences.dart';
 import 'package:musify/firebase_options.dart';
 import 'package:musify/core/utils/screen_size.dart';
 import 'package:audio_service/audio_service.dart';
@@ -14,6 +18,7 @@ late final AudioPlayerHandler audioHandler;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await AppPreferences.initialize();
 
   // AudioService setup
   audioHandler = await AudioService.init(
@@ -26,60 +31,68 @@ void main() async {
     ),
   );
 
-  runApp(const RestartWidget(child: Musify()));
+  runApp(const ProviderScope(child: Musify()));
 }
 
-// RestartWidget for completely reseting all providers.
-class RestartWidget extends StatefulWidget {
-  final Widget child;
-
-  const RestartWidget({super.key, required this.child});
-
-  static void restartApp(BuildContext context) {
-    context.findAncestorStateOfType<_RestartWidgetState>()?.restartApp();
-  }
-
-  @override
-  State<RestartWidget> createState() => _RestartWidgetState();
-}
-
-class _RestartWidgetState extends State<RestartWidget> {
-  Key key = UniqueKey();
-
-  void restartApp() {
-    setState(() {
-      key = UniqueKey();
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ProviderScope(key: key, child: widget.child);
-  }
-}
-
-class Musify extends StatelessWidget {
+class Musify extends ConsumerWidget {
   const Musify({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     ScreenSize.init(context);
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: const SystemUiOverlayStyle(
-        statusBarBrightness: Brightness.light,
-        statusBarColor: AppThemeColors.lightSurface,
+    final appearance = ref.watch(appearanceProvider);
 
-        // System navigation bar
+    final themeMode = appearance.themeMode;
+    final platformBrightness = MediaQuery.platformBrightnessOf(context);
+
+    final isDarkMode = switch (themeMode) {
+      ThemeMode.dark => true,
+      ThemeMode.light => false,
+      ThemeMode.system => platformBrightness == Brightness.dark,
+    };
+
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        // Status bar background
+        statusBarColor: isDarkMode
+            ? AppThemeColors.darkSurface
+            : AppThemeColors.lightSurface,
+
+        // Android status bar icons and text
+        statusBarIconBrightness: isDarkMode
+            ? Brightness.light
+            : Brightness.dark,
+
+        // iOS status bar appearance
+        statusBarBrightness: isDarkMode ? Brightness.dark : Brightness.light,
+
+        // Bottom navigation bar
         systemNavigationBarColor: Colors.transparent,
         systemNavigationBarDividerColor: Colors.transparent,
-        systemNavigationBarIconBrightness: Brightness.light,
+        systemNavigationBarIconBrightness: isDarkMode
+            ? Brightness.light
+            : Brightness.dark,
+        systemNavigationBarContrastEnforced: false,
       ),
       child: MaterialApp(
         title: 'Musify',
-        debugShowCheckedModeBanner: false,
-        themeMode: ThemeMode.dark,
-        theme: AppTheme.darkTheme,
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: themeMode,
         home: const SplashScreen(),
+        navigatorKey: AppNavigator.navigatorKey,
+        debugShowCheckedModeBanner: false,
+
+        builder: (context, child) {
+          final mediaQuery = MediaQuery.of(context);
+          return MediaQuery(
+            data: mediaQuery.copyWith(
+              
+              textScaler: TextSizeX.getScaler(appearance.textSize),
+            ),
+            child: child!,
+          );
+        },
       ),
     );
   }

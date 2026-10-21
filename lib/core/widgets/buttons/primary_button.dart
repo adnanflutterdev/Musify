@@ -19,6 +19,7 @@ class PrimaryButton extends StatelessWidget {
     this.foregroundColor,
     this.buildFull = false,
     this.isLoading = false,
+    this.isBordered = false,
     this.alignment = .start,
     this.elevation = 0,
   });
@@ -32,6 +33,7 @@ class PrimaryButton extends StatelessWidget {
   final double? elevation;
   final bool buildFull;
   final bool isLoading;
+  final bool isBordered;
   final double? progress;
   final double? iconSize;
   final TextStyle? style;
@@ -77,10 +79,17 @@ class PrimaryButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           elevation: elevation,
 
-          backgroundColor: backgroundColor ?? context.colors.primary,
+          backgroundColor: isBordered
+              ? (backgroundColor ?? context.colors.transparent)
+              : (backgroundColor ?? context.colors.primary),
           shape: RoundedRectangleBorder(
             borderRadius: .circular(AppSpacing.radiusLg),
-            side: BorderSide(width: 0.1, color: context.colors.shadowLvl1),
+            side: BorderSide(
+              width: isBordered ? 1 : 0.1,
+              color: isBordered
+                  ? (foregroundColor ?? context.colors.primary)
+                  : context.colors.shadowLvl1,
+            ),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           iconAlignment: alignment,

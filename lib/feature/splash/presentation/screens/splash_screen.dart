@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/core/utils/images.dart';
 import 'package:musify/core/widgets/custom_scaffold.dart';
 import 'package:musify/core/extension/app_theme_extention.dart';
@@ -32,10 +33,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const AuthState()),
-        );
+        AppNavigator.pushReplacement(const AuthState());
       }
     });
   }
@@ -72,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen>
               left: 0,
               right: 0,
               bottom: 0,
-              child: Text('Musify yourself...',textAlign: .center,),
+              child: Text('Musify yourself...', textAlign: .center),
             ),
           ],
         ),

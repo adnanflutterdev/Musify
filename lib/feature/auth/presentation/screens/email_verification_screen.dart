@@ -4,6 +4,7 @@ import 'package:musify/core/const/app_shadow.dart';
 import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/di/di.dart';
 import 'package:musify/core/extension/app_theme_extention.dart';
+import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/core/widgets/buttons/primary_button.dart';
 import 'package:musify/core/widgets/custom_app_bar.dart';
 import 'package:musify/core/widgets/custom_scaffold.dart';
@@ -39,7 +40,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
       if (result.success) {
         await Future.delayed(const Duration(seconds: 2), () async {
           await notifier.logout();
-          if (mounted) Navigator.pop(context);
+          if (mounted) AppNavigator.pop();
         });
       }
     }

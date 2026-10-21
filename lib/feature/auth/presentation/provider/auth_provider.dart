@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:musify/core/di/di.dart';
 import 'package:musify/core/typedefs/typedefs.dart';
 import 'package:musify/core/usecase/usecase.dart';
 import 'package:musify/feature/auth/domain/usecase/email_verification_usecase.dart';
@@ -65,3 +67,8 @@ class AuthNotifier extends AsyncNotifier<void> {
 final authProvider = AsyncNotifierProvider<AuthNotifier, void>(
   AuthNotifier.new,
 );
+
+final authStateProvider = StreamProvider<User?>((ref) {
+  final auth = ref.watch(firebaseAuthProvider);
+  return auth.authStateChanges();
+});

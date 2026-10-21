@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/extension/app_theme_extention.dart';
+import 'package:musify/core/utils/app_navigator.dart';
 
 class AttentionDialog({
   required this.title,
@@ -41,7 +42,7 @@ class AppDialogs {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                AppNavigator.pop();
               },
               child: Text(
                 'cancel',

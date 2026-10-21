@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/feature/song/providers/song_selection_provider.dart';
 import 'package:musify/feature/search/presentation/screens/search_tab.dart';
 import 'package:musify/core/utils/colors.dart';
@@ -21,7 +22,7 @@ class SelectSongScreen extends StatelessWidget {
           return;
         }
         turnOnOffSongSelectionNotifier.stop();
-        Navigator.pop(context);
+        AppNavigator.pop();
       },
       child: Scaffold(
         backgroundColor: AppColors.surface,
