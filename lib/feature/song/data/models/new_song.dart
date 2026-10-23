@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:uuid/uuid.dart';
 
 class Song {
   final String id;
@@ -20,6 +19,18 @@ class Song {
   final Flags flags;
   final Metadata metadata;
 
+  String getArtists() {
+    if (artists.isEmpty) return '';
+
+    if (artists.length == 1) return artists.first.name;
+
+    if (artists.length == 2) return artistList.join(' and ');
+
+    return '${artistList.sublist(0, artistList.length - 1).join(', ')} and ${artistList.last}';
+  }
+
+  List<String> get artistList => artists.map((a) => a.name).toList();
+
   const Song({
     required this.id,
     required this.title,
@@ -35,19 +46,9 @@ class Song {
     this.metadata = const Metadata(),
   });
 
-  factory Song.fromFirebase(DocumentSnapshot<Map<String, dynamic>> doc) {
-    final data = doc.data();
-
-    if (!doc.exists || data == null) {
-      throw StateError('Song document does not exist: ${doc.id}');
-    }
-
-    return Song.fromJson({...data, 'id': doc.id});
-  }
-
-  factory Song.fromJson(Map<String, dynamic> json) {
+  factory Song.fromFirebase(Map<String, dynamic> json) {
     return Song(
-      id: const Uuid().v4(),
+      id: _string(json['id']),
       title: _string(json['title']),
       slug: _string(json['slug']),
       artists: _mapList(json['artists'])

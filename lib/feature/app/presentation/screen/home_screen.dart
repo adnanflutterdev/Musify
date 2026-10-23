@@ -11,7 +11,6 @@ import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/widgets/custom_text_form_field.dart';
 import 'package:musify/feature/song/widgets/song_selection_bar.dart';
 import 'package:musify/feature/home/presentation/screens/home_tab.dart';
-import 'package:musify/feature/song/providers/song_search_provider.dart';
 import 'package:musify/feature/app/presentation/provider/tab_provider.dart';
 import 'package:musify/feature/search/presentation/screens/search_tab.dart';
 import 'package:musify/feature/account/presentation/screens/account_tab.dart';
@@ -44,7 +43,7 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
   void _onPageChanged(int index) {
     ref.read(tabProvider.notifier).changeTab(index);
     if (index == 1) {
-      ref.watch(searchedTextProvider.notifier).clearState();
+      // ref.watch(searchedTextProvider.notifier).clearState();
     }
   }
 
@@ -81,6 +80,10 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
       onPopInvokedWithResult: (didPop, _) => _onPop(didPop, tabIndex),
       child: CustomScaffold(
         appBar: _buildAppBar(tabIndex),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.md,
+          vertical: AppSpacing.xs,
+        ),
         body: Column(
           children: [
             Expanded(

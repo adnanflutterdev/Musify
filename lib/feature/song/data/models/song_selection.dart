@@ -1,4 +1,4 @@
-import 'package:musify/feature/song/models/song.dart';
+import 'package:musify/feature/song/data/models/new_song.dart';
 
 class SongSelection {
   final Map<String, Song> selectedSongs;

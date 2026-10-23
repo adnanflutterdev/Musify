@@ -8,7 +8,6 @@ import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/core/widgets/buttons/custom_button.dart';
 import 'package:musify/core/widgets/custom_text_form_field.dart';
 import 'package:musify/feature/playlist/presentation/screens/create_playlist_screen.dart';
-import 'package:musify/core/services/providers/playlist_provider.dart';
 import 'package:musify/core/utils/colors.dart';
 import 'package:musify/feature/home/presentation/widget/song_list.dart';
 
@@ -17,7 +16,6 @@ class PlaylistTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final myPlaylists = [];
-    // final myPlaylists = ref.watch(userDataProvider).value?.myPlaylists ?? [];
 
     void push() {
       AppNavigator.push(const CreatePlaylistScreen());
@@ -215,7 +213,7 @@ class PlaylistTab extends ConsumerWidget {
       ),
     ];
 
-    final playlists = ref.watch(playlistProvider);
+    final playlists = [];
 
     return Column(
       children: [

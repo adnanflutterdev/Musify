@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:musify/feature/song/models/song.dart';
-import 'package:musify/feature/song/models/song_selection.dart';
+import 'package:musify/feature/song/data/models/new_song.dart';
+import 'package:musify/feature/song/data/models/song_selection.dart';
 
 class TurnOnOffSongSelectionNotifier extends StateNotifier<bool> {
   TurnOnOffSongSelectionNotifier() : super(false);

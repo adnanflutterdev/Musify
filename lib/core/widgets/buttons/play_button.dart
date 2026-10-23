@@ -1,7 +1,7 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/feature/song/models/song.dart';
+import 'package:musify/feature/song/data/models/new_song.dart';
 import 'package:musify/core/services/providers/audio_player_provider.dart';
 import 'package:musify/feature/song/providers/song_stream_provider.dart';
 import 'package:musify/core/utils/colors.dart';
@@ -35,17 +35,17 @@ class PlayButton extends ConsumerWidget {
               callback?.call();
             }
             if (song != null) {
-              bool isDiffSong = mediaItem == null || mediaItem.id != song!.url;
+              bool isDiffSong = mediaItem == null || mediaItem.id != song!.media.audioUrl;
               if (isDiffSong) {
                 Song s = song!;
                 audioProvider.playSong(
                   MediaItem(
-                    id: s.url,
-                    title: s.songName,
-                    artUri: Uri.parse(s.coverImage),
-                    artist: s.artistName,
-                    duration: Duration(seconds: s.duration),
-                    extras: {'songId': s.id, 'listen': s.listen},
+                    id: s.media.audioUrl,
+                    title: s.title,
+                    artUri: Uri.parse(s.media.coverImage),
+                    artist: s.getArtists(),
+                    duration: Duration(seconds: s.media.duration),
+                    extras: {'songId': s.id, 'listen': s.stats.playCount},
                   ),
                 );
               } else {
@@ -59,12 +59,12 @@ class PlayButton extends ConsumerWidget {
               List<MediaItem> mediaItems = songs!
                   .map(
                     (song) => MediaItem(
-                      id: song.url,
-                      title: song.songName,
-                      artUri: Uri.parse(song.coverImage),
-                      artist: song.artistName,
-                      duration: Duration(seconds: song.duration),
-                      extras: {'songId': song.id, 'listen': song.listen},
+                      id: song.media.audioUrl,
+                      title: song.title,
+                      artUri: Uri.parse(song.media.coverImage),
+                      artist: song.getArtists(),
+                      duration: Duration(seconds: song.media.duration),
+                      extras: {'songId': song.id, 'listen': song.stats.playCount},
                     ),
                   )
                   .toList();
@@ -73,7 +73,7 @@ class PlayButton extends ConsumerWidget {
           },
           child:
               song != null &&
-                      (mediaItem == null || mediaItem.id != song!.url) ||
+                      (mediaItem == null || mediaItem.id != song!.media.audioUrl) ||
                   songs != null
               ? Container(
                   width: size ?? 30,

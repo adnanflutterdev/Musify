@@ -5,7 +5,7 @@ import 'package:audio_session/audio_session.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:musify/feature/song/models/song_stream.dart';
+import 'package:musify/feature/song/data/models/song_stream.dart';
 import 'package:rxdart/rxdart.dart';
 
 class AudioPlayerHandler extends BaseAudioHandler

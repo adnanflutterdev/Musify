@@ -1,9 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:musify/core/utils/app_navigator.dart';
-import 'package:musify/feature/playlist/presentation/screens/playlist_screen.dart';
+import 'package:musify/feature/song/data/models/new_song.dart';
 import 'package:musify/feature/song/screens/song_details_screen.dart';
-import 'package:musify/feature/song/models/song.dart';
 import 'package:musify/core/utils/colors.dart';
 import 'package:musify/core/utils/text.dart';
 
@@ -36,13 +35,16 @@ class SongList extends StatelessWidget {
                 whiteTextMedium(title),
                 const Spacer(),
                 TextButton(
-                  onPressed: () => AppNavigator.push(
-                    PlaylistScreen(
-                      title: title,
-                      songs: songs,
-                      menuItems: menuItems,
-                    ),
-                  ),
+                  onPressed: () {
+                    // AppNavigator.push(
+                      // PlaylistScreen(
+                      //   title: title,
+                      //   songs: songs,
+                      //   menuItems: menuItems,
+                      // ),
+                    // );
+                  },
+
                   child: darkText('View all'),
                 ),
               ],
@@ -69,7 +71,7 @@ class SongList extends StatelessWidget {
                           SongDetailsScreen(song: songs[index]),
                         ),
                         child: CachedNetworkImage(
-                          imageUrl: song.coverImage,
+                          imageUrl: song.media.coverImage,
 
                           placeholder: (context, url) => Container(
                             width: 80,
@@ -92,7 +94,7 @@ class SongList extends StatelessWidget {
                               ),
                               SizedBox(
                                 width: 80,
-                                child: whiteTextSmall(song.songName),
+                                child: whiteTextSmall(song.title),
                               ),
                             ],
                           ),

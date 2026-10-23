@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/utils/app_navigator.dart';
-import 'package:musify/feature/song/models/song.dart';
+import 'package:musify/feature/song/data/models/new_song.dart';
 import 'package:musify/feature/song/providers/song_selection_provider.dart';
 import 'package:musify/feature/song/providers/song_stream_provider.dart';
 import 'package:musify/core/utils/colors.dart';
 import 'package:musify/core/utils/text.dart';
 import 'package:musify/core/widgets/buttons/more_button.dart';
-import 'package:musify/core/widgets/buttons/play_button.dart';
 import 'package:musify/feature/search/presentation/widgets/song_tile.dart';
 import 'package:musify/feature/song/widgets/song_selection_bar.dart';
 import 'package:musify/feature/song/widgets/song_track.dart';
@@ -65,7 +64,7 @@ class PlaylistScreen extends StatelessWidget {
                               songStream.asData?.value.mediaItem?.id;
                           return SongTile(
                             song: song,
-                            isSameSong: song.url == currentSongId,
+                            isSameSong: song.id == currentSongId,
                           );
                         },
                       );
@@ -130,7 +129,7 @@ class PlaylistScreen extends StatelessWidget {
                             : WrapAlignment.center,
                         children: List.generate(songLength, (index) {
                           return CachedNetworkImage(
-                            imageUrl: songs[index].coverImage,
+                            imageUrl: songs[index].media.coverImage,
                             width: songLength == 1
                                 ? imageSize * 1.35
                                 : imageSize,
@@ -143,15 +142,15 @@ class PlaylistScreen extends StatelessWidget {
               ),
               if (imageSize > 40) const Spacer(),
               if (imageSize > 40)
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [PlayButton(songs: songs)],
-                ),
+                // Column(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [PlayButton(songs: songs)],
+                // ),
               if (imageSize == 40)
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [PlayButton(songs: songs)],
-                ),
+                // Column(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [PlayButton(songs: songs)],
+                // ),
               if (imageSize == 40) const Spacer(),
               AppSpacing.h20,
             ],

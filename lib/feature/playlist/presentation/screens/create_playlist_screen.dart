@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/utils/app_navigator.dart';
+import 'package:musify/feature/song/data/models/new_song.dart';
 import 'package:musify/feature/song/screens/select_song_screen.dart';
-import 'package:musify/feature/song/models/song.dart';
 import 'package:musify/feature/song/providers/song_selection_provider.dart';
 import 'package:musify/core/utils/colors.dart';
 import 'package:musify/core/utils/images.dart';
@@ -181,7 +181,7 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
                                   vertical: 3.0,
                                 ),
                                 leading: CachedNetworkImage(
-                                  imageUrl: song.coverImage,
+                                  imageUrl: song.media.coverImage,
                                   placeholder: (context, url) => CircleAvatar(
                                     radius: 23,
                                     backgroundImage: AssetImage(
@@ -201,8 +201,8 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
                                         backgroundImage: imageProvider,
                                       ),
                                 ),
-                                title: tileTitle(song.songName),
-                                subtitle: tileSubTitle(song.artistName),
+                                title: tileTitle(song.title),
+                                subtitle: tileSubTitle(song.getArtists()),
                                 trailing: IconButton(
                                   onPressed: () {
                                     songSelectionNotifer.toggleSongSelection(

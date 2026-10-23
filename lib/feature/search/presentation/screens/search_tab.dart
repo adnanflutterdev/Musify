@@ -6,6 +6,6 @@ class SearchTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(children: [Expanded(child: SearchedSongs())]);
+    return const SearchedSongs();
   }
 }

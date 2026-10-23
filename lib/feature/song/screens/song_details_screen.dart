@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:musify/core/const/app_spacing.dart';
-import 'package:musify/feature/song/models/song.dart';
+import 'package:musify/feature/song/data/models/new_song.dart';
 import 'package:musify/core/utils/colors.dart';
 import 'package:musify/core/utils/duration_label.dart';
 import 'package:musify/core/utils/screen_size.dart';
@@ -19,12 +20,17 @@ class SongDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double coverImageSize = ScreenSize.width / 1.5;
-    int duration = song.duration;
+    int duration = song.media.duration;
     List<Set<String>> songDetails = [
-      {'From: ', song.movieName},
+      {'From: ', song.context.movie?.name ?? ''},
       {'Duration: ', '${durationLabel(duration)} min'},
-      {'Released: ', song.date},
-      {'Listens:  ', song.listen.toString()},
+      {
+        'Released: ',
+        song.release.releaseDate != null
+            ? DateFormat('dd-MM-yyyy').format(song.release.releaseDate!)
+            : '',
+      },
+      {'Listens:  ', song.stats.playCount.toString()},
     ];
     return Scaffold(
       backgroundColor: AppColors.surface,
@@ -34,13 +40,13 @@ class SongDetailsScreen extends StatelessWidget {
           children: [
             CustomAppBar(
               title: doubleText(
-                text1: song.songName,
+                text1: song.title,
                 style1: const TextStyle(
                   color: AppColors.primary,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
-                text2: song.artistName,
+                text2: song.getArtists(),
                 style2: const TextStyle(
                   color: AppColors.onSurfaceMedium,
                   fontSize: 16,
@@ -58,7 +64,7 @@ class SongDetailsScreen extends StatelessWidget {
                       AppSpacing.h20,
                       Center(
                         child: CachedNetworkImage(
-                          imageUrl: song.coverImage,
+                          imageUrl: song.media.coverImage,
                           placeholder: (context, url) => Container(
                             width: coverImageSize,
                             height: coverImageSize,
@@ -126,7 +132,7 @@ class SongDetailsScreen extends StatelessWidget {
                       Row(
                         children: [
                           Wrap(
-                            children: song.language
+                            children: song.classification.languages
                                 .toString()
                                 .split(',')
                                 .map(
@@ -140,7 +146,7 @@ class SongDetailsScreen extends StatelessWidget {
                       AppSpacing.h12,
                       songDetailsHeading('Genre(s):'),
                       Wrap(
-                        children: song.songCategories
+                        children: song.classification.genres
                             .toString()
                             .split(', ')
                             .map(

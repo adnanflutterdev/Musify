@@ -115,7 +115,7 @@ class AppThemeColors {
   static const Color lightInfo = Color(0xFF1D4ED8);
 
   // Dark theme
-  static const Color darkError = Color(0xFFF87171);
+  static const Color darkError = Color(0xFFB91C1C);
   static const Color darkSuccess = Color(0xFF4ADE80);
   static const Color darkWarning = Color(0xFFFBBF24);
   static const Color darkInfo = Color(0xFF60A5FA);
