@@ -234,7 +234,7 @@ class Media {
   final String coverImage;
 
   /// Optional additional audio encodings or quality variants.
-  final List<AudioSource> audioSources;
+  final List<AudioSourceData> audioSources;
 
   const Media({
     required this.audioUrl,
@@ -249,7 +249,7 @@ class Media {
       duration: _int(json['duration']),
       coverImage: _string(json['coverImage']),
       audioSources: _mapList(json['audioSources'])
-          .map(AudioSource.fromJson)
+          .map(AudioSourceData.fromJson)
           .toList(growable: false),
     );
   }
@@ -263,21 +263,21 @@ class Media {
   };
 }
 
-class AudioSource {
+class AudioSourceData {
   final String url;
   final String format;
   final String quality;
   final int? bitrate;
 
-  const AudioSource({
+  const AudioSourceData({
     required this.url,
     required this.format,
     required this.quality,
     this.bitrate,
   });
 
-  factory AudioSource.fromJson(Map<String, dynamic> json) {
-    return AudioSource(
+  factory AudioSourceData.fromJson(Map<String, dynamic> json) {
+    return AudioSourceData(
       url: _string(json['url']),
       format: _string(json['format']),
       quality: _string(json['quality']),

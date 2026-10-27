@@ -121,6 +121,7 @@ users
 {
   "songId": "song_001",
   "playedAt": "Timestamp"
+  "durationPlayed": 182,
 }
 
 (7)

@@ -24,7 +24,8 @@ class HomeScreen extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _HomeScreen();
 }
 
-class _HomeScreen extends ConsumerState<HomeScreen> {
+class _HomeScreen extends ConsumerState<HomeScreen>
+    with WidgetsBindingObserver {
   late PageController _pageController;
 
   List<Widget> tabs = [
@@ -37,6 +38,7 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _pageController = PageController();
   }
 
@@ -67,7 +69,14 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    debugPrint(state.name);
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _pageController.dispose();
     super.dispose();
   }
@@ -80,10 +89,12 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
       onPopInvokedWithResult: (didPop, _) => _onPop(didPop, tabIndex),
       child: CustomScaffold(
         appBar: _buildAppBar(tabIndex),
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.md,
-          vertical: AppSpacing.xs,
-        ),
+        padding: tabIndex == 1
+            ? EdgeInsets.zero
+            : const EdgeInsets.symmetric(
+                horizontal: AppSpacing.md,
+                vertical: AppSpacing.xs,
+              ),
         body: Column(
           children: [
             Expanded(
@@ -130,8 +141,9 @@ class _HomeScreen extends ConsumerState<HomeScreen> {
           hasLeading: false,
           verticalPadding: AppSpacing.h4,
           title: AppTextField(
-            suffixIcon: Icons.close,
+            prefixIconSize: 25,
             prefixIcon: Icons.search,
+            suffixIcon: Icons.close,
             hintText: 'Search song, artist, movie, genre, category',
           ),
         );

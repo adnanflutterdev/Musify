@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:musify/core/model/appearance_theme.dart';
-import 'package:musify/core/services/providers/theme_provider.dart';
+import 'package:musify/feature/account/presentation/provider/appearance_provider.dart';
 import 'package:musify/core/theme/app_colors.dart';
 import 'package:musify/core/theme/app_theme.dart';
 import 'package:musify/core/utils/app_navigator.dart';
@@ -10,9 +10,9 @@ import 'package:musify/firebase_options.dart';
 import 'package:musify/core/utils/screen_size.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:musify/feature/splash/presentation/screens/splash_screen.dart';
+import 'package:musify/feature/app/presentation/screen/splash_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/core/services/audio/audio_player_handler.dart';
+import 'package:musify/feature/listening/audio/audio_player_handler.dart';
 
 late final AudioPlayerHandler audioHandler;
 void main() async {
@@ -22,7 +22,7 @@ void main() async {
 
   // AudioService setup
   audioHandler = await AudioService.init(
-    builder: () => AudioPlayerHandler(),
+    builder: () => AudioPlayerHandler(ProviderContainer()),
     config: const AudioServiceConfig(
       androidNotificationChannelId: 'com.musify.app.audio',
       androidNotificationChannelName: 'Audio Playback',
@@ -87,7 +87,6 @@ class Musify extends ConsumerWidget {
           final mediaQuery = MediaQuery.of(context);
           return MediaQuery(
             data: mediaQuery.copyWith(
-              
               textScaler: TextSizeX.getScaler(appearance.textSize),
             ),
             child: child!,

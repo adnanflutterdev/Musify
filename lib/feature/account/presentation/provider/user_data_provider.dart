@@ -1,9 +1,11 @@
 import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/core/typedefs/typedefs.dart';
 import 'package:musify/core/usecase/usecase.dart';
-import 'package:musify/feature/account/data/models/user_data.dart';
-import 'package:musify/feature/account/data/models/username.dart';
+import 'package:musify/feature/account/data/models/user/recently_played.dart';
+import 'package:musify/feature/account/data/models/user/user_data.dart';
+import 'package:musify/feature/account/data/models/user/username.dart';
 import 'package:musify/feature/account/domain/usecase/delete_username_usecase.dart';
 import 'package:musify/feature/account/domain/usecase/is_username_available_usecase.dart';
 import 'package:musify/feature/account/domain/usecase/set_usename_usecase.dart';
@@ -72,5 +74,28 @@ final userDataProvider = FutureProvider<UserData?>((ref) async {
 });
 
 final updateUserDataProvider = AsyncNotifierProvider(
-  UpdateUserDataNotifier.new,
+  () => UpdateUserDataNotifier(),
 );
+
+final recentlyPlayedProvider = FutureProvider<List<RecentlyPlayed>>((
+  ref,
+) async {
+  final usecase = ref.read(getRecentlyPlayedUsecaseProvider);
+  final result = await usecase(NoParams());
+  if (result.success) {
+    return result.data ?? [];
+  }
+  return Future.error(result.message ?? 'Failed to get recently played songs');
+});
+
+final recentlyPlayedHistoryProvider =
+    FutureProvider<List<RecentlyPlayedHistory>>((ref) async {
+      final usecase = ref.read(getRecentlyPlayedHistoryUsecaseProvider);
+      final result = await usecase(NoParams());
+      if (result.success) {
+        return result.data ?? [];
+      }
+      return Future.error(
+        result.message ?? 'Failed to get recently played history songs',
+      );
+    });

@@ -1,13 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:musify/core/const/app_spacing.dart';
+import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/utils/app_navigator.dart';
-import 'package:musify/feature/song/data/models/new_song.dart';
+import 'package:musify/feature/song/data/models/song.dart';
 import 'package:musify/functions/play_song.dart';
 import 'package:musify/feature/song/screens/song_details_screen.dart';
-import 'package:musify/core/services/providers/audio_player_provider.dart';
+import 'package:musify/feature/listening/presentation/providers/audio_player_provider.dart';
 import 'package:musify/feature/song/providers/song_selection_provider.dart';
-import 'package:musify/core/utils/colors.dart';
 import 'package:musify/core/utils/duration_label.dart';
 import 'package:musify/core/utils/images.dart';
 
@@ -28,7 +29,11 @@ class SongTile extends ConsumerWidget {
     bool isSongSelected = ref.watch(isSongSelectedProvider(song.id));
 
     return Material(
-      color: isSameSong ? AppColors.primary : Colors.transparent,
+      color: (isSongSelectionOn && isSongSelected)
+          ? context.colors.selection
+          : isSameSong
+          ? context.colors.primary
+          : Colors.transparent,
       child: ListTile(
         onLongPress: isSongSelectionOn
             ? () {
@@ -47,7 +52,7 @@ class SongTile extends ConsumerWidget {
                   playSong(song: song, audioProvider: audioProvider);
                 }
               },
-        contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+        contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
         minTileHeight: 46,
         horizontalTitleGap: 8,
         leading: GestureDetector(
@@ -71,7 +76,7 @@ class SongTile extends ConsumerWidget {
         trailing: isSongSelectionOn
             ? Icon(
                 isSongSelected ? Icons.check : null,
-                color: AppColors.onSuccess,
+                color: context.colors.success,
               )
             : Text(durationLabel(song.media.duration)),
       ),

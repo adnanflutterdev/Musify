@@ -5,7 +5,7 @@ import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/extension/string_extention.dart';
 import 'package:musify/core/model/appearance_theme.dart';
-import 'package:musify/core/services/providers/theme_provider.dart';
+import 'package:musify/feature/account/presentation/provider/appearance_provider.dart';
 import 'package:musify/core/theme/app_colors.dart';
 import 'package:musify/core/widgets/custom_app_bar.dart';
 import 'package:musify/core/widgets/custom_scaffold.dart';

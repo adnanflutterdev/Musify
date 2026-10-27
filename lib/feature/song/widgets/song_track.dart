@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/feature/song/screens/song_player.dart';
-import 'package:musify/core/services/providers/audio_player_provider.dart';
+import 'package:musify/feature/listening/presentation/providers/audio_player_provider.dart';
 import 'package:musify/feature/song/providers/song_stream_provider.dart';
-import 'package:musify/core/utils/colors.dart';
-import 'package:musify/core/utils/text.dart';
+
 import 'package:my_progress_bar/my_progress_bar.dart';
 
 class SongTrack extends ConsumerWidget {
@@ -26,16 +26,16 @@ class SongTrack extends ConsumerWidget {
             return mediaItem == null
                 ? const SizedBox.shrink()
                 : Container(
-                    decoration: const BoxDecoration(
+                    decoration:  BoxDecoration(
                       border: Border(
                         top: BorderSide(
-                          color: AppColors.surfaceMuted,
+                          color: context.colors.disabled,
                           width: 0.7,
                         ),
                       ),
                     ),
                     child: Material(
-                      color: AppColors.surfaceDark,
+                      color: context.colors.background,
                       child: ListTile(
                         minTileHeight: 45,
                         minVerticalPadding: 3,
@@ -46,9 +46,9 @@ class SongTrack extends ConsumerWidget {
                         ),
                         leading: CachedNetworkImage(
                           imageUrl: mediaItem.artUri.toString(),
-                          placeholder: (context, url) => const CircleAvatar(
+                          placeholder: (context, url) =>  CircleAvatar(
                             radius: 22,
-                            backgroundColor: AppColors.surface,
+                            backgroundColor: context.colors.surface,
                           ),
                           imageBuilder: (context, imageProvider) =>
                               CircleAvatar(
@@ -58,17 +58,17 @@ class SongTrack extends ConsumerWidget {
                         ),
                         title: Padding(
                           padding: const EdgeInsets.only(left: 5.0),
-                          child: tileTitle(mediaItem.title),
+                          child: Text(mediaItem.title),
                         ),
                         subtitle: HorizontalProgressBar(
                           maxValue: mediaItem.duration!.inSeconds.toDouble(),
                           currentPosition: currentPosition,
-                          progressColor: AppColors.primary.withValues(
+                          progressColor: context.colors.primary.withValues(
                             alpha: 0.7,
                           ),
-                          bufferedColor: AppColors.surfaceMuted,
+                          bufferedColor: context.colors.disabled,
                           bufferedPosition: bufferedPosition,
-                          thumbColor: AppColors.primaryVariant,
+                          thumbColor: context.colors.primaryDark,
                           trackHeight: 4,
                           thumbDiameter: 12,
                           onChanged: (value) {
@@ -88,13 +88,12 @@ class SongTrack extends ConsumerWidget {
                           child: Container(
                             width: 30,
                             height: 30,
-                            decoration: const BoxDecoration(
+                            decoration:  BoxDecoration(
                               shape: BoxShape.circle,
-                              color: AppColors.primaryVariant,
+                              color: context.colors.primaryDark,
                             ),
                             child: Icon(
                               isPlaying ? Icons.pause : Icons.play_arrow,
-                              color: AppColors.surfaceWhite,
                             ),
                           ),
                         ),

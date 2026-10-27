@@ -4,16 +4,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/core/const/app_spacing.dart';
+import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/utils/app_navigator.dart';
-import 'package:musify/feature/song/data/models/new_song.dart';
+import 'package:musify/core/widgets/custom_text_form_field.dart';
+import 'package:musify/feature/song/data/models/song.dart';
 import 'package:musify/feature/song/screens/select_song_screen.dart';
 import 'package:musify/feature/song/providers/song_selection_provider.dart';
-import 'package:musify/core/utils/colors.dart';
 import 'package:musify/core/utils/images.dart';
-import 'package:musify/core/utils/text.dart';
 import 'package:musify/core/widgets/buttons/custom_button.dart';
 import 'package:musify/core/widgets/custom_app_bar.dart';
-import 'package:musify/core/widgets/custom_text_form_field.dart';
 
 class CreatePlaylistScreen extends ConsumerStatefulWidget {
   const CreatePlaylistScreen({super.key});
@@ -103,32 +102,30 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: 1,
-          backgroundColor: AppColors.surfaceDark,
+          backgroundColor: context.colors.background,
         ),
-        backgroundColor: AppColors.surface,
+        backgroundColor: context.colors.surface,
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomAppBar(
-                title: appBarText('Create playlist'),
+                title: const Text('Create playlist'),
                 onTap: clearProvider,
               ),
               AppSpacing.h12,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: whiteTextSmall('Enter playlist name'),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15.0),
+                child: Text('Enter playlist name'),
               ),
               AppSpacing.h4,
               Form(
                 key: _formKey,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: CustomTextFormField(
+                  child: AppTextField(
                     hintText: 'Playlist name',
                     controller: _controller,
-                    errorBorder: true,
-                    focusedErorBorder: true,
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
                         return 'Please enter name of playlist';
@@ -144,7 +141,7 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
                 padding: const EdgeInsets.only(left: 15.0, right: 8.0),
                 child: Row(
                   children: [
-                    whiteTextSmall('Songs'),
+                    const Text('Songs'),
                     const Spacer(),
                     IconButton(
                       onPressed: () async {
@@ -156,10 +153,7 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
                           ),
                         );
                       },
-                      icon: const Icon(
-                        Icons.add,
-                        color: AppColors.surfaceMuted,
-                      ),
+                      icon: Icon(Icons.add, color: context.colors.disabled),
                     ),
                   ],
                 ),
@@ -169,7 +163,7 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
                 child: Stack(
                   children: [
                     addedSongs.isEmpty
-                        ? Center(child: whiteTextSmall('No songs added'))
+                        ? const Center(child: Text('No songs added'))
                         : ListView.builder(
                             itemCount: addedSongs.length,
                             itemBuilder: (context, index) {
@@ -201,17 +195,17 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
                                         backgroundImage: imageProvider,
                                       ),
                                 ),
-                                title: tileTitle(song.title),
-                                subtitle: tileSubTitle(song.getArtists()),
+                                title: Text(song.title),
+                                subtitle: Text(song.getArtists()),
                                 trailing: IconButton(
                                   onPressed: () {
                                     songSelectionNotifer.toggleSongSelection(
                                       song,
                                     );
                                   },
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.cancel,
-                                    color: AppColors.surfaceMuted,
+                                    color: context.colors.disabled,
                                   ),
                                 ),
                               );

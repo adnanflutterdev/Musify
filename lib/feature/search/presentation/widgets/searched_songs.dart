@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/widgets/async_when.dart';
 import 'package:musify/core/widgets/snack_bars.dart';
-import 'package:musify/feature/song/data/models/new_song.dart';
+import 'package:musify/feature/song/data/models/song.dart';
 import 'package:musify/feature/song/providers/song_stream_provider.dart';
 import 'package:musify/feature/search/presentation/widgets/song_tile.dart';
 import 'package:musify/feature/song/providers/songs_provider.dart';
@@ -62,7 +62,7 @@ class _SearchedSongsState extends ConsumerState<SearchedSongs> {
           children: [
             Expanded(
               child: ListView.builder(
-                padding: EdgeInsets.zero,
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
                 itemCount: songs.length,
                 controller: _scrollController,
                 itemBuilder: (context, index) {

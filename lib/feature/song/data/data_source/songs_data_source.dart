@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:musify/feature/song/data/models/new_song.dart';
+import 'package:musify/feature/song/data/models/song.dart';
 
 class SongsDataSource {
   final FirebaseFirestore firestore;
@@ -27,7 +27,14 @@ class SongsDataSource {
     return songs.docs.map((song) => Song.fromFirebase(song.data())).toList();
   }
 
-  Future<void> addSongCount()async{
-    
+  Future<List<Song>> getSongsByIds(List<String> songIds) async {
+    final snapshots = await firestore
+        .collection('songs')
+        .where(FieldPath.documentId, whereIn: songIds)
+        .get();
+
+    return snapshots.docs
+        .map((song) => Song.fromFirebase(song.data()))
+        .toList();
   }
 }

@@ -1,10 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/utils/app_navigator.dart';
-import 'package:musify/feature/song/data/models/new_song.dart';
+import 'package:musify/feature/song/data/models/song.dart';
 import 'package:musify/feature/song/screens/song_details_screen.dart';
-import 'package:musify/core/utils/colors.dart';
-import 'package:musify/core/utils/text.dart';
 
 class SongList extends StatelessWidget {
   const SongList({
@@ -32,27 +31,27 @@ class SongList extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Row(
               children: [
-                whiteTextMedium(title),
+                Text(title),
                 const Spacer(),
                 TextButton(
                   onPressed: () {
                     // AppNavigator.push(
-                      // PlaylistScreen(
-                      //   title: title,
-                      //   songs: songs,
-                      //   menuItems: menuItems,
-                      // ),
+                    // PlaylistScreen(
+                    //   title: title,
+                    //   songs: songs,
+                    //   menuItems: menuItems,
+                    // ),
                     // );
                   },
 
-                  child: darkText('View all'),
+                  child: const Text('View all'),
                 ),
               ],
             ),
           ),
           Container(
             decoration: BoxDecoration(
-              color: AppColors.surfaceVariant,
+              color: context.colors.surfaceVariant,
               borderRadius: BorderRadius.circular(15.0),
             ),
             child: SizedBox(
@@ -77,7 +76,7 @@ class SongList extends StatelessWidget {
                             width: 80,
                             decoration: BoxDecoration(
                               shape: BoxShape.rectangle,
-                              color: AppColors.surfaceLight,
+                              color: context.colors.surfaceVariant,
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
@@ -92,10 +91,7 @@ class SongList extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
-                              SizedBox(
-                                width: 80,
-                                child: whiteTextSmall(song.title),
-                              ),
+                              SizedBox(width: 80, child: Text(song.title)),
                             ],
                           ),
                         ),

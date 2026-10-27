@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:musify/core/utils/colors.dart';
-import 'package:musify/core/utils/text.dart';
+import 'package:musify/core/extension/app_theme_extention.dart';
 
 class CustomTextButton extends StatelessWidget {
   const CustomTextButton({
@@ -17,9 +16,9 @@ class CustomTextButton extends StatelessWidget {
       onPressed: onPressed,
       style: TextButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 3),
-        backgroundColor: AppColors.primaryVariant,
+        backgroundColor: context.colors.primaryLight,
       ),
-      child: whiteTextSmall(title),
+      child: Text(title),
     );
   }
 }

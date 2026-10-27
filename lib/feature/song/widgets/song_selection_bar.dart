@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/utils/app_navigator.dart';
-import 'package:musify/feature/song/data/models/new_song.dart';
+import 'package:musify/feature/song/data/models/song.dart';
 import 'package:musify/feature/song/providers/song_selection_provider.dart';
-import 'package:musify/core/utils/colors.dart';
-import 'package:musify/core/utils/text.dart';
+
 import 'package:musify/core/widgets/buttons/custom_button.dart';
 import 'package:musify/core/widgets/buttons/play_button.dart';
 
@@ -26,24 +26,22 @@ class SongSelectionBar extends StatelessWidget {
             ? Container(
                 height: 50,
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                decoration: const BoxDecoration(
-                  color: AppColors.surfaceDark,
+                decoration: BoxDecoration(
+                  color: context.colors.background,
                   border: Border(
-                    top: BorderSide(color: AppColors.surfaceMuted, width: 0.7),
+                    top: BorderSide(color: context.colors.disabled, width: 0.7),
                   ),
                 ),
                 child: Row(
                   children: [
-                    primaryTextMedium(
-                      'Selected songs (${selectedSong.songsOrder.length})',
-                    ),
+                    Text('Selected songs (${selectedSong.songsOrder.length})'),
                     if (!forPlaylist)
                       TextButton(
                         onPressed: () {
                           songSelectionNotifier.stop();
                           selectedSongNotifier.clear();
                         },
-                        child: whiteTextSmall('Cancel'),
+                        child: const Text('Cancel'),
                       ),
                     const Spacer(),
                     if (!forPlaylist)

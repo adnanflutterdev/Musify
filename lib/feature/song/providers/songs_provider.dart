@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:musify/core/result/result.dart';
-import 'package:musify/feature/song/data/models/new_song.dart';
+import 'package:musify/feature/song/data/models/song.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:musify/feature/song/domain/usecase/get_songs_by_ids_usecase.dart';
 import 'package:musify/feature/song/domain/usecase/load_songs_usecase.dart';
 import 'package:musify/feature/song/providers/di.dart';
 
@@ -32,3 +33,13 @@ class SongsNotifier extends AsyncNotifier<List<Song>> {
 }
 
 final songsProvider = AsyncNotifierProvider(() => SongsNotifier());
+
+final songsByIdsProvider = FutureProvider.family<List<Song>, List<String>>((
+  ref,
+  param,
+) async {
+  final usecase = ref.read(getSongsByIdsUsecaseProvider);
+  final result = await usecase(GetSongsByIdsUsecaseParams(param));
+
+  return result.data ?? [];
+});

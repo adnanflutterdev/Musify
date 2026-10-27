@@ -4,6 +4,17 @@ import 'package:musify/core/utils/app_preferences.dart';
 class AppThemeColors {
   AppThemeColors._();
 
+  static Color getAccentTint({
+  required Color primary,
+  required Color background,
+  double opacity = 0.12,
+}) {
+  return Color.alphaBlend(
+    primary.withValues(alpha: opacity),
+    background,
+  );
+}
+
   // ============================================================
   // BRAND / PRIMARY
   // ============================================================
@@ -140,13 +151,13 @@ class AppThemeColors {
 
   // Light theme
   static const Color lightDisabled = Color(0xFFD1D5DB);
-  static const Color lightSelection = Color(0xFFFCE7F3);
-  static const Color lightSkeleton = Color(0xFFE5E7EB);
+  // static const Color lightSelection = Color(0xFFFCE7F3);
+  // static const Color lightSkeleton = Color(0xFFE5E7EB);
 
   // Dark theme
   static const Color darkDisabled = Color(0xFF4B5563);
-  static const Color darkSelection = Color(0xFF831843);
-  static const Color darkSkeleton = Color(0xFF374151);
+  // static const Color darkSelection = Color(0xFF831843);
+  // static const Color darkSkeleton = Color(0xFF374151);
 
   static const Color white = Colors.white;
   static const Color black = Colors.black;
@@ -155,7 +166,26 @@ class AppThemeColors {
   static const Color textFieldError = Color(0xFFFF4040);
 
   static AppColors getColors(Brightness brightness) {
-    final index = AppPreferences.getAccentColorIndex();
+    final index = AppPreferences.getAccentColorIndex()
+      .clamp(0, primary.length - 1);
+
+  final isDark = brightness == Brightness.dark;
+
+  final accent = primary[index];
+  final background =
+      isDark ? darkBackground : lightBackground;
+
+  final selection = getAccentTint(
+    primary: accent,
+    background: background,
+    opacity: isDark ? 0.24 : 0.12,
+  );
+
+  final skeleton = getAccentTint(
+    primary: accent,
+    background: isDark ? darkSurfaceVariant : lightSurfaceVariant,
+    opacity: isDark ? 0.18 : 0.08,
+  );
     if (brightness == .dark) {
       return AppColors(
         primary: primary[index],
@@ -190,8 +220,8 @@ class AppThemeColors {
         textFieldError: textFieldError,
         scrim: scrim,
         disabled: darkDisabled,
-        selection: darkSelection,
-        skeleton: darkSelection,
+        selection: selection,
+        skeleton: skeleton,
       );
     } else {
       return AppColors(
@@ -227,8 +257,8 @@ class AppThemeColors {
         textFieldError: textFieldError,
         scrim: scrim,
         disabled: lightDisabled,
-        selection: lightSelection,
-        skeleton: lightSelection,
+         selection: selection,
+        skeleton: skeleton,
       );
     }
   }

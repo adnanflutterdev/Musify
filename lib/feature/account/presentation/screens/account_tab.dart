@@ -6,7 +6,7 @@ import 'package:musify/core/widgets/user_avatar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/widgets/buttons/primary_button.dart';
-import 'package:musify/feature/account/data/models/user_data.dart';
+import 'package:musify/feature/account/data/models/user/user_data.dart';
 import 'package:musify/feature/account/presentation/screens/account_settings/appearances_settings.dart';
 import 'package:musify/feature/account/presentation/screens/profile_screen.dart';
 import 'package:musify/feature/auth/presentation/provider/auth_provider.dart';

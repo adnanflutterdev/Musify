@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/core/utils/colors.dart';
+import 'package:musify/core/extension/app_theme_extention.dart';
 
 class FavouriteButton extends ConsumerWidget {
   const FavouriteButton({super.key, required this.songId, this.size});
@@ -54,14 +54,12 @@ class FavouriteButton extends ConsumerWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: isFavourite
-              ? AppColors.surfaceVariant
-              : AppColors.surfaceLight,
+              ? context.colors.surfaceVariant
+              : context.colors.surface,
         ),
         child: Icon(
           isFavourite ? Icons.favorite_rounded : Icons.favorite_outline_sharp,
-          color: isFavourite
-              ? AppColors.primaryVariant
-              : AppColors.surfaceWhite,
+          color: isFavourite ? context.colors.primary : null,
           size: size == null ? 18 : (size! - 15),
         ),
       ),

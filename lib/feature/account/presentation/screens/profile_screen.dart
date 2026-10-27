@@ -11,7 +11,7 @@ import 'package:musify/core/widgets/collapsible_text.dart';
 import 'package:musify/core/widgets/custom_app_bar.dart';
 import 'package:musify/core/widgets/custom_scaffold.dart';
 import 'package:musify/core/widgets/user_avatar.dart';
-import 'package:musify/feature/account/data/models/user_data.dart';
+import 'package:musify/feature/account/data/models/user/user_data.dart';
 import 'package:musify/feature/account/presentation/provider/app_config_provider.dart';
 import 'package:musify/feature/account/presentation/provider/edit_profile_provider.dart';
 import 'package:musify/feature/account/presentation/provider/user_data_provider.dart';

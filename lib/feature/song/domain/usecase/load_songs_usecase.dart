@@ -1,6 +1,6 @@
 import 'package:musify/core/typedefs/typedefs.dart';
 import 'package:musify/core/usecase/usecase.dart';
-import 'package:musify/feature/song/data/models/new_song.dart';
+import 'package:musify/feature/song/data/models/song.dart';
 import 'package:musify/feature/song/domain/repository/songs_repository.dart';
 
 class LoadSongsUsecase extends FUsecase<List<Song>, SongLimitParam> {

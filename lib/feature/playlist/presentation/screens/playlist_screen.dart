@@ -2,12 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/core/const/app_spacing.dart';
+import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/utils/app_navigator.dart';
-import 'package:musify/feature/song/data/models/new_song.dart';
+import 'package:musify/feature/song/data/models/song.dart';
 import 'package:musify/feature/song/providers/song_selection_provider.dart';
 import 'package:musify/feature/song/providers/song_stream_provider.dart';
-import 'package:musify/core/utils/colors.dart';
-import 'package:musify/core/utils/text.dart';
 import 'package:musify/core/widgets/buttons/more_button.dart';
 import 'package:musify/feature/search/presentation/widgets/song_tile.dart';
 import 'package:musify/feature/song/widgets/song_selection_bar.dart';
@@ -27,7 +26,6 @@ class PlaylistScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.surface,
       appBar: AppBar(toolbarHeight: 1),
       body: SafeArea(
         child: Column(
@@ -36,7 +34,7 @@ class PlaylistScreen extends StatelessWidget {
               child: CustomScrollView(
                 slivers: [
                   // AppBar
-                  _buildSliverAppBar(),
+                  _buildSliverAppBar(context),
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -45,7 +43,7 @@ class PlaylistScreen extends StatelessWidget {
                       ),
                       child: Row(
                         children: [
-                          appBarText(title),
+                          Text(title),
                           const Spacer(),
                           if (menuItems != null)
                             MoreButton(menuItems: menuItems!),
@@ -81,11 +79,11 @@ class PlaylistScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSliverAppBar() {
+  Widget _buildSliverAppBar(BuildContext context) {
     return SliverAppBar(
       pinned: true,
       expandedHeight: 220,
-      backgroundColor: AppColors.surfaceDark,
+      backgroundColor: context.colors.background,
       automaticallyImplyLeading: false,
       flexibleSpace: LayoutBuilder(
         builder: (context, constraints) {
@@ -108,10 +106,7 @@ class PlaylistScreen extends StatelessWidget {
                       ref.read(turnOnOffSongSelectionProvider.notifier).stop();
                       AppNavigator.pop();
                     },
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: AppColors.surfaceWhite,
-                    ),
+                    icon: const Icon(Icons.arrow_back),
                   );
                 },
               ),
@@ -146,12 +141,12 @@ class PlaylistScreen extends StatelessWidget {
                 //   mainAxisAlignment: MainAxisAlignment.center,
                 //   children: [PlayButton(songs: songs)],
                 // ),
-              if (imageSize == 40)
-                // Column(
-                //   mainAxisAlignment: MainAxisAlignment.end,
-                //   children: [PlayButton(songs: songs)],
-                // ),
-              if (imageSize == 40) const Spacer(),
+                if (imageSize == 40)
+                  // Column(
+                  //   mainAxisAlignment: MainAxisAlignment.end,
+                  //   children: [PlayButton(songs: songs)],
+                  // ),
+                  if (imageSize == 40) const Spacer(),
               AppSpacing.h20,
             ],
           );

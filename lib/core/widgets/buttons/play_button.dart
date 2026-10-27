@@ -1,10 +1,10 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/feature/song/data/models/new_song.dart';
-import 'package:musify/core/services/providers/audio_player_provider.dart';
+import 'package:musify/core/extension/app_theme_extention.dart';
+import 'package:musify/feature/song/data/models/song.dart';
+import 'package:musify/feature/listening/presentation/providers/audio_player_provider.dart';
 import 'package:musify/feature/song/providers/song_stream_provider.dart';
-import 'package:musify/core/utils/colors.dart';
 
 class PlayButton extends ConsumerWidget {
   const PlayButton({super.key, this.size, this.callback, this.song, this.songs})
@@ -23,8 +23,7 @@ class PlayButton extends ConsumerWidget {
     final audioProvider = ref.watch(audioPlayerProvider);
     return songStream.when(
       error: (error, stackTrace) => const Text('Error'),
-      loading: () =>
-          const CircularProgressIndicator(color: AppColors.surfaceWhite),
+      loading: () => const CircularProgressIndicator(),
       data: (data) {
         final mediaItem = data.mediaItem;
         final isPlaying = data.playbackState.playing;
@@ -35,7 +34,8 @@ class PlayButton extends ConsumerWidget {
               callback?.call();
             }
             if (song != null) {
-              bool isDiffSong = mediaItem == null || mediaItem.id != song!.media.audioUrl;
+              bool isDiffSong =
+                  mediaItem == null || mediaItem.id != song!.media.audioUrl;
               if (isDiffSong) {
                 Song s = song!;
                 audioProvider.playSong(
@@ -64,7 +64,10 @@ class PlayButton extends ConsumerWidget {
                       artUri: Uri.parse(song.media.coverImage),
                       artist: song.getArtists(),
                       duration: Duration(seconds: song.media.duration),
-                      extras: {'songId': song.id, 'listen': song.stats.playCount},
+                      extras: {
+                        'songId': song.id,
+                        'listen': song.stats.playCount,
+                      },
                     ),
                   )
                   .toList();
@@ -73,18 +76,18 @@ class PlayButton extends ConsumerWidget {
           },
           child:
               song != null &&
-                      (mediaItem == null || mediaItem.id != song!.media.audioUrl) ||
+                      (mediaItem == null ||
+                          mediaItem.id != song!.media.audioUrl) ||
                   songs != null
               ? Container(
                   width: size ?? 30,
                   height: size ?? 30,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: AppColors.primaryVariant,
+                    color: context.colors.primaryDark,
                   ),
                   child: Icon(
                     Icons.play_arrow,
-                    color: AppColors.surfaceWhite,
                     size: size == null ? 23 : (size! - 7),
                   ),
                 )

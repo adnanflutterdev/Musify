@@ -9,7 +9,7 @@ extension ThemeModeX on ThemeMode {
   }
 }
 
-class ThemeNotifier extends Notifier<AppearanceTheme> {
+class AppearanceNotifier extends Notifier<AppearanceTheme> {
   @override
   AppearanceTheme build() {
     return _initialize();
@@ -43,4 +43,4 @@ class ThemeNotifier extends Notifier<AppearanceTheme> {
   }
 }
 
-final appearanceProvider = NotifierProvider(() => ThemeNotifier());
+final appearanceProvider = NotifierProvider(() => AppearanceNotifier());

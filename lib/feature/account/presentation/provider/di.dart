@@ -7,6 +7,8 @@ import 'package:musify/feature/account/data/repository/user_repository_impl.dart
 import 'package:musify/feature/account/domain/usecase/delete_username_usecase.dart';
 import 'package:musify/feature/account/domain/usecase/get_avatar_usecase.dart';
 import 'package:musify/feature/account/domain/usecase/get_general_configs_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/get_recently_played_history_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/get_recently_played_usecase.dart';
 import 'package:musify/feature/account/domain/usecase/get_user_data_usecase.dart';
 import 'package:musify/feature/account/domain/usecase/is_username_available_usecase.dart';
 import 'package:musify/feature/account/domain/usecase/set_usename_usecase.dart';
@@ -66,4 +68,14 @@ final deleteUsernameUsecaseProvider = Provider((ref) {
 final setUsernameUsecaseProvider = Provider((ref) {
   final userRepository = ref.read(userRepositoryProvider);
   return SetUsenameUsecase(userRepository);
+});
+
+final getRecentlyPlayedUsecaseProvider = Provider((ref) {
+  final userRepository = ref.read(userRepositoryProvider);
+  return GetRecentlyPlayedUsecase(userRepository);
+});
+
+final getRecentlyPlayedHistoryUsecaseProvider = Provider((ref) {
+  final userRepository = ref.read(userRepositoryProvider);
+  return GetRecentlyPlayedHistoryUsecase(userRepository);
 });

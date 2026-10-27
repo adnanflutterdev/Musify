@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:musify/core/utils/colors.dart';
+import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/utils/screen_size.dart';
 
 class MoreButton extends ConsumerWidget {
@@ -16,7 +16,7 @@ class MoreButton extends ConsumerWidget {
 
         showMenu(
           context: context,
-          color: AppColors.surface,
+          color: context.colors.surface,
 
           menuPadding: const EdgeInsets.all(5),
           position: RelativeRect.fromLTRB(
@@ -29,13 +29,13 @@ class MoreButton extends ConsumerWidget {
         );
       },
       child: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: AppColors.surfaceVariant,
+          color: context.colors.surfaceVariant,
         ),
         child: const Padding(
           padding: EdgeInsets.all(2.5),
-          child: Icon(Icons.more_vert, color: AppColors.surfaceWhite, size: 25),
+          child: Icon(Icons.more_vert),
         ),
       ),
     );

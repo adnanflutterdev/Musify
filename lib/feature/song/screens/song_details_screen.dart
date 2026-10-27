@@ -2,11 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:musify/core/const/app_spacing.dart';
-import 'package:musify/feature/song/data/models/new_song.dart';
-import 'package:musify/core/utils/colors.dart';
+import 'package:musify/core/extension/app_theme_extention.dart';
+import 'package:musify/feature/song/data/models/song.dart';
+
 import 'package:musify/core/utils/duration_label.dart';
 import 'package:musify/core/utils/screen_size.dart';
-import 'package:musify/core/utils/text.dart';
+
 import 'package:musify/core/widgets/buttons/favourite_button.dart';
 import 'package:musify/core/widgets/buttons/play_button.dart';
 import 'package:musify/core/widgets/custom_app_bar.dart';
@@ -33,24 +34,27 @@ class SongDetailsScreen extends StatelessWidget {
       {'Listens:  ', song.stats.playCount.toString()},
     ];
     return Scaffold(
-      backgroundColor: AppColors.surface,
-      appBar: AppBar(backgroundColor: AppColors.surfaceDark, toolbarHeight: 1),
+      backgroundColor: context.colors.surface,
+      appBar: AppBar(
+        backgroundColor: context.colors.background,
+        toolbarHeight: 1,
+      ),
       body: SafeArea(
         child: Column(
           children: [
             CustomAppBar(
-              title: doubleText(
-                text1: song.title,
-                style1: const TextStyle(
-                  color: AppColors.primary,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-                text2: song.getArtists(),
-                style2: const TextStyle(
-                  color: AppColors.onSurfaceMedium,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
+              title: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: song.title,
+                      style: context.text.headlineMedium,
+                    ),
+                    TextSpan(
+                      text: song.getArtists(),
+                      style: context.text.titleLarge,
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -69,7 +73,7 @@ class SongDetailsScreen extends StatelessWidget {
                             width: coverImageSize,
                             height: coverImageSize,
                             decoration: BoxDecoration(
-                              color: AppColors.surfaceVariant,
+                              color: context.colors.surfaceVariant,
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
@@ -77,7 +81,7 @@ class SongDetailsScreen extends StatelessWidget {
                             width: coverImageSize,
                             height: coverImageSize,
                             decoration: BoxDecoration(
-                              color: AppColors.surfaceVariant,
+                              color: context.colors.surfaceVariant,
                               borderRadius: BorderRadius.circular(20),
                               image: DecorationImage(
                                 image: imageProvider,
@@ -98,7 +102,7 @@ class SongDetailsScreen extends StatelessWidget {
                         ],
                       ),
                       // Song Details here
-                      songDetailsHeading('Details:'),
+                      const Text('Details:'),
                       AppSpacing.h12,
                       Padding(
                         padding: const EdgeInsets.only(left: 5.0, bottom: 5.0),
@@ -108,19 +112,23 @@ class SongDetailsScreen extends StatelessWidget {
                               padding: const EdgeInsets.only(bottom: 10.0),
                               child: SizedBox(
                                 width: ScreenSize.width / 2.3,
-                                child: doubleText(
-                                  text1: songDetails[index].first,
-                                  style1: const TextStyle(
-                                    color: AppColors.onSurfaceMedium,
-                                  ),
-                                  text2: songDetails[index].last != ''
-                                      ? songDetails[index].last[0]
-                                                .toUpperCase() +
-                                            songDetails[index].last.substring(1)
-                                      : '_______',
-                                  style2: const TextStyle(
-                                    color: AppColors.surfaceWhite,
-                                    fontWeight: FontWeight.w600,
+                                child: RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: songDetails[index].first,
+                                        style: context.text.headlineMedium,
+                                      ),
+                                      TextSpan(
+                                        text: songDetails[index].last != ''
+                                            ? songDetails[index].last[0]
+                                                      .toUpperCase() +
+                                                  songDetails[index].last
+                                                      .substring(1)
+                                            : '_______',
+                                        style: context.text.titleLarge,
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -128,7 +136,7 @@ class SongDetailsScreen extends StatelessWidget {
                           }),
                         ),
                       ),
-                      songDetailsHeading('Language(s):'),
+                      const Text('Language(s):'),
                       Row(
                         children: [
                           Wrap(
@@ -136,21 +144,26 @@ class SongDetailsScreen extends StatelessWidget {
                                 .toString()
                                 .split(',')
                                 .map(
-                                  (e) =>
-                                      tag(e[0].toUpperCase() + e.substring(1)),
+                                  (e) => tag(
+                                    e[0].toUpperCase() + e.substring(1),
+                                    context,
+                                  ),
                                 )
                                 .toList(),
                           ),
                         ],
                       ),
                       AppSpacing.h12,
-                      songDetailsHeading('Genre(s):'),
+                      const Text('Genre(s):'),
                       Wrap(
                         children: song.classification.genres
                             .toString()
                             .split(', ')
                             .map(
-                              (e) => tag(e[0].toUpperCase() + e.substring(1)),
+                              (e) => tag(
+                                e[0].toUpperCase() + e.substring(1),
+                                context,
+                              ),
                             )
                             .toList(),
                       ),

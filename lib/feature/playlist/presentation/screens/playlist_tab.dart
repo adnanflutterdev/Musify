@@ -8,7 +8,7 @@ import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/core/widgets/buttons/custom_button.dart';
 import 'package:musify/core/widgets/custom_text_form_field.dart';
 import 'package:musify/feature/playlist/presentation/screens/create_playlist_screen.dart';
-import 'package:musify/core/utils/colors.dart';
+
 import 'package:musify/feature/home/presentation/widget/song_list.dart';
 
 class PlaylistTab extends ConsumerWidget {
@@ -43,11 +43,9 @@ class PlaylistTab extends ConsumerWidget {
                 AppSpacing.h4,
                 Form(
                   key: formKey,
-                  child: CustomTextFormField(
+                  child: AppTextField(
                     hintText: 'New name',
                     controller: controller,
-                    errorBorder: true,
-                    focusedErorBorder: true,
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
                         return 'Please enter name of playlist';
@@ -112,7 +110,7 @@ class PlaylistTab extends ConsumerWidget {
           return AlertDialog(
             title: Text(
               'Deleting Playlist',
-              style: context.text.bodyLarge?.copyWith(color: AppColors.onError),
+              style: context.text.bodyLarge?.copyWith(color: context.colors.onError),
             ),
             content: Text(
               'Are you sure to delete this playlist?',
@@ -162,7 +160,7 @@ class PlaylistTab extends ConsumerWidget {
                 child: Text(
                   'Delete',
                   style: context.text.bodySmall?.copyWith(
-                    color: AppColors.onError,
+                    color: context.colors.onError,
                   ),
                 ),
               ),
@@ -207,7 +205,7 @@ class PlaylistTab extends ConsumerWidget {
         child: Center(
           child: Text(
             'Delete Playlist',
-            style: context.text.bodySmall!.copyWith(color: AppColors.onError),
+            style: context.text.bodySmall!.copyWith(color: context.colors.onError),
           ),
         ),
       ),
@@ -240,7 +238,7 @@ class PlaylistTab extends ConsumerWidget {
                 TextButton(
                   onPressed: push,
                   style: TextButton.styleFrom(
-                    backgroundColor: AppColors.surfaceVariant,
+                    backgroundColor: context.colors.surfaceVariant,
                   ),
                   child: Text('Create playlist', style: context.text.bodySmall),
                 ),
