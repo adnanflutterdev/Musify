@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:musify/core/const/app_shadow.dart';
 import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/core/widgets/async_when.dart';
+import 'package:musify/core/widgets/custom_ink_well.dart';
 import 'package:musify/core/widgets/user_avatar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/core/extension/app_theme_extention.dart';
@@ -118,66 +120,59 @@ class _AccountTabState extends ConsumerState<AccountTab> {
   }
 
   Widget _buildProfileSection(UserData user) {
-    return Material(
-      color: context.colors.transparent,
-      child: InkWell(
-        onTap: () => AppNavigator.pushDelayed(const ProfileScreen()),
-        splashColor: context.colors.selection,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.xs,
-            vertical: AppSpacing.md,
-          ),
-          child: Row(
-            children: [
-              if (user.userAvatar == null)
-                _buildDefaultAvatar()
-              else
-                UserAvatar(
-                  avatar: user.userAvatar!,
-                  showBorder: false,
-                  size: 80,
-                ),
+    return CustomInkWell(
+      onTap: () => AppNavigator.pushDelayed(const ProfileScreen()),
+      splashColor: context.colors.selection,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.xs,
+          vertical: AppSpacing.md,
+        ),
+        child: Row(
+          children: [
+            if (user.userAvatar == null)
+              _buildDefaultAvatar()
+            else
+              UserAvatar(avatar: user.userAvatar!, showBorder: false, size: 80),
 
-              AppSpacing.w12,
+            AppSpacing.w12,
 
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: .start,
-                  children: [
-                    Text(user.name, style: context.text.titleMedium),
-                    if (user.username.trim().isNotEmpty)
-                      RichText(
-                        text: TextSpan(
-                          text: '@',
-                          style: context.text.bodyMedium?.copyWith(
-                            color: context.colors.primary,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: user.username,
-                              style: context.text.bodyMedium,
-                            ),
-                          ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: .start,
+                children: [
+                  Text(user.name, style: context.text.titleMedium),
+                  if (user.username.trim().isNotEmpty)
+                    RichText(
+                      text: TextSpan(
+                        text: '@',
+                        style: context.text.bodyMedium?.copyWith(
+                          color: context.colors.primary,
                         ),
-                      ),
-                    Text(
-                      'View and edit your profile',
-                      style: context.text.bodyMedium?.copyWith(
-                        color: context.colors.textTertiary,
+                        children: [
+                          TextSpan(
+                            text: user.username,
+                            style: context.text.bodyMedium,
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  Text(
+                    'View and edit your profile',
+                    style: context.text.bodyMedium?.copyWith(
+                      color: context.colors.textTertiary,
+                    ),
+                  ),
+                ],
               ),
+            ),
 
-              Icon(
-                Icons.arrow_forward_ios,
-                size: 18,
-                color: context.colors.textTertiary,
-              ),
-            ],
-          ),
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 18,
+              color: context.colors.textTertiary,
+            ),
+          ],
         ),
       ),
     );
@@ -219,62 +214,60 @@ class _AccountTabState extends ConsumerState<AccountTab> {
     required IconData icon,
     required VoidCallback onTap,
   }) {
-    return Material(
-      color: context.colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        splashColor: context.colors.selection,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.xs,
-            vertical: AppSpacing.md,
-          ),
-          child: Row(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppSpacing.radiusSm),
-                  color: context.colors.surface,
-                ),
-                padding: const EdgeInsets.all(AppSpacing.sm),
-                child: Icon(icon, color: context.colors.primaryLight),
+    return CustomInkWell(
+      onTap: onTap,
+      splashColor: context.colors.selection,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.xs,
+          vertical: AppSpacing.md,
+        ),
+        child: Row(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: context.colors.surface,
+                borderRadius: BorderRadius.circular(AppSpacing.radiusSm),
+                boxShadow: [AppShadow.shadowLvl1(context)],
               ),
+              padding: const EdgeInsets.all(AppSpacing.sm),
+              child: Icon(icon, color: context.colors.primaryLight),
+            ),
 
-              AppSpacing.w12,
+            AppSpacing.w12,
 
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: .start,
-                  children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: .start,
+                children: [
+                  Text(
+                    title,
+                    maxLines: 1,
+                    overflow: .ellipsis,
+                    style: context.text.titleMedium?.copyWith(
+                      color: context.colors.textPrimary,
+                      fontWeight: .w500,
+                    ),
+                  ),
+                  if (subTitle != null)
                     Text(
-                      title,
-                      maxLines: 1,
+                      subTitle,
+                      maxLines: 2,
                       overflow: .ellipsis,
-                      style: context.text.titleMedium?.copyWith(
-                        color: context.colors.textPrimary,
-                        fontWeight: .w500,
+                      style: context.text.bodyMedium?.copyWith(
+                        color: context.colors.textTertiary,
                       ),
                     ),
-                    if (subTitle != null)
-                      Text(
-                        subTitle,
-                        maxLines: 2,
-                        overflow: .ellipsis,
-                        style: context.text.bodyMedium?.copyWith(
-                          color: context.colors.textTertiary,
-                        ),
-                      ),
-                  ],
-                ),
+                ],
               ),
+            ),
 
-              Icon(
-                Icons.arrow_forward_ios,
-                size: 16,
-                color: context.colors.textTertiary,
-              ),
-            ],
-          ),
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 16,
+              color: context.colors.textTertiary,
+            ),
+          ],
         ),
       ),
     );

@@ -144,7 +144,7 @@ class _LoginSignupState extends State<AuthScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         if (!_isLoginScreen) ...[
-                          AppTextField(
+                          CustomTextField(
                             label: 'Name',
                             hintText: 'Adnan',
                             controller: _nameController,
@@ -158,7 +158,7 @@ class _LoginSignupState extends State<AuthScreen> {
                           AppSpacing.h20,
                         ],
 
-                        AppTextField(
+                        CustomTextField(
                           label: 'Email',
                           // label: 'Email or Phone',
                           hintText: 'musify@gmail.com',
@@ -172,7 +172,7 @@ class _LoginSignupState extends State<AuthScreen> {
 
                         AppSpacing.h20,
 
-                        AppTextField(
+                        CustomTextField(
                           label: 'Password',
                           hintText: '••••••••',
                           isObscure: _isPassObscure,
@@ -207,7 +207,7 @@ class _LoginSignupState extends State<AuthScreen> {
                         if (!_isLoginScreen) ...[
                           AppSpacing.h20,
 
-                          AppTextField(
+                          CustomTextField(
                             label: 'Confirm Password',
                             hintText: '••••••••',
                             isObscure: _isCnfPassObscure,

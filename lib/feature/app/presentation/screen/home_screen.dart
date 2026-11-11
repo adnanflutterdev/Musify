@@ -89,12 +89,9 @@ class _HomeScreen extends ConsumerState<HomeScreen>
       onPopInvokedWithResult: (didPop, _) => _onPop(didPop, tabIndex),
       child: CustomScaffold(
         appBar: _buildAppBar(tabIndex),
-        padding: tabIndex == 1
+        padding: (tabIndex == 0 || tabIndex == 1)
             ? EdgeInsets.zero
-            : const EdgeInsets.symmetric(
-                horizontal: AppSpacing.md,
-                vertical: AppSpacing.xs,
-              ),
+            : const EdgeInsets.all(AppSpacing.md),
         body: Column(
           children: [
             Expanded(
@@ -140,7 +137,7 @@ class _HomeScreen extends ConsumerState<HomeScreen>
         return const CustomAppBar(
           hasLeading: false,
           verticalPadding: AppSpacing.h4,
-          title: AppTextField(
+          title: CustomTextField(
             prefixIconSize: 25,
             prefixIcon: Icons.search,
             suffixIcon: Icons.close,

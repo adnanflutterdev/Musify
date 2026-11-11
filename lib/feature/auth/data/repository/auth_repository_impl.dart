@@ -96,7 +96,9 @@ class AuthRepositoryImpl implements AuthRepository {
         e.message ?? 'Email verification link is sent to your email. If not fount check in spam folder.\nYou need to login again.',
       );
     } catch (e) {
-      return Result.failure('Email verification link is sent to your email. If not fount check in spam folder.\nYou need to login again.');
+      return Result.failure(
+        'Email verification link is sent to your email. If not fount check in spam folder.\nYou need to login again.',
+      );
     }
   }
 }

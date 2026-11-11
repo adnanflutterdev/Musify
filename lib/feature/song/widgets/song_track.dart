@@ -26,7 +26,7 @@ class SongTrack extends ConsumerWidget {
             return mediaItem == null
                 ? const SizedBox.shrink()
                 : Container(
-                    decoration:  BoxDecoration(
+                    decoration: BoxDecoration(
                       border: Border(
                         top: BorderSide(
                           color: context.colors.disabled,
@@ -46,7 +46,7 @@ class SongTrack extends ConsumerWidget {
                         ),
                         leading: CachedNetworkImage(
                           imageUrl: mediaItem.artUri.toString(),
-                          placeholder: (context, url) =>  CircleAvatar(
+                          placeholder: (context, url) => CircleAvatar(
                             radius: 22,
                             backgroundColor: context.colors.surface,
                           ),
@@ -88,11 +88,12 @@ class SongTrack extends ConsumerWidget {
                           child: Container(
                             width: 30,
                             height: 30,
-                            decoration:  BoxDecoration(
+                            decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: context.colors.primaryDark,
                             ),
                             child: Icon(
+                              color: context.colors.white,
                               isPlaying ? Icons.pause : Icons.play_arrow,
                             ),
                           ),

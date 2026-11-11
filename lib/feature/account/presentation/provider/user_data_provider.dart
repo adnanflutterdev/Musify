@@ -77,15 +77,9 @@ final updateUserDataProvider = AsyncNotifierProvider(
   () => UpdateUserDataNotifier(),
 );
 
-final recentlyPlayedProvider = FutureProvider<List<RecentlyPlayed>>((
-  ref,
-) async {
+final recentlyPlayedProvider = StreamProvider<List<RecentlyPlayed>>((ref) {
   final usecase = ref.read(getRecentlyPlayedUsecaseProvider);
-  final result = await usecase(NoParams());
-  if (result.success) {
-    return result.data ?? [];
-  }
-  return Future.error(result.message ?? 'Failed to get recently played songs');
+  return usecase(NoParams());
 });
 
 final recentlyPlayedHistoryProvider =

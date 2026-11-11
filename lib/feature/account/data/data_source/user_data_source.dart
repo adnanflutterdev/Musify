@@ -52,13 +52,15 @@ class UserDataSource {
 
   // Get users music data
 
-  Future<List<RecentlyPlayed>> getRecentlyPlayed() async {
-    final recentlyPlayed = await recentlyPlayedCol
+  Stream<List<RecentlyPlayed>> getRecentlyPlayed() {
+    final recentlyPlayed = recentlyPlayedCol
         .orderBy('playedAt', descending: true)
-        .get();
-    return recentlyPlayed.docs
-        .map((e) => RecentlyPlayed.fromFirebase(e.data()))
-        .toList();
+        .snapshots();
+    return recentlyPlayed.map(
+      (recentlyPlayed) => recentlyPlayed.docs
+          .map((e) => RecentlyPlayed.fromFirebase(e.data()))
+          .toList(),
+    );
   }
 
   Future<List<RecentlyPlayedHistory>> getRecentlyPlayedHistory() async {

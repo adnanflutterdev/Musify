@@ -1,11 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:musify/core/const/app_shadow.dart';
 import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/extension/app_theme_extention.dart';
+import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/core/utils/images.dart';
 import 'package:musify/core/widgets/async_when.dart';
+import 'package:musify/core/widgets/custom_ink_well.dart';
+import 'package:musify/feature/playlist/presentation/screens/playlist_screen.dart';
 import 'package:musify/feature/song/providers/songs_provider.dart';
+import 'package:musify/feature/song/screens/song_details_screen.dart';
 
 class SongCardList extends ConsumerWidget {
   const SongCardList({super.key, required this.title, required this.songsIds});
@@ -22,58 +27,83 @@ class SongCardList extends ConsumerWidget {
           return const SizedBox.shrink();
         }
         final imageSize = 110.0;
-        final verticalPadding = AppSpacing.md;
-        final fontSize = context.text.bodyMedium?.fontSize ?? 14;
-        final boxHeight =
-            imageSize +
-            (verticalPadding * 2) +
-            (MediaQuery.of(context).textScaler.scale(fontSize) * 2);
-        return Column(
-          crossAxisAlignment: .start,
-          children: [
-            Row(
-              children: [
-                Expanded(child: Text(title, style: context.text.headlineLarge)),
-                TextButton(onPressed: () {}, child: const Text('View All')),
-              ],
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: context.colors.surface,
-                borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+        final verticalPadding = AppSpacing.xs;
+        final textStyle =
+            context.text.bodyMedium ?? const TextStyle(fontSize: 14);
+
+        final textScaler = MediaQuery.textScalerOf(context);
+        final lineHeight = textStyle.height ?? 1.2;
+        final textHeight =
+            textScaler.scale(textStyle.fontSize!) * lineHeight * 2;
+
+        final boxHeight = imageSize + 4 + textHeight + (verticalPadding * 4);
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+          child: Column(
+            crossAxisAlignment: .start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(title, style: context.text.headlineLarge),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      AppNavigator.push(
+                        PlaylistScreen(title: title, songs: songs),
+                      );
+                    },
+                    child: const Text('View All'),
+                  ),
+                ],
               ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.md,
-                vertical: AppSpacing.md,
-              ),
-              child: SizedBox(
-                height: boxHeight - 3.5, // -3.5 used to adjust some default space left due to text
+              Container(
+                height: boxHeight,
+                decoration: BoxDecoration(
+                  color: context.colors.surface,
+                  borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+                  boxShadow: [AppShadow.shadowLvl1(context)],
+                ),
+                padding: EdgeInsets.all(verticalPadding),
                 child: ListView.separated(
                   scrollDirection: .horizontal,
                   itemCount: songs.length,
                   itemBuilder: (context, index) {
                     final song = songs[index];
-                    return SizedBox(
-                      width: imageSize,
-                      child: Column(
-                        crossAxisAlignment: .start,
-                        children: [
-                          _buildImage(song.media.coverImage, imageSize),
-                          AppSpacing.h4,
-                          Text(
-                            '${song.title}${song.getArtists().isNotEmpty ? ' - ' : ''}${song.getArtists()}',
-                            maxLines: 2,
-                            overflow: .ellipsis,
+
+                    return CustomInkWell(
+                      onTap: () =>
+                          AppNavigator.push(SongDetailsScreen(song: song)),
+                      splashColor: context.colors.selection,
+
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: AppSpacing.sm,
+                          vertical: verticalPadding,
+                        ),
+                        child: SizedBox(
+                          width: imageSize,
+                          child: Column(
+                            crossAxisAlignment: .start,
+                            children: [
+                              _buildImage(song.media.coverImage, imageSize),
+                              AppSpacing.h4,
+                              Text(
+                                '${song.title}${song.getArtists().isNotEmpty ? ' - ' : ''}${song.getArtists()}',
+                                maxLines: 2,
+                                overflow: .ellipsis,
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     );
                   },
-                  separatorBuilder: (context, index) => AppSpacing.w16,
+                  separatorBuilder: (context, index) => AppSpacing.w4,
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

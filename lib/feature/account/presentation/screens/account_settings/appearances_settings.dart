@@ -5,6 +5,7 @@ import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/extension/string_extention.dart';
 import 'package:musify/core/model/appearance_theme.dart';
+import 'package:musify/core/widgets/custom_ink_well.dart';
 import 'package:musify/feature/account/presentation/provider/appearance_provider.dart';
 import 'package:musify/core/theme/app_colors.dart';
 import 'package:musify/core/widgets/custom_app_bar.dart';
@@ -134,37 +135,34 @@ class _AppearancesSettingsState extends ConsumerState<AppearancesSettings> {
                   mode.name.capitalize,
                 ),
               };
-              return Material(
-                color: context.colors.transparent,
-                child: InkWell(
-                  onTap: () {
-                    ref.read(appearanceProvider.notifier).changeThemeMode(mode);
-                  },
-                  borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
-                  splashColor: context.colors.selection,
-                  child: Container(
-                    width: width,
-                    decoration: BoxDecoration(
-                      border: mode == themeMode
-                          ? Border.all(width: 2, color: context.colors.primary)
-                          : null,
+              return CustomInkWell(
+                onTap: () {
+                  ref.read(appearanceProvider.notifier).changeThemeMode(mode);
+                },
+                borderRadius: AppSpacing.radiusLg,
+                splashColor: context.colors.selection,
+                child: Container(
+                  width: width,
+                  decoration: BoxDecoration(
+                    border: mode == themeMode
+                        ? Border.all(width: 2, color: context.colors.primary)
+                        : null,
 
-                      borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
-                    ),
+                    borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
+                  ),
 
-                    padding: const EdgeInsets.all(AppSpacing.md),
-                    child: Column(
-                      children: [
-                        Icon(icon, size: 40),
-                        AppSpacing.h4,
-                        Text(
-                          theme,
-                          style: context.text.titleLarge?.copyWith(
-                            fontWeight: .w500,
-                          ),
+                  padding: const EdgeInsets.all(AppSpacing.md),
+                  child: Column(
+                    children: [
+                      Icon(icon, size: 40),
+                      AppSpacing.h4,
+                      Text(
+                        theme,
+                        style: context.text.titleLarge?.copyWith(
+                          fontWeight: .w500,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               );
@@ -196,51 +194,45 @@ class _AppearancesSettingsState extends ConsumerState<AppearancesSettings> {
               (i) => accentColors[i][index],
             );
             bool isSelected = index == accentColorIndex;
-            return Material(
-              color: context.colors.transparent,
-              child: InkWell(
-                onTap: () {
-                  ref
-                      .read(appearanceProvider.notifier)
-                      .changeAccentColor(index);
-                },
-                splashColor: context.colors.selection,
-                borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: isSelected
-                        ? Border.all(width: 2, color: context.colors.primary)
-                        : null,
+            return CustomInkWell(
+              onTap: () {
+                ref.read(appearanceProvider.notifier).changeAccentColor(index);
+              },
+              borderRadius: AppSpacing.radiusLg,
+              child: Container(
+                decoration: BoxDecoration(
+                  border: isSelected
+                      ? Border.all(width: 2, color: context.colors.primary)
+                      : null,
 
-                    borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
-                  ),
-                  padding: isSelected
-                      ? const EdgeInsets.all(AppSpacing.sm)
-                      : const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.md,
-                          vertical: AppSpacing.sm,
-                        ),
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 60,
-                        width: isSelected ? 100 : 60,
-                        decoration: BoxDecoration(
-                          borderRadius: isSelected
-                              ? BorderRadius.circular(AppSpacing.radiusMd)
-                              : null,
-                          shape: isSelected ? .rectangle : .circle,
-                          gradient: LinearGradient(
-                            colors: colors,
-                            stops: [0, 0.33, 0.66],
-                            tileMode: .decal,
-                          ),
+                  borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
+                ),
+                padding: isSelected
+                    ? const EdgeInsets.all(AppSpacing.sm)
+                    : const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.md,
+                        vertical: AppSpacing.sm,
+                      ),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 60,
+                      width: isSelected ? 100 : 60,
+                      decoration: BoxDecoration(
+                        borderRadius: isSelected
+                            ? BorderRadius.circular(AppSpacing.radiusMd)
+                            : null,
+                        shape: isSelected ? .rectangle : .circle,
+                        gradient: LinearGradient(
+                          colors: colors,
+                          stops: [0, 0.33, 0.66],
+                          tileMode: .decal,
                         ),
                       ),
-                      AppSpacing.h4,
-                      Text(names[index], style: context.text.bodyLarge),
-                    ],
-                  ),
+                    ),
+                    AppSpacing.h4,
+                    Text(names[index], style: context.text.bodyLarge),
+                  ],
                 ),
               ),
             );
@@ -277,40 +269,36 @@ class _AppearancesSettingsState extends ConsumerState<AppearancesSettings> {
         child: Row(
           spacing: 5,
           children: TextSize.values.map((size) {
-            return Material(
-              color: context.colors.transparent,
-              child: InkWell(
-                onTap: () {
-                  ref.read(appearanceProvider.notifier).changeTextSize(size);
-                },
-                borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
-                splashColor: context.colors.selection,
-                child: Container(
-                  // width: width,
-                  decoration: BoxDecoration(
-                    border: size == textSize
-                        ? Border.all(width: 2, color: context.colors.primary)
-                        : null,
+            return CustomInkWell(
+              onTap: () {
+                ref.read(appearanceProvider.notifier).changeTextSize(size);
+              },
+              borderRadius: AppSpacing.radiusLg,
+              child: Container(
+                decoration: BoxDecoration(
+                  border: size == textSize
+                      ? Border.all(width: 2, color: context.colors.primary)
+                      : null,
 
-                    borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
-                  ),
+                  borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
+                ),
 
-                  padding: const EdgeInsets.all(AppSpacing.md),
-                  child: Column(
-                    children: [
-                      Text(
-                        size.name.toUpperCase(),
-                        style: context.text.displayLarge,
+                padding: const EdgeInsets.all(AppSpacing.md),
+                child: Column(
+                  children: [
+                    Text(
+                      size.name.toUpperCase(),
+                      style: context.text.displayLarge,
+                      textScaler: .noScaling,
+                    ),
+                    AppSpacing.h4,
+                    Text(
+                      size.fullForm,
+                      style: context.text.titleLarge?.copyWith(
+                        fontWeight: .w500,
                       ),
-                      AppSpacing.h4,
-                      Text(
-                        size.fullForm,
-                        style: context.text.titleLarge?.copyWith(
-                          fontWeight: .w500,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             );
@@ -319,79 +307,4 @@ class _AppearancesSettingsState extends ConsumerState<AppearancesSettings> {
       ),
     );
   }
-
-  // Widget _buildIconSize(int accentColorIndex) {
-  //   List<List<Color>> accentColors = [
-  //     AppThemeColors.primary,
-  //     AppThemeColors.primaryDark,
-  //     AppThemeColors.primaryLight,
-  //   ];
-  //   List<String> names = ['Pink', 'Purple', 'Electric Blue', 'Cyan'];
-  //   return _buildSectionCard(
-  //     title: 'Accent Color',
-  //     subTitle: 'Personalize Musify\'s colors',
-  //     icon: Icons.color_lens_rounded,
-  //     secondChild: SingleChildScrollView(
-  //       scrollDirection: .horizontal,
-  //       child: Row(
-  //         spacing: 5,
-  //         children: List.generate(AppThemeColors.primary.length, (index) {
-  //           final colors = List.generate(
-  //             accentColors.length,
-  //             (i) => accentColors[i][index],
-  //           );
-  //           bool isSelected = index == accentColorIndex;
-  //           return Material(
-  //             color: context.colors.transparent,
-  //             child: InkWell(
-  //               onTap: () {
-  //                 ref
-  //                     .read(appearanceProvider.notifier)
-  //                     .changeAccentColor(index);
-  //               },
-  //               splashColor: context.colors.selection,
-  //               borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
-  //               child: Container(
-  //                 decoration: BoxDecoration(
-  //                   border: isSelected
-  //                       ? Border.all(width: 2, color: context.colors.primary)
-  //                       : null,
-  //
-  //                   borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
-  //                 ),
-  //                 padding: isSelected
-  //                     ? const EdgeInsets.all(AppSpacing.sm)
-  //                     : const EdgeInsets.symmetric(
-  //                         horizontal: AppSpacing.md,
-  //                         vertical: AppSpacing.sm,
-  //                       ),
-  //                 child: Column(
-  //                   children: [
-  //                     Container(
-  //                       height: 60,
-  //                       width: isSelected ? 100 : 60,
-  //                       decoration: BoxDecoration(
-  //                         borderRadius: isSelected
-  //                             ? BorderRadius.circular(AppSpacing.radiusMd)
-  //                             : null,
-  //                         shape: isSelected ? .rectangle : .circle,
-  //                         gradient: LinearGradient(
-  //                           colors: colors,
-  //                           stops: [0, 0.33, 0.66],
-  //                           tileMode: .decal,
-  //                         ),
-  //                       ),
-  //                     ),
-  //                     AppSpacing.h4,
-  //                     Text(names[index], style: context.text.bodyLarge),
-  //                   ],
-  //                 ),
-  //               ),
-  //             ),
-  //           );
-  //         }),
-  //       ),
-  //     ),
-  //   );
-  // }
 }

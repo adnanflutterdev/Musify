@@ -33,8 +33,14 @@ class SongsDataSource {
         .where(FieldPath.documentId, whereIn: songIds)
         .get();
 
-    return snapshots.docs
-        .map((song) => Song.fromFirebase(song.data()))
+    Map<String, Song> docs = {
+      for (final song in snapshots.docs)
+        song.id: Song.fromFirebase(song.data()),
+    };
+
+    return songIds
+        .where((id) => docs.containsKey(id))
+        .map((id) => docs[id]!)
         .toList();
   }
 }

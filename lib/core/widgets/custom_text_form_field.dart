@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/extension/app_theme_extention.dart';
 
-class AppTextField extends StatelessWidget {
-  const AppTextField({
+class CustomTextField extends StatelessWidget {
+  const CustomTextField({
     super.key,
     this.label,
     this.hintText,

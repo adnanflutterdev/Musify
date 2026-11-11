@@ -123,7 +123,7 @@ class _CreatePlaylistScreenState extends ConsumerState<CreatePlaylistScreen> {
                 key: _formKey,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: AppTextField(
+                  child: CustomTextField(
                     hintText: 'Playlist name',
                     controller: _controller,
                     validator: (value) {

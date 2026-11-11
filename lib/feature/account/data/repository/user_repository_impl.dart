@@ -103,18 +103,17 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  FResult<List<RecentlyPlayed>> getRecentlyPlayed() async {
+  Stream<List<RecentlyPlayed>> getRecentlyPlayed() {
     try {
-      final recentlyPlayed = await dataSource.getRecentlyPlayed();
-      return Result.success(data: recentlyPlayed, message: '');
+      return dataSource.getRecentlyPlayed();
     } on FirebaseException catch (e) {
-      return Result.failure(e.message ?? 'Failed to get recently played songs');
+      return Stream.error(e.message ?? 'Failed to get recently played songs');
     } catch (e, s) {
       if (kDebugMode) {
         print(e);
         print(s);
       }
-      return Result.failure('Failed to get recently played songs');
+      return Stream.error('Failed to get recently played songs');
     }
   }
 

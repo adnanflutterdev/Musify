@@ -9,6 +9,6 @@ abstract interface class UserRepository {
   FResult<bool> isUserNameAvailable(String username);
   FResult<void> deleteUsername(String username);
   FResult<void> setUsername(Username username);
-  FResult<List<RecentlyPlayed>> getRecentlyPlayed();
+  Stream<List<RecentlyPlayed>> getRecentlyPlayed();
   FResult<List<RecentlyPlayedHistory>> getRecentlyPlayedHistory();
 }

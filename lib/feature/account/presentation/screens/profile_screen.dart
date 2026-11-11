@@ -9,6 +9,7 @@ import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/core/widgets/async_when.dart';
 import 'package:musify/core/widgets/collapsible_text.dart';
 import 'package:musify/core/widgets/custom_app_bar.dart';
+import 'package:musify/core/widgets/custom_ink_well.dart';
 import 'package:musify/core/widgets/custom_scaffold.dart';
 import 'package:musify/core/widgets/user_avatar.dart';
 import 'package:musify/feature/account/data/models/user/user_data.dart';
@@ -175,24 +176,21 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   child: Icon(Icons.verified, color: colors.success),
                 )
               else
-                Material(
-                  color: colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      AppNavigator.push(const EmailVerificationScreen());
-                    },
-                    borderRadius: BorderRadius.circular(AppSpacing.radiusRound),
-                    splashColor: colors.primary.withValues(alpha: 0.3),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.md,
-                        vertical: AppSpacing.xs,
-                      ),
-                      child: Text(
-                        'verify',
-                        style: context.text.bodyMedium?.copyWith(
-                          color: colors.primary,
-                        ),
+                CustomInkWell(
+                  onTap: () {
+                    AppNavigator.push(const EmailVerificationScreen());
+                  },
+                  isCircular: true,
+                  splashColor: colors.primary.withValues(alpha: 0.3),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.md,
+                      vertical: AppSpacing.xs,
+                    ),
+                    child: Text(
+                      'verify',
+                      style: context.text.bodyMedium?.copyWith(
+                        color: colors.primary,
                       ),
                     ),
                   ),

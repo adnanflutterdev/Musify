@@ -22,6 +22,8 @@ class AudioPlayerHandler extends BaseAudioHandler
   final List<MediaItem> _playList = [];
   int _lastIndex = -1;
   DateTime? _playedAt;
+  Timer? _songDurationTimer;
+  bool _completionHandled = false;
 
   final ProviderContainer provider;
 
@@ -79,6 +81,7 @@ class AudioPlayerHandler extends BaseAudioHandler
       );
       debugPrint('\n\nDeleting last played song after syncing');
       AppPreferences.deleteLastPlayedSong();
+      _songDurationTimer?.cancel();
     } else {
       debugPrint('\n\nNo need to sync songs!!!!');
     }
@@ -113,11 +116,23 @@ class AudioPlayerHandler extends BaseAudioHandler
         ),
       );
 
-      if (processingState == .completed) {
+      if (processingState == .completed && !_completionHandled) {
         debugPrint('\n\nSong Completed\n\n');
+        _completionHandled = true;
+        _stopSongDurationTimer();
+        playbackState.add(
+          playbackState.value.copyWith(
+            playing: false,
+            processingState: .completed,
+            updatePosition: _player.position,
+            bufferedPosition: _player.bufferedPosition,
+          ),
+        );
         await updateRecentlyPlayed(completed: true);
         if (!_player.hasNext) {
-          debugPrint("\n\nNo songs are in queue. We can delete last played song");
+          debugPrint(
+            "\n\nNo songs are in queue. We can delete last played song",
+          );
           AppPreferences.deleteLastPlayedSong();
         }
       }
@@ -131,8 +146,8 @@ class AudioPlayerHandler extends BaseAudioHandler
 
         final extras = item.extras;
         if (extras != null) {
-          await onSongChanged(extras['songId'], extras['listen']);
-        } else {}
+          await onSongChanged(extras['songId']);
+        }
       }
     });
   }
@@ -171,6 +186,7 @@ class AudioPlayerHandler extends BaseAudioHandler
   }
 
   Future<void> clearPlaylist() async {
+    _stopSongDurationTimer();
     await _player.stop();
     _playList.clear();
     queue.add([]);
@@ -201,17 +217,53 @@ class AudioPlayerHandler extends BaseAudioHandler
     await _player.play();
   }
 
-  Future<void> onSongChanged(String songId, int listen) async {
+  void _stopSongDurationTimer() {
+    if (_songDurationTimer?.isActive ?? false) {
+      _songDurationTimer?.cancel();
+      debugPrint('Song duration timer stopped');
+    }
+
+    _songDurationTimer = null;
+  }
+
+  Future<void> onSongChanged(String songId) async {
+    // Stopping previous timer
+    _stopSongDurationTimer();
+    _completionHandled = false;
+
     _playedAt = DateTime.now();
     AppPreferences.setLastPlayedSong(
       LastPlayedSong(
         songId: songId,
         playedAt: _playedAt ?? DateTime.now(),
-        duration: _player.duration?.inSeconds ?? 0,
+        duration: 0,
       ),
     );
+
+    _songDurationTimer = Timer.periodic(const Duration(seconds: 20), (_) {
+      AppPreferences.setLastPlayedSong(
+        LastPlayedSong(
+          songId: songId,
+          playedAt: _playedAt ?? DateTime.now(),
+          duration: _player.position.inSeconds,
+        ),
+      );
+    });
+    playCountIncrement(songId);
+  }
+
+  Future<void> playCountIncrement(String songId) async {
     Future.delayed(const Duration(seconds: 30), () {
-      if (songId == queue.value[_player.currentIndex ?? 0].extras?['songId']) {
+      final currentIndex = _player.currentIndex;
+      if (currentIndex == null ||
+          currentIndex < 0 ||
+          currentIndex >= queue.value.length) {
+        return;
+      }
+
+      final currentSongId =
+          queue.value[_player.currentIndex ?? 0].extras?['songId'];
+      if (songId == currentSongId) {
         provider
             .read(listeningProvider.notifier)
             .playCountIncrement(IdParam(songId));
@@ -240,7 +292,7 @@ class AudioPlayerHandler extends BaseAudioHandler
         : queue.value[_player.currentIndex ?? 0].extras?['songId'];
 
     bool canUpdate = recentlyPlayedSongs.map((r) => r.songId).contains(songId);
-    String? docToBeDeleted = (recentlyPlayedSongs.length == 20 && canUpdate)
+    String? docToBeDeleted = (recentlyPlayedSongs.length >= 20 && !canUpdate)
         ? recentlyPlayedSongs.last.songId
         : null;
 
@@ -295,19 +347,27 @@ class AudioPlayerHandler extends BaseAudioHandler
     );
 
     debugPrint('History Updated');
-
-    provider.invalidate(recentlyPlayedProvider);
-    provider.invalidate(recentlyPlayedHistoryProvider);
   }
 
   @override
-  Future<void> play() => _player.play();
+  Future<void> play() async {
+    if (_player.processingState == .completed && !_player.hasNext) {
+      await _player.seek(Duration.zero);
+      onSongChanged(
+        queue.value[_player.currentIndex ?? 0].extras?['songId'],
+      );
+    }
+    await _player.play();
+  }
 
   @override
   Future<void> pause() => _player.pause();
 
   @override
-  Future<void> stop() => _player.stop();
+  Future<void> stop() async {
+    _stopSongDurationTimer();
+    _player.stop();
+  }
 
   @override
   Future<void> seek(Duration position) => _player.seek(position);
@@ -324,12 +384,14 @@ class AudioPlayerHandler extends BaseAudioHandler
 
   @override
   Future<void> skipToNext() async {
+    _stopSongDurationTimer();
     await updateRecentlyPlayed(completed: false);
     await _player.seekToNext();
   }
 
   @override
   Future<void> skipToPrevious() async {
+    _stopSongDurationTimer();
     await updateRecentlyPlayed(completed: false);
     await _player.seekToPrevious();
   }

@@ -5,7 +5,7 @@ abstract class FUsecase<T, Param> {
 }
 
 abstract class SUsecase<T, Param> {
-  FResult<T> call(Param param);
+  Stream<T> call(Param param);
 }
 
 class NoParams();

@@ -89,6 +89,7 @@ class PlayButton extends ConsumerWidget {
                   child: Icon(
                     Icons.play_arrow,
                     size: size == null ? 23 : (size! - 7),
+                    color: context.colors.white,
                   ),
                 )
               : Container(),

@@ -10,6 +10,7 @@ import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/core/utils/app_validators.dart';
 import 'package:musify/core/widgets/async_when.dart';
 import 'package:musify/core/widgets/buttons/primary_button.dart';
+import 'package:musify/core/widgets/custom_ink_well.dart';
 import 'package:musify/core/widgets/custom_text_form_field.dart';
 import 'package:musify/core/widgets/snack_bars.dart';
 import 'package:musify/core/widgets/user_avatar.dart';
@@ -136,21 +137,19 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                             itemCount: avatar.avatars.length,
                             itemBuilder: (context, index) {
                               final currentAvatar = avatar.avatars[index];
-                              return Material(
-                                color: context.colors.transparent,
-                                child: InkWell(
-                                  onTap: () {
-                                    _selectedAvatar.value = currentAvatar;
-                                    AppNavigator.pop();
-                                  },
-                                  splashColor: context.colors.primary
-                                      .withValues(alpha: 0.2),
+                              return CustomInkWell(
+                                onTap: () {
+                                  _selectedAvatar.value = currentAvatar;
+                                  AppNavigator.pop();
+                                },
+                                splashColor: context.colors.primary.withValues(
+                                  alpha: 0.2,
+                                ),
 
-                                  child: UserAvatar(
-                                    avatar: currentAvatar,
-                                    showBorder:
-                                        selectedAvatar?.id == currentAvatar.id,
-                                  ),
+                                child: UserAvatar(
+                                  avatar: currentAvatar,
+                                  showBorder:
+                                      selectedAvatar?.id == currentAvatar.id,
                                 ),
                               );
                             },
@@ -317,18 +316,14 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
           Positioned(
             right: 0,
             bottom: 0,
-            child: Material(
-              color: colors.background,
-              borderRadius: BorderRadius.circular(AppSpacing.radiusRound),
-              child: InkWell(
-                onTap: showAvatarDialogue,
-                splashColor: colors.onError,
-                borderRadius: BorderRadius.circular(AppSpacing.radiusRound),
-                child: Container(
-                  padding: const EdgeInsets.all(AppSpacing.md),
-                  decoration: const BoxDecoration(shape: .circle),
-                  child: const Icon(Icons.cameraswitch_rounded, size: 20),
-                ),
+            child: CustomInkWell(
+              backgroudColor: colors.background,
+              onTap: showAvatarDialogue,
+              splashColor: colors.onError,
+              isCircular: true,
+              child: const Padding(
+                padding: EdgeInsets.all(AppSpacing.md),
+                child: Icon(Icons.cameraswitch_rounded, size: 20),
               ),
             ),
           ),
@@ -354,7 +349,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         key: _formKey,
         child: Column(
           children: [
-            AppTextField(
+            CustomTextField(
               label: 'Name',
               hintText: 'Type your name',
               prefixIcon: Icons.person,
@@ -362,7 +357,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               validator: AppValidators.name,
             ),
             AppSpacing.h12,
-            AppTextField(
+            CustomTextField(
               label: 'Username',
               hintText: 'Type a username',
               prefixIcon: Icons.alternate_email,
@@ -444,7 +439,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
             AppSpacing.h12,
 
-            AppTextField(
+            CustomTextField(
               label: 'Date of Birth',
               hintText: 'Select DOB',
               prefixIcon: Icons.calendar_month,
@@ -471,7 +466,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               child: Opacity(
                 opacity: 0.5,
                 child: IgnorePointer(
-                  child: AppTextField(
+                  child: CustomTextField(
                     label: 'Email',
                     isReadOnly: true,
                     prefixIcon: Icons.email,
@@ -481,7 +476,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               ),
             ),
             AppSpacing.h12,
-            AppTextField(
+            CustomTextField(
               label: 'Bio',
               hintText: 'Add your bio',
               controller: _bioController,

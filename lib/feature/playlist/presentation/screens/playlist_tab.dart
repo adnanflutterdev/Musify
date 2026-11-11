@@ -7,9 +7,8 @@ import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/core/widgets/buttons/custom_button.dart';
 import 'package:musify/core/widgets/custom_text_form_field.dart';
+import 'package:musify/feature/home/presentation/widget/song_card_list.dart';
 import 'package:musify/feature/playlist/presentation/screens/create_playlist_screen.dart';
-
-import 'package:musify/feature/home/presentation/widget/song_list.dart';
 
 class PlaylistTab extends ConsumerWidget {
   const PlaylistTab({super.key});
@@ -43,7 +42,7 @@ class PlaylistTab extends ConsumerWidget {
                 AppSpacing.h4,
                 Form(
                   key: formKey,
-                  child: AppTextField(
+                  child: CustomTextField(
                     hintText: 'New name',
                     controller: controller,
                     validator: (value) {
@@ -110,7 +109,9 @@ class PlaylistTab extends ConsumerWidget {
           return AlertDialog(
             title: Text(
               'Deleting Playlist',
-              style: context.text.bodyLarge?.copyWith(color: context.colors.onError),
+              style: context.text.bodyLarge?.copyWith(
+                color: context.colors.onError,
+              ),
             ),
             content: Text(
               'Are you sure to delete this playlist?',
@@ -205,7 +206,9 @@ class PlaylistTab extends ConsumerWidget {
         child: Center(
           child: Text(
             'Delete Playlist',
-            style: context.text.bodySmall!.copyWith(color: context.colors.onError),
+            style: context.text.bodySmall!.copyWith(
+              color: context.colors.onError,
+            ),
           ),
         ),
       ),
@@ -221,10 +224,9 @@ class PlaylistTab extends ConsumerWidget {
               itemCount: playlists.length,
               itemBuilder: (context, index) {
                 final playlist = playlists[index];
-                return SongList(
+                return SongCardList(
                   title: playlist['title'],
-                  songs: playlist['songs'],
-                  menuItems: menuItems(playlist['title']),
+                  songsIds: playlist['songs'],
                 );
               },
             ),
