@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AsyncWhen<T> extends StatelessWidget {
-  const AsyncWhen({super.key, required this.value, required this.onData});
+  const AsyncWhen({
+    super.key,
+    required this.value,
+    required this.onData,
+    this.loader,
+  });
   final AsyncValue<T> value;
-
   final Widget Function(T data) onData;
+  final Widget? loader;
   @override
   Widget build(BuildContext context) {
     return value.when(
@@ -19,7 +24,7 @@ class AsyncWhen<T> extends StatelessWidget {
         return Center(child: Text(error.toString()));
       },
       loading: () {
-        return const Center(child: CircularProgressIndicator());
+        return loader ?? const Center(child: CircularProgressIndicator());
       },
     );
   }

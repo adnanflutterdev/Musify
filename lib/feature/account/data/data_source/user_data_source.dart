@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:musify/feature/account/data/models/user/favourite_song.dart';
 import 'package:musify/feature/account/data/models/user/recently_played.dart';
 import 'package:musify/feature/account/data/models/user/user_data.dart';
 import 'package:musify/feature/account/data/models/user/username.dart';
@@ -19,6 +20,9 @@ class UserDataSource {
 
   CollectionReference<Map<String, dynamic>> get recentlyPlayedHistoryCol =>
       userDoc.collection('recentlyPlayedHistory');
+
+  CollectionReference<Map<String, dynamic>> get favouriteCol =>
+      userDoc.collection('favourite');
 
   Future<UserData?> getUserData() async {
     if (uid == null) return null;
@@ -70,5 +74,27 @@ class UserDataSource {
     return history.docs
         .map((e) => RecentlyPlayedHistory.fromFirebase(e.data()))
         .toList();
+  }
+
+  Stream<List<FavouriteSong>> getFavouriteSongs() {
+    final snapshots = favouriteCol.orderBy('createdAt').snapshots();
+    return snapshots.map(
+      (data) => data.docs
+          .map((favourite) => FavouriteSong.fromFirebase(favourite.data()))
+          .toList(),
+    );
+  }
+
+  Future<void> toggleFavourite(String songId, bool isFavourite) async {
+    if (isFavourite) {
+      await favouriteCol.doc(songId).delete();
+      return;
+    }
+    FavouriteSong favouriteSong = FavouriteSong(
+      songId: songId,
+      createdAt: DateTime.now(),
+    );
+
+    await favouriteCol.doc(songId).set(favouriteSong.toFirebase());
   }
 }

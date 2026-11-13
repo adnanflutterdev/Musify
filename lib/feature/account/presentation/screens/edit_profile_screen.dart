@@ -5,7 +5,6 @@ import 'package:musify/core/const/app_shadow.dart';
 import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/extension/string_extention.dart';
-import 'package:musify/core/result/result.dart';
 import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/core/utils/app_validators.dart';
 import 'package:musify/core/widgets/async_when.dart';
@@ -208,7 +207,11 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
           updateData(updateRef, now);
         }
       } else if (mounted) {
-        showAppSnackbar(context: context, result: userNameAvailable);
+        showAppSnackbar(
+          context: context,
+          type: userNameAvailable.success ? .success : .error,
+          message: userNameAvailable.message ?? '',
+        );
       }
     }
   }
@@ -242,7 +245,11 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     final setUserNameResult = await updateRef.setUsername(newUsername);
 
     if (mounted && !setUserNameResult.success) {
-      showAppSnackbar(context: context, result: setUserNameResult);
+      showAppSnackbar(
+        context: context,
+        type: setUserNameResult.success ? .success : .error,
+        message: setUserNameResult.message ?? '',
+      );
     }
 
     return setUserNameResult.success;
@@ -264,7 +271,11 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
     final updateResult = await updateRef.updateUserData(updatedData);
     if (mounted) {
-      showAppSnackbar(context: context, result: updateResult);
+      showAppSnackbar(
+        context: context,
+        type: updateResult.success ? .success : .error,
+        message: updateResult.message ?? '',
+      );
     }
     if (updateResult.success && mounted) {
       final _ = ref.invalidate(userDataProvider);
@@ -407,9 +418,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                           onTap: () {
                             showAppSnackbar(
                               context: context,
-                              result: Result.failure(
-                                'You can\'t update account type',
-                              ),
+                              type: .error,
+                              message: 'You can\'t update account type',
                             );
                           },
                           child: IgnorePointer(
@@ -460,7 +470,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               onTap: () {
                 showAppSnackbar(
                   context: context,
-                  result: Result.failure('You can\'t update email from here'),
+                  type: .error,
+                  message: 'You can\'t update email from here',
                 );
               },
               child: Opacity(

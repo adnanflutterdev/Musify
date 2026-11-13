@@ -5,15 +5,12 @@ class AppThemeColors {
   AppThemeColors._();
 
   static Color getAccentTint({
-  required Color primary,
-  required Color background,
-  double opacity = 0.12,
-}) {
-  return Color.alphaBlend(
-    primary.withValues(alpha: opacity),
-    background,
-  );
-}
+    required Color primary,
+    required Color background,
+    double opacity = 0.12,
+  }) {
+    return Color.alphaBlend(primary.withValues(alpha: opacity), background);
+  }
 
   // ============================================================
   // BRAND / PRIMARY
@@ -126,10 +123,10 @@ class AppThemeColors {
   static const Color lightInfo = Color(0xFF1D4ED8);
 
   // Dark theme
-  static const Color darkError = Color(0xFFB91C1C);
-  static const Color darkSuccess = Color(0xFF4ADE80);
-  static const Color darkWarning = Color(0xFFFBBF24);
-  static const Color darkInfo = Color(0xFF60A5FA);
+  static const Color darkError = Color(0xFF450A0A);
+  static const Color darkSuccess = Color(0xFF052E16);
+  static const Color darkWarning = Color(0xFF451A03);
+  static const Color darkInfo = Color(0xFF172554);
 
   static const Color onError = Color(0xFFFEE2E2);
   static const Color onSuccess = Color(0xFFDCFCE7);
@@ -166,26 +163,27 @@ class AppThemeColors {
   static const Color textFieldError = Color(0xFFFF4040);
 
   static AppColors getColors(Brightness brightness) {
-    final index = AppPreferences.getAccentColorIndex()
-      .clamp(0, primary.length - 1);
+    final index = AppPreferences.getAccentColorIndex().clamp(
+      0,
+      primary.length - 1,
+    );
 
-  final isDark = brightness == Brightness.dark;
+    final isDark = brightness == Brightness.dark;
 
-  final accent = primary[index];
-  final background =
-      isDark ? darkBackground : lightBackground;
+    final accent = primary[index];
+    final background = isDark ? darkBackground : lightBackground;
 
-  final selection = getAccentTint(
-    primary: accent,
-    background: background,
-    opacity: isDark ? 0.24 : 0.12,
-  );
+    final selection = getAccentTint(
+      primary: accent,
+      background: background,
+      opacity: isDark ? 0.24 : 0.12,
+    );
 
-  final skeleton = getAccentTint(
-    primary: accent,
-    background: isDark ? darkSurfaceVariant : lightSurfaceVariant,
-    opacity: isDark ? 0.18 : 0.08,
-  );
+    final skeleton = getAccentTint(
+      primary: accent,
+      background: isDark ? darkSurfaceVariant : lightSurfaceVariant,
+      opacity: isDark ? 0.18 : 0.08,
+    );
     if (brightness == .dark) {
       return AppColors(
         primary: primary[index],
@@ -257,7 +255,7 @@ class AppThemeColors {
         textFieldError: textFieldError,
         scrim: scrim,
         disabled: lightDisabled,
-         selection: selection,
+        selection: selection,
         skeleton: skeleton,
       );
     }

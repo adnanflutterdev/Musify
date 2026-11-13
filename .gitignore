@@ -51,3 +51,5 @@ app.*.map.json
 /lib/secrets.dart
 /database_architectur
 /firebase.json
+# Widget Preview related
+.widget_preview/

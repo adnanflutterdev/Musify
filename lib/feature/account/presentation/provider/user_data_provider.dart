@@ -3,13 +3,15 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:musify/core/typedefs/typedefs.dart';
 import 'package:musify/core/usecase/usecase.dart';
+import 'package:musify/feature/account/data/models/user/favourite_song.dart';
 import 'package:musify/feature/account/data/models/user/recently_played.dart';
 import 'package:musify/feature/account/data/models/user/user_data.dart';
 import 'package:musify/feature/account/data/models/user/username.dart';
-import 'package:musify/feature/account/domain/usecase/delete_username_usecase.dart';
-import 'package:musify/feature/account/domain/usecase/is_username_available_usecase.dart';
-import 'package:musify/feature/account/domain/usecase/set_usename_usecase.dart';
-import 'package:musify/feature/account/domain/usecase/update_user_data_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/user_usecases/toggle_favourite_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/user_usecases/delete_username_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/user_usecases/is_username_available_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/user_usecases/set_usename_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/user_usecases/update_user_data_usecase.dart';
 import 'package:musify/feature/account/presentation/provider/di.dart';
 import 'package:musify/feature/auth/presentation/provider/auth_provider.dart';
 
@@ -18,6 +20,7 @@ class UpdateUserDataNotifier extends AsyncNotifier<void> {
   late IsUsernameAvailableUsecase _isUsernameAvailableUsecase;
   late DeleteUsernameUsecase _deleteUsernameUsecase;
   late SetUsenameUsecase _setUsenameUsecase;
+  late ToggleFavouriteUsecase _toggleFavouriteUsecase;
 
   @override
   FutureOr<void> build() {
@@ -25,6 +28,7 @@ class UpdateUserDataNotifier extends AsyncNotifier<void> {
     _isUsernameAvailableUsecase = ref.read(isUsernameAvailabeUsecaseProvider);
     _deleteUsernameUsecase = ref.read(deleteUsernameUsecaseProvider);
     _setUsenameUsecase = ref.read(setUsernameUsecaseProvider);
+    _toggleFavouriteUsecase = ref.read(toggleFavouriteUsecaseProvider);
   }
 
   FResult<void> updateUserData(Map<String, dynamic> updatedData) async {
@@ -56,7 +60,20 @@ class UpdateUserDataNotifier extends AsyncNotifier<void> {
     state = const AsyncData(null);
     return result;
   }
+
+  FResult<void> toggleFavouriteSong(String songId, bool isFavourite) async {
+    state = const AsyncLoading();
+    final result = await _toggleFavouriteUsecase(
+      ToggleFavouriteUsecaseParams(songId, isFavourite),
+    );
+    state = const AsyncData(null);
+    return result;
+  }
 }
+
+final updateUserDataProvider = AsyncNotifierProvider(
+  () => UpdateUserDataNotifier(),
+);
 
 final userDataProvider = FutureProvider<UserData?>((ref) async {
   final user = await ref.watch(authStateProvider.future);
@@ -72,10 +89,6 @@ final userDataProvider = FutureProvider<UserData?>((ref) async {
 
   throw Exception(result.message ?? 'Failed to load user data');
 });
-
-final updateUserDataProvider = AsyncNotifierProvider(
-  () => UpdateUserDataNotifier(),
-);
 
 final recentlyPlayedProvider = StreamProvider<List<RecentlyPlayed>>((ref) {
   final usecase = ref.read(getRecentlyPlayedUsecaseProvider);
@@ -93,3 +106,8 @@ final recentlyPlayedHistoryProvider =
         result.message ?? 'Failed to get recently played history songs',
       );
     });
+
+final favouriteSongsProvider = StreamProvider<List<FavouriteSong>>((ref) {
+  final usecase = ref.read(getFavouriteSongsUsecaseProvider);
+  return usecase(NoParams());
+});

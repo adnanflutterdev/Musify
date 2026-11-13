@@ -7,7 +7,7 @@ import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/core/widgets/buttons/custom_button.dart';
 import 'package:musify/core/widgets/custom_text_form_field.dart';
-import 'package:musify/feature/home/presentation/widget/song_card_list.dart';
+import 'package:musify/feature/home/presentation/widget/song_list.dart';
 import 'package:musify/feature/playlist/presentation/screens/create_playlist_screen.dart';
 
 class PlaylistTab extends ConsumerWidget {
@@ -224,7 +224,7 @@ class PlaylistTab extends ConsumerWidget {
               itemCount: playlists.length,
               itemBuilder: (context, index) {
                 final playlist = playlists[index];
-                return SongCardList(
+                return SongList(
                   title: playlist['title'],
                   songsIds: playlist['songs'],
                 );

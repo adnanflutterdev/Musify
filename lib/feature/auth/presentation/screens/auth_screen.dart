@@ -54,7 +54,13 @@ class _LoginSignupState extends State<AuthScreen> {
           _passController.text.trim(),
         );
         final result = await authNotifier.login(params);
-        if (mounted) showAppSnackbar(context: context, result: result);
+        if (mounted) {
+          showAppSnackbar(
+            context: context,
+            type: result.success ? .success : .error,
+            message: result.message ?? '',
+          );
+        }
       } else {
         final SignupParams params = SignupParams(
           _nameController.text.trim().capitalize,
@@ -62,7 +68,13 @@ class _LoginSignupState extends State<AuthScreen> {
           _passController.text.trim(),
         );
         final result = await authNotifier.signup(params);
-        if (mounted) showAppSnackbar(context: context, result: result);
+        if (mounted) {
+          showAppSnackbar(
+            context: context,
+            type: result.success ? .success : .error,
+            message: result.message ?? '',
+          );
+        }
       }
     }
   }
@@ -71,7 +83,11 @@ class _LoginSignupState extends State<AuthScreen> {
     final result = await ref.read(authProvider.notifier).googleSignin();
 
     if (mounted) {
-      showAppSnackbar(context: context, result: result);
+      showAppSnackbar(
+        context: context,
+        type: result.success ? .success : .error,
+        message: result.message ?? '',
+      );
     }
   }
 

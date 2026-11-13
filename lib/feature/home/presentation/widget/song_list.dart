@@ -8,12 +8,13 @@ import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/core/utils/images.dart';
 import 'package:musify/core/widgets/async_when.dart';
 import 'package:musify/core/widgets/custom_ink_well.dart';
+import 'package:musify/core/widgets/song_list_loader.dart';
 import 'package:musify/feature/playlist/presentation/screens/playlist_screen.dart';
 import 'package:musify/feature/song/providers/songs_provider.dart';
 import 'package:musify/feature/song/screens/song_details_screen.dart';
 
-class SongCardList extends ConsumerWidget {
-  const SongCardList({super.key, required this.title, required this.songsIds});
+class SongList extends ConsumerWidget {
+  const SongList({super.key, required this.title, required this.songsIds});
   final String title;
   final List<String> songsIds;
 
@@ -22,6 +23,7 @@ class SongCardList extends ConsumerWidget {
     final songsRef = ref.watch(songsByIdsProvider(songsIds));
     return AsyncWhen(
       value: songsRef,
+      loader: const SongListLoader(),
       onData: (songs) {
         if (songs.isEmpty) {
           return const SizedBox.shrink();

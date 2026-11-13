@@ -29,7 +29,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     if (mounted) {
       showAppSnackbar(
         context: context,
-        result: result,
+        type: result.success ? .success : .error,
+        message: result.message ?? '',
         duaration: const Duration(seconds: 8),
       );
 

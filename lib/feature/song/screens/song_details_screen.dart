@@ -8,10 +8,13 @@ import 'package:musify/core/const/app_spacing.dart';
 import 'package:musify/core/extension/app_theme_extention.dart';
 import 'package:musify/core/extension/size_extention.dart';
 import 'package:musify/core/extension/string_extention.dart';
+import 'package:musify/core/result/result.dart';
 import 'package:musify/core/utils/app_navigator.dart';
 import 'package:musify/core/widgets/async_when.dart';
 import 'package:musify/core/widgets/custom_ink_well.dart';
 import 'package:musify/core/widgets/custom_scaffold.dart';
+import 'package:musify/core/widgets/snack_bars.dart';
+import 'package:musify/feature/account/presentation/provider/user_data_provider.dart';
 import 'package:musify/feature/listening/presentation/providers/audio_player_provider.dart';
 import 'package:musify/feature/song/data/models/song.dart';
 import 'package:musify/core/utils/duration_label.dart';
@@ -205,15 +208,52 @@ class SongDetailsScreen extends StatelessWidget {
   Widget _buildActionButtons(BuildContext context) {
     return Row(
       mainAxisAlignment: .center,
-      spacing: 15,
+      spacing: 10,
       children: [
-        _buildSideActionButton(
-          context: context,
-          icon: Icons.favorite,
-          color: context.colors.primaryDark,
-          onTap: () {},
+        Consumer(
+          builder: (context, ref, child) {
+            final favouriteSongsRef = ref.watch(favouriteSongsProvider);
+            return AsyncWhen(
+              value: favouriteSongsRef,
+              loader: _buildSideActionButton(
+                context: context,
+                icon: Icons.favorite,
+                color: context.colors.primaryDark,
+                onTap: () {},
+              ),
+              onData: (favouriteSongs) {
+                bool isFavourite = favouriteSongs
+                    .map((fSong) => fSong.songId)
+                    .contains(song.id);
+                return _buildSideActionButton(
+                  context: context,
+                  icon: isFavourite
+                      ? Icons.favorite
+                      : Icons.favorite_outline_rounded,
+                  color: isFavourite
+                      ? context.colors.primaryDark
+                      : context.colors.white,
+
+                  onTap: () async {
+                    Result result = await ref
+                        .read(updateUserDataProvider.notifier)
+                        .toggleFavouriteSong(song.id, isFavourite);
+                    if (context.mounted) {
+                      showAppSnackbar(
+                        context: context,
+                        type: isFavourite ? .info : .success,
+                        message: result.message ?? '',
+                      );
+                    }
+                  },
+                );
+              },
+            );
+          },
         ),
+
         _buildPlayButton(context: context, song: song),
+
         _buildSideActionButton(
           context: context,
           icon: Icons.playlist_add_rounded,
@@ -327,7 +367,7 @@ class SongDetailsScreen extends StatelessWidget {
           shape: .circle,
         ),
         padding: const EdgeInsets.all(AppSpacing.md),
-        child: Icon(icon, color: color, size: 25),
+        child: Icon(icon, color: color, size: 30),
       ),
     );
   }
@@ -439,6 +479,47 @@ class SongDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildOtherInfo(BuildContext context) {
+    List<Widget?> sections = [
+      if (song.context.movie != null || song.album != null)
+        _buildOtherInfoSection(
+          context: context,
+          title: 'From',
+          icon: Icons.person_outline,
+          haveMultipleSymbol: false,
+          content: song.context.movie?.name ?? song.album!.name,
+        ),
+      if (song.classification.languages.isNotEmpty)
+        _buildOtherInfoSection(
+          context: context,
+          icon: Icons.translate,
+          title: 'Languages',
+          content: song.classification.languages,
+        ),
+
+      if (song.classification.genres.isNotEmpty)
+        _buildOtherInfoSection(
+          context: context,
+          icon: Icons.music_note_rounded,
+          title: 'Genre',
+          content: song.classification.genres,
+        ),
+
+      if (song.classification.moods.isNotEmpty)
+        _buildOtherInfoSection(
+          context: context,
+          icon: Icons.mood_outlined,
+          title: 'Moods',
+          content: song.classification.moods,
+        ),
+
+      if (song.classification.tags.isNotEmpty)
+        _buildOtherInfoSection(
+          context: context,
+          icon: Icons.sell_outlined,
+          title: 'Tags',
+          content: song.classification.tags,
+        ),
+    ];
     return Container(
       decoration: BoxDecoration(
         color: context.colors.surface.withValues(alpha: 0.6),
@@ -458,54 +539,15 @@ class SongDetailsScreen extends StatelessWidget {
           horizontal: AppSpacing.lg,
           vertical: AppSpacing.md,
         ),
-        child: Column(
-          children: [
-            if (song.context.movie != null || song.album != null) ...[
-              _buildOtherInfoSection(
-                context: context,
-                title: 'From',
-                icon: Icons.person_outline,
-                haveMultipleSymbol: false,
-                content: song.context.movie?.name ?? song.album!.name,
-              ),
-              _buildDivider(context),
-            ],
-            if (song.classification.languages.isNotEmpty) ...[
-              _buildOtherInfoSection(
-                context: context,
-                icon: Icons.translate,
-                title: 'Languages',
-                content: song.classification.languages,
-              ),
-              _buildDivider(context),
-            ],
-            if (song.classification.genres.isNotEmpty) ...[
-              _buildOtherInfoSection(
-                context: context,
-                icon: Icons.music_note_rounded,
-                title: 'Genre',
-                content: song.classification.genres,
-              ),
-              _buildDivider(context),
-            ],
-            if (song.classification.moods.isNotEmpty) ...[
-              _buildOtherInfoSection(
-                context: context,
-                icon: Icons.mood_outlined,
-                title: 'Moods',
-                content: song.classification.moods,
-              ),
-              _buildDivider(context),
-            ],
-            if (song.classification.tags.isNotEmpty) ...[
-              _buildOtherInfoSection(
-                context: context,
-                icon: Icons.sell_outlined,
-                title: 'Tags',
-                content: song.classification.tags,
-              ),
-            ],
-          ],
+        child: ListView.separated(
+          padding: const EdgeInsets.all(0),
+          itemCount: sections.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            return sections[index];
+          },
+          separatorBuilder: (context, index) => _buildDivider(context),
         ),
       ),
     );
@@ -525,82 +567,90 @@ class SongDetailsScreen extends StatelessWidget {
     required dynamic content,
     bool haveMultipleSymbol = true,
   }) {
-    return Row(
+    return Column(
       children: [
-        Container(
-          decoration: BoxDecoration(
-            shape: .circle,
-            gradient: LinearGradient(
-              colors: [
-                context.colors.primaryDark.withValues(alpha: 0.4),
-                context.colors.primaryDark.withValues(alpha: 0.6),
-              ],
+        Row(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                shape: .circle,
+                gradient: LinearGradient(
+                  colors: [
+                    context.colors.primaryDark.withValues(alpha: 0.4),
+                    context.colors.primaryDark.withValues(alpha: 0.6),
+                  ],
+                ),
+                // boxShadow: [AppShadow.shadowLvl1(context, blurRadius: 1)],
+              ),
+              padding: const EdgeInsets.all(AppSpacing.md),
+              child: Icon(
+                icon,
+                size: 30,
+                color: context.colors.white,
+                shadows: [AppShadow.shadowLvl1(context)],
+              ),
             ),
-            // boxShadow: [AppShadow.shadowLvl1(context, blurRadius: 1)],
-          ),
-          padding: const EdgeInsets.all(AppSpacing.md),
-          child: Icon(
-            icon,
-            size: 30,
-            color: context.colors.white,
-            shadows: [AppShadow.shadowLvl1(context)],
-          ),
-        ),
-        AppSpacing.w12,
-        Expanded(
-          child: Column(
-            crossAxisAlignment: .start,
-            children: [
-              Row(
+            AppSpacing.w12,
+            Expanded(
+              child: Column(
                 crossAxisAlignment: .start,
                 children: [
-                  Text(title, style: context.text.bodyLarge),
-                  if (haveMultipleSymbol)
-                    Transform.translate(
-                      offset: const Offset(-2, -1),
-                      child: Text(
-                        '﹙s﹚',
-                        style: context.text.bodyLarge?.copyWith(
-                          letterSpacing: -6,
+                  Row(
+                    crossAxisAlignment: .start,
+                    children: [
+                      Text(title, style: context.text.bodyLarge),
+                      if (haveMultipleSymbol)
+                        Transform.translate(
+                          offset: const Offset(-2, -1),
+                          child: Text(
+                            '﹙s﹚',
+                            style: context.text.bodyLarge?.copyWith(
+                              letterSpacing: -6,
+                            ),
+                          ),
                         ),
-                      ),
+                    ],
+                  ),
+                  if (content is String)
+                    Text(content)
+                  else if (content is List<String>)
+                    Wrap(
+                      spacing: AppSpacing.sm,
+                      children: List.generate(content.length, (index) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                context.colors.primaryDark.withValues(
+                                  alpha: 0.4,
+                                ),
+                                context.colors.primaryDark.withValues(
+                                  alpha: 0.6,
+                                ),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(
+                              AppSpacing.radiusLg,
+                            ),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.sm,
+                            vertical: AppSpacing.xs,
+                          ),
+                          child: Text(
+                            content[index].toUpperCase(),
+                            style: context.text.bodyMedium?.copyWith(
+                              color: context.colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        );
+                      }),
                     ),
                 ],
               ),
-              if (content is String)
-                Text(content)
-              else if (content is List<String>)
-                Wrap(
-                  spacing: AppSpacing.sm,
-                  children: List.generate(content.length, (index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            context.colors.primaryDark.withValues(alpha: 0.4),
-                            context.colors.primaryDark.withValues(alpha: 0.6),
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(
-                          AppSpacing.radiusLg,
-                        ),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.sm,
-                        vertical: AppSpacing.xs,
-                      ),
-                      child: Text(
-                        content[index].toUpperCase(),
-                        style: context.text.bodyMedium?.copyWith(
-                          color: context.colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    );
-                  }),
-                ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );

@@ -4,15 +4,17 @@ import 'package:musify/feature/account/data/data_source/app_config_data_source.d
 import 'package:musify/feature/account/data/data_source/user_data_source.dart';
 import 'package:musify/feature/account/data/repository/app_config_repository_impl.dart';
 import 'package:musify/feature/account/data/repository/user_repository_impl.dart';
-import 'package:musify/feature/account/domain/usecase/delete_username_usecase.dart';
-import 'package:musify/feature/account/domain/usecase/get_avatar_usecase.dart';
-import 'package:musify/feature/account/domain/usecase/get_general_configs_usecase.dart';
-import 'package:musify/feature/account/domain/usecase/get_recently_played_history_usecase.dart';
-import 'package:musify/feature/account/domain/usecase/get_recently_played_usecase.dart';
-import 'package:musify/feature/account/domain/usecase/get_user_data_usecase.dart';
-import 'package:musify/feature/account/domain/usecase/is_username_available_usecase.dart';
-import 'package:musify/feature/account/domain/usecase/set_usename_usecase.dart';
-import 'package:musify/feature/account/domain/usecase/update_user_data_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/user_usecases/toggle_favourite_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/user_usecases/delete_username_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/app_config_usecases/get_avatar_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/app_config_usecases/get_general_configs_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/user_usecases/get_favourite_songs_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/user_usecases/get_recently_played_history_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/user_usecases/get_recently_played_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/user_usecases/get_user_data_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/user_usecases/is_username_available_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/user_usecases/set_usename_usecase.dart';
+import 'package:musify/feature/account/domain/usecase/user_usecases/update_user_data_usecase.dart';
 
 final appConfigDataSourceProvider = Provider((ref) {
   final firestore = ref.read(firestoreProvider);
@@ -78,4 +80,14 @@ final getRecentlyPlayedUsecaseProvider = Provider((ref) {
 final getRecentlyPlayedHistoryUsecaseProvider = Provider((ref) {
   final userRepository = ref.read(userRepositoryProvider);
   return GetRecentlyPlayedHistoryUsecase(userRepository);
+});
+
+final toggleFavouriteUsecaseProvider = Provider((ref) {
+  final userRepository = ref.read(userRepositoryProvider);
+  return ToggleFavouriteUsecase(userRepository);
+});
+
+final getFavouriteSongsUsecaseProvider = Provider((ref) {
+  final userRepository = ref.read(userRepositoryProvider);
+  return GetFavouriteSongsUsecase(userRepository);
 });

@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:musify/core/result/result.dart';
 import 'package:musify/core/typedefs/typedefs.dart';
 import 'package:musify/feature/account/data/data_source/user_data_source.dart';
+import 'package:musify/feature/account/data/models/user/favourite_song.dart';
 import 'package:musify/feature/account/data/models/user/recently_played.dart';
 import 'package:musify/feature/account/data/models/user/user_data.dart';
 import 'package:musify/feature/account/data/models/user/username.dart';
@@ -132,6 +133,51 @@ class UserRepositoryImpl implements UserRepository {
         print(s);
       }
       return Result.failure('Failed to get recently history songs');
+    }
+  }
+
+  @override
+  FResult<void> toggleFavourite(String songId, bool isFavourite) async {
+    try {
+      await dataSource.toggleFavourite(songId, isFavourite);
+      return Result.success(
+        data: null,
+        message: isFavourite
+            ? 'Removed from favourites'
+            : 'Song added to favourites',
+      );
+    } on FirebaseException catch (e) {
+      return Result.failure(
+        e.message ??
+            (isFavourite
+                ? 'Failed to remove from favourites'
+                : 'Failed to add song to favourites'),
+      );
+    } catch (e, s) {
+      if (kDebugMode) {
+        print(e);
+        print(s);
+      }
+      return Result.failure(
+        isFavourite
+            ? 'Failed to remove from favourites'
+            : 'Failed to add song to favourites',
+      );
+    }
+  }
+
+  @override
+  Stream<List<FavouriteSong>> getFavouriteSongs() {
+    try {
+      return dataSource.getFavouriteSongs();
+    } on FirebaseException catch (e) {
+      return Stream.error(e.message ?? 'Failed to get recently history songs');
+    } catch (e, s) {
+      if (kDebugMode) {
+        print(e);
+        print(s);
+      }
+      return Stream.error('Failed to get recently history songs');
     }
   }
 }

@@ -40,7 +40,11 @@ class _SearchedSongsState extends ConsumerState<SearchedSongs> {
     final result = await songsNotifier.loadMoreSongs();
 
     if (!result.success && mounted) {
-      showAppSnackbar(context: context, result: result);
+      showAppSnackbar(
+        context: context,
+        type: result.success ? .success : .error,
+        message: result.message ?? '',
+      );
     }
 
     _isLoadingNewSongs.value = false;

@@ -1,4 +1,5 @@
 import 'package:musify/core/typedefs/typedefs.dart';
+import 'package:musify/feature/account/data/models/user/favourite_song.dart';
 import 'package:musify/feature/account/data/models/user/recently_played.dart';
 import 'package:musify/feature/account/data/models/user/user_data.dart';
 import 'package:musify/feature/account/data/models/user/username.dart';
@@ -11,4 +12,6 @@ abstract interface class UserRepository {
   FResult<void> setUsername(Username username);
   Stream<List<RecentlyPlayed>> getRecentlyPlayed();
   FResult<List<RecentlyPlayedHistory>> getRecentlyPlayedHistory();
+  Stream<List<FavouriteSong>> getFavouriteSongs();
+  FResult<void> toggleFavourite(String songId, bool isFavourite);
 }
